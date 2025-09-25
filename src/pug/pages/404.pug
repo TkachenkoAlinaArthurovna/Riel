@@ -1,0 +1,26 @@
+extends ../layout/main
+block variable
+  -
+    var title_page = 'error'
+    var id_page = 'id-page-error'
+    var class_page = 'class-page-error'
+    var headerCustomClass = 'type1' 
+    
+block meta
+  title= title_page
+  meta(name='description' content='')
+block head
+  link(rel='stylesheet' href="./assets/styles/main.min.css")
+block scripts
+  script(defer src='./assets/scripts/vendors.bundle.js')
+  script(defer src='./assets/scripts/header.bundle.js')
+  script(defer src='./assets/scripts/footer.bundle.js')
+  script(defer src='./assets/scripts/index.bundle.js')
+block content
+    
+
+block footer
+  include ../includes/footer.pug
+
+block header
+  include ../includes/header.pug

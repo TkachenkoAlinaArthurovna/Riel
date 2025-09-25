@@ -1,0 +1,19 @@
+@import '../../../node_modules/intl-tel-input/build/css/intlTelInput.min';
+@import '../../../node_modules/swiper/swiper';
+@import '../../../node_modules/swiper/modules/scrollbar/scrollbar';
+@import '../../../node_modules/ion-rangeslider/css/ion.rangeSlider.min';
+@import '../../../node_modules/swiper/modules/grid/grid';
+.iti {
+  width: 100%;
+}
+
+.iti__flag {
+  background-image: url("../../../3d/assets/images/libs/flags.png");
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .iti__flag {
+    background-image: url("../../../3d/assets/images/libs/flags@2x.png");
+  }
+}

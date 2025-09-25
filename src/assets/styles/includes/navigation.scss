@@ -1,0 +1,147 @@
+// .navigation-container {
+//   width: 100vw;
+//   margin-bottom: 150px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 28px;
+
+//   height: auto;
+
+//   @include tablet {
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//   }
+
+//   @include laptop {
+//     flex-direction: row;
+//     justify-content: space-between;
+//   }
+
+//   @include desktop {
+//     // gap: 134px;
+//   }
+// }
+
+// .main-nav__list {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 14px;
+
+//   @include tablet {
+//     width: calc(50% - 14px);
+//   }
+
+//   @include laptop {
+//     width: auto;
+//   }
+
+//   @include desktop {
+//     gap: 20px;
+//   }
+// }
+
+// .main-nav__link {
+
+//   transition: color .3s ease-in-out;
+// }
+
+// .main-nav__item {
+//   @include from(1023px) {
+//     &:hover {
+//       .main-nav__link {
+//         color: $wc;
+//         transition: color .3s ease-in-out;
+//       }
+//     }
+//   }
+// }
+
+// .sub-nav__title-wrap {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+
+//   svg {
+//     width: 20px;
+//     height: 20px;
+//     transform: rotate(180deg);
+
+//     stroke-width: 2px;
+//     fill: none;
+//     transition: transform 0.4s ease-in-out;
+
+//     .is-visible & {
+//       transform: rotate(0deg);
+//     }
+
+//     @include tablet {
+//       display: none;
+//     }
+//   }
+// }
+
+// .sub-nav__title {
+
+//   @include tablet {}
+// }
+
+// .sub-nav__list {
+//   max-height: 0px;
+//   overflow: hidden;
+//   margin-top: 14px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 8px;
+//   transition: max-height 0.4s ease-in-out;
+
+//   @include tablet {
+//     margin-top: 16px;
+//     max-height: 1000px;
+//   }
+
+//   @include desktop {
+//     margin-top: 20px;
+//     gap: 10px;
+//   }
+
+//   .is-visible & {
+//     max-height: 1000px;
+//   }
+// }
+
+// .sub-nav__link {
+
+//   transition: color .3s ease-in-out;
+// }
+
+// .sub-nav__item {
+//   &:hover {
+//     .sub-nav__link {
+//       color: $wc;
+//       transition: color .3s ease-in-out;
+//     }
+//   }
+// }
+
+// .third-block-nav {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 28px;
+
+//   @include tablet {
+//     width: calc(50% - 14px);
+//   }
+
+//   @include laptop {
+//     width: auto;
+//   }
+
+//   @include desktop {
+//     gap: 60px;
+//     max-width: 320px;
+//   }
+// }
+
+// .forth-block-nav {
+//   @extend .third-block-nav;
+// }

@@ -1,0 +1,209 @@
+$default-font: 'WixMadeforDisplay', sans-serif;
+
+$mc2: #ff554c;
+$mc3: #e5df06;
+$mc4: #4f90b6;
+$gray: #878797;
+$gray_2: #767676;
+$text: #22223e;
+$wc: rgb(249, 242, 235);
+$bc: rgb(41, 41, 37);
+
+$bg-color: rgb(249, 242, 235);
+$accent-color: rgb(242, 209, 41);
+$text-color: #0a0f13;
+$second-accent-color: rgb(255, 105, 60);
+$border-color: rgba(41, 41, 37, 0.2);
+$second-accent-color--hover: rgb(234 99 58);
+$accent-color--hover: rgb(41, 41, 37);
+
+$white: #ffffff;
+$white-text: #f5f6e6;
+
+$brend-white: #f4f5f9;
+$brend-dark: #1d3541;
+$brend-green: #68d23f;
+$brend-grey: #829099;
+$brend-red: #fb5238;
+$brend-purple: #6858cf;
+
+@mixin title-text() {
+  font-size: 40px;
+  font-family: $default-font;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 100%;
+  text-decoration: none;
+
+  @include tablet {
+    font-size: 6.3vw;
+  }
+}
+
+@mixin subtitle-text() {
+  font-size: 30px;
+  font-family: $default-font;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 120%;
+  text-decoration: none;
+
+  @include tablet {
+    font-size: 4.23vw;
+  }
+}
+
+@mixin general-text() {
+  font-size: 18px;
+  font-family: $default-font;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 133%;
+  text-decoration: none;
+  text-transform: none;
+
+  @include tablet {
+    font-size: 1.38vw;
+  }
+}
+
+@mixin general-text-bold() {
+  font-size: 18px;
+  font-family: $default-font;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 133%;
+  text-decoration: none;
+  text-transform: none;
+
+  @include tablet {
+    font-size: 1.38vw;
+  }
+}
+
+@mixin tiny-text() {
+  font-size: 16px;
+  font-family: $default-font;
+  font-weight: 500;
+  font-style: normal;
+  line-height: normal;
+
+  text-decoration: none;
+
+  // @include tablet {
+  // 	font-size: 1.05vw;
+  // }
+}
+
+@mixin title {
+  font-size: max(32px, 1.66vw);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: -2.88px;
+  @media (max-width: 768px) {
+    font-size: max(24px, 4.16vw);
+    letter-spacing: -2.16px;
+  }
+}
+
+@mixin block-subtitle() {
+  font-family: $default-font;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 28.8px */
+  letter-spacing: -1.44px;
+  @media (max-width: 768px) {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 24px */
+    letter-spacing: -1.2px;
+  }
+}
+
+@mixin section-text {
+  font-size: max(16px, 0.83vw);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  letter-spacing: -0.96px;
+}
+
+@mixin big-text {
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: -3.36px;
+  @media (max-width: 480px) {
+    font-size: 40px;
+    letter-spacing: -2.4px;
+  }
+}
+
+@mixin text-96-56-32 {
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%;
+  letter-spacing: -5.76px;
+  text-transform: uppercase;
+  @media (max-width: 1300px) {
+    font-size: 56px;
+    letter-spacing: -3.36px;
+  }
+  @media (max-width: 480px) {
+    font-size: 32px;
+    letter-spacing: -1.92px;
+  }
+}
+
+@mixin text-36 {
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -2.16px;
+}
+
+@mixin text-32 {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 100%;
+  letter-spacing: -1.92px;
+}
+
+@mixin text-20 {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -1.2px;
+}
+
+@mixin text-16 {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: -0.96px;
+}
+
+@mixin text-14 {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.84px;
+}
+
+@mixin text-12 {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.72px;
+}

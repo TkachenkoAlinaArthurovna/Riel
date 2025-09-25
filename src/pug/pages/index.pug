@@ -1,0 +1,32 @@
+
+extends ../layout/main
+block variable
+  -
+    var title_page = 'index'
+    var id_page = 'id-page-index'
+    var class_page = 'page-template-home'
+    var headerCustomClass = 'type1' 
+    
+block meta
+  title= title_page
+  meta(name='description' content='')
+block head
+  link(rel='stylesheet' href="./assets/styles/main.min.css")
+block scripts
+  script(defer src='./assets/scripts/vendors.bundle.js')
+  script(defer src='./assets/scripts/header.bundle.js')
+  script(defer src='./assets/scripts/footer.bundle.js')
+  script(defer src='./assets/scripts/index.bundle.js')
+block content
+  include ../includes/section_top.pug
+  include ../includes/section_hot_deals.pug
+  include ../includes/section_btn_projects.pug
+  include ../includes/section_news.pug
+  include ../includes/section_btn_planning.pug
+  include ../includes/section_video.pug
+  
+block footer
+  include ../includes/footer.pug
+
+block header
+  include ../includes/header.pug

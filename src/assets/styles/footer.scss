@@ -1,0 +1,491 @@
+.footer {
+  position: relative;
+  background: $brend-dark;
+  overflow: hidden;
+  padding-top: 320px;
+  @media (max-width: 1024px) {
+    padding-top: 250px;
+  }
+  @media (max-width: 480px) {
+    padding-top: 200px;
+  }
+  .section_title {
+    margin-bottom: 100px;
+    @media (max-width: 1024px) {
+      margin-bottom: 60px;
+    }
+  }
+  &__bg {
+    position: absolute;
+    top: 160px;
+    right: -300px;
+    width: 1170px;
+    @media (max-width: 1500px) {
+      top: 200px;
+    }
+    @media (max-width: 1300px) {
+      right: -450px;
+    }
+    @media (max-width: 1024px) {
+      top: 1200px;
+      right: auto;
+      left: -350px;
+      transform: scaleX(-1);
+    }
+    @media (max-width: 600px) {
+      top: 1400px;
+    }
+    @media (max-width: 480px) {
+      top: 1250px;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+    }
+  }
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 200px;
+    }
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 120px;
+    }
+  }
+  &__contacts {
+    display: flex;
+    justify-content: space-between;
+    width: 40vw;
+    @media (max-width: 1500px) {
+      flex-direction: column;
+    }
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+  }
+  &__contacts_left {
+    @media (max-width: 1024px) {
+      margin-bottom: 20px;
+    }
+  }
+  &__contacts_right {
+    position: relative;
+    z-index: 1;
+    @media (max-width: 1024px) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+  &__contacts_item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+    @media (max-width: 1024px) {
+      width: 50%;
+    }
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+    span {
+      margin-bottom: 12px;
+      @include text-14;
+      text-transform: uppercase;
+    }
+    a {
+      &:hover {
+        @media (min-width: 1024px) {
+          span:after {
+            transform: scaleX(1);
+          }
+        }
+      }
+      span {
+        position: relative;
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 100%;
+        letter-spacing: -2.4px;
+        color: $brend-green;
+        text-transform: none;
+        @media (max-width: 1300px) {
+          @include text-32;
+        }
+      }
+      span:after {
+        content: '';
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        transform-origin: left;
+        transition: 0.25s ease-in-out;
+        width: 100%;
+        height: 1px;
+        background-color: currentColor;
+        transform: scaleX(0);
+      }
+    }
+  }
+  &__contacts_item_right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    div:nth-child(2) {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+      a {
+        &:hover {
+          @media (min-width: 1024px) {
+            color: $brend-green;
+          }
+        }
+        transition: 0.25s ease-in-out;
+        @include text-16;
+        @media (max-width: 480px) {
+          @include text-14;
+          font-weight: 500;
+        }
+      }
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: max-content;
+        margin-bottom: 0;
+        padding: 4px 12px;
+        border-radius: 100px;
+        @include text-14;
+        color: $brend-dark;
+        background: $brend-white;
+        text-transform: none !important;
+      }
+    }
+    div:nth-child(3) {
+      margin-bottom: 4px;
+      @include text-16;
+      a {
+        &:hover {
+          @media (min-width: 1024px) {
+            color: $brend-green;
+          }
+        }
+        transition: 0.25s ease-in-out;
+      }
+      @media (max-width: 480px) {
+        @include text-14;
+        font-weight: 500;
+      }
+    }
+    div:nth-child(4) {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      span {
+        margin-bottom: 4px;
+        @include text-16;
+        text-transform: none !important;
+        @media (max-width: 480px) {
+          @include text-14;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  &__icons {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+  &__wrapper_icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    .social_icon {
+      position: relative;
+      z-index: 1;
+      width: 16px;
+      height: 16px;
+      path {
+        transition: 0.5s ease-out;
+      }
+    }
+    .bg_for_icon {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      path {
+        transition: 0.5s ease-out;
+      }
+    }
+  }
+  &__wrapper_icon:hover {
+    .social_icon path {
+      fill: $brend-white;
+    }
+    .social_icon .hover-dark {
+      fill: $brend-dark;
+    }
+    .bg_for_icon path {
+      fill: $brend-white;
+    }
+  }
+  &__right {
+    display: flex;
+    justify-content: center;
+    width: 600px;
+    @media (max-width: 1024px) {
+      justify-content: start;
+      width: 100%;
+    }
+  }
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    color: $brend-dark;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+    &__title {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 100%; /* 64px */
+      letter-spacing: -3.84px;
+      @media (max-width: 1024px) {
+        text-align: start;
+        font-size: 56px;
+        font-weight: 500;
+        line-height: 90%;
+        letter-spacing: -3.36px;
+      }
+      @media (max-width: 1024px) {
+        @include text-32;
+      }
+    }
+    &__text {
+      margin-bottom: 80px;
+      @include text-16;
+      @media (max-width: 1024px) {
+        margin-bottom: 60px;
+      }
+      @media (max-width: 480px) {
+        margin-bottom: 40px;
+        @include text-14;
+        font-weight: 500;
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      @media (max-width: 1024px) {
+        gap: 60px;
+      }
+      @media (max-width: 480px) {
+        gap: 40px;
+      }
+      .brend_btn {
+        background: $brend-white;
+      }
+      .brend_btn::before {
+        background-image: url('../../assets/images/btn_decor_white.png');
+      }
+      .brend_btn::after {
+        background-image: url('../../assets/images/btn_decor_white.png');
+      }
+    }
+    .form_item {
+      position: relative;
+      width: 100%;
+      border-bottom: 1px solid rgba(29, 53, 65, 0.2);
+      input {
+        width: 100%;
+        height: 66px;
+        padding: 22px 6px 22px 6px;
+      }
+      input#phone {
+        padding: 22px 6px 22px 56px;
+      }
+      label {
+        position: absolute;
+        z-index: 5;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        font-size: 16px;
+        letter-spacing: -0.96px;
+        pointer-events: none;
+        transition: all 0.3s ease-out;
+        @media (max-width: 480px) {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 120%;
+          letter-spacing: -0.84px;
+        }
+      }
+      span {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 22px;
+      }
+    }
+    .form_item:focus-within label,
+    .form_item input:valid ~ label {
+      top: 0%;
+      font-size: 12px;
+    }
+    .form_button {
+      width: max-content;
+    }
+  }
+  &__bottom {
+    @media (max-width: 1024px) {
+      margin-top: 110px;
+    }
+    @media (max-width: 480px) {
+      margin-top: 100px;
+    }
+    .content {
+      @media (max-width: 1024px) {
+      }
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+  }
+  &__rights {
+    display: flex;
+    gap: 8px;
+    @include text-14;
+    text-transform: uppercase;
+    @media (max-width: 1024px) {
+      color: $brend-dark;
+    }
+    @media (max-width: 480px) {
+      @include text-12;
+    }
+  }
+  &__up {
+    position: absolute;
+    left: 40px;
+    bottom: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    @media (max-width: 1500px) {
+      left: 50%;
+      bottom: 50px;
+      transform: translateX(-50%);
+    }
+    @media (max-width: 1024px) {
+      top: 240px;
+      bottom: auto;
+      left: auto;
+      right: -30px;
+      flex-direction: row-reverse;
+    }
+
+    @media (max-width: 480px) {
+      top: 190px;
+    }
+    &:hover {
+      @media (min-width: 1024px) {
+        .icon {
+          animation: upArrowAnim 1.5s linear infinite;
+        }
+      }
+    }
+    .footer__up_icon {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 76px;
+      height: 68px;
+      @media (max-width: 480px) {
+        width: 46px;
+        height: 40px;
+      }
+      .bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+      .icon {
+        position: relative;
+      }
+    }
+    span {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 110%;
+      letter-spacing: -0.84px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+/* приховати .iti за замовчуванням */
+.form_item .iti {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* показати, коли .form_item активна (фокус або валідність) */
+.form_item.active .iti {
+  opacity: 1;
+}
+
+/* стиль для підняття label */
+.form_item.active label {
+  top: 0% !important;
+  font-size: 12px !important;
+}
+
+.iti__country-list {
+  z-index: 20 !important;
+  padding-top: 10px !important;
+}
+
+form .form_item span {
+  opacity: 0 !important;
+}
+
+@keyframes upArrowAnim {
+  0% {
+    transform: translateY(40px);
+  }
+  40% {
+    transform: translateY(0px);
+  }
+  60% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-40px);
+  }
+}

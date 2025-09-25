@@ -1,0 +1,42 @@
+mixin form(attr)
+	.form-wrapper(data-form-wrapper)
+		//- .form-close(data-close-form)
+		//- 	<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+		//- 	<path d="M25 25L1 1M1 25L25 1L1 25Z" stroke-width="2"/>
+		//- 	</svg>
+		form(data-form=attr autocomplete="off" contact-form-js).form
+			//- .form-title.text-style-h-3.text-black Замовити дзвінок
+			//- .form-description.text-style-body Залишіть контактні дані і ми обов'язково зв'яжемося з вами
+			.inputs-wrapper
+				.form-field.form-field-input(data-field-input data-field-name data-status="field--inactive").first-offset
+					.input-title  Ваше ім’я
+					input(type='text' name="name" placeholder="Ваше ім’я").form-field__input
+					.input-message(data-input-message)
+				.form-field.form-field-input(data-field-input data-field-phone data-status="field--inactive")
+					.input-title  Номер телефону
+					input(type='text' name="phone" placeholder="Телефон:").form-field__input
+					.input-message(data-input-message)
+				//- .form-field.disabled.form-field-input(data-field-input data-field-email data-status="field--inactive")
+				//- 	.input-title.text-style-h-4.text-gray Email:
+				//- 	input(type='text' name="email" placeholder="Введіть email").form-field__input
+				//- 	.input-message(data-input-message)
+				.form-field.form-field-input(data-field-input data-field-time data-status="field--inactive")
+					.input-title Оберіть час:
+					.custom-select#time-select(data-placeholder="Оберіть час")
+						span.selected-time 9:00
+						span.arrow
+							svg(xmlns="http://www.w3.org/2000/svg", width="24", height="24", viewBox="0 0 24 24", fill="none")
+								g(opacity="0.7")
+									path(fill-rule="evenodd", clip-rule="evenodd", d="M12.0001 15.5859L4.70718 8.29297L3.29297 9.70718L12.0001 18.4143L20.7072 9.70718L19.293 8.29297L12.0001 15.5859Z", fill="#292925")
+						ul.options(data-lenis-prevent)
+							each hour in [9,10,11,12,13,14,15,16,17,18,19,20]
+								- const formatted = `${hour}:00`
+								li.option(data-value=formatted class=hour === 9 ? 'selected' : '')= formatted
+					input(type="hidden", name="time", id="hidden-time", value="9:00")
+					//- .input-title Коментар:
+					//- textarea(type='text' name="comment" placeholder="Введіть повідомлення").form-field__input.text-input
+					.input-message(data-input-message)
+			.form__button-wrapper
+				
+				button( type="submit" data-btn-submit).general-btn
+					span.submit-btn__text(data-btn-submit-text) Замовити дзвінок

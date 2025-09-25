@@ -1,0 +1,52 @@
+.notFound {
+    height:100vh;
+   
+}
+
+.notFound-bg {
+
+    background-size: cover;
+    padding-top: 100px;
+    height:100%;
+    width: 100%;
+    background-image: url('../images/home/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include tablet {
+        padding-top: 200px;
+    }
+
+    @include laptop {
+        display: flex;
+        flex-direction: row-reverse;
+        
+        height: 100%;
+        padding-top: 130px;
+    }
+
+    @include desktop {
+        padding-top: 200px;
+    }
+}
+
+.notFound__text {
+    
+
+}
+
+.notFound__title {
+ 
+
+}
+
+.notFound-links__wrap {
+    
+}
+
+.notFound-img-wraper {
+    
+}
+
+

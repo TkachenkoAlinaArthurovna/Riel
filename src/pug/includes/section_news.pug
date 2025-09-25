@@ -1,0 +1,42 @@
+section.section_style.section_news
+    .content 
+        .section_title.section_news__title 
+            span Новини та акції
+            a(href="/").brend_btn
+                span(data-title="Більше новин") Більше новин 
+            .swiper_navigation
+                .swiper_navigation__left 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="18" viewBox="0 0 33 18" fill="none">
+                        <path d="M2.5 9L32.5 9M2.5 9L9.925 1M2.5 9L6.2125 13L9.925 17" stroke="#1D3541" stroke-width="3"/>
+                    </svg>
+                .swiper_navigation__right
+                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="18" viewBox="0 0 34 18" fill="none">
+                        <g clip-path="url(#clip0_789_8771)">
+                            <path d="M30.5 9L0.499999 8.99999M30.5 9L23.075 17M30.5 9L26.7875 5L23.075 0.999999" stroke="#1D3541" stroke-width="3"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_789_8771">
+                            <rect width="18" height="33" fill="white" transform="matrix(1.62921e-07 -1 -1 -1.62921e-07 33.5 18)"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+        .section_news__wrapper 
+            .swiper 
+                .swiper-wrapper 
+                    each i in [...Array(3).keys()]
+                        .swiper-slide
+                            a(href="/").news_card
+                                .news_card__img 
+                                    img(src="../../assets/images/news/image.jpg" alt="news")
+                                .news_card__title Сучасний спортивний майданчик вже працює у ЖК «Brother»
+                                .news_card__bottom
+                                    .news_card__year 2025
+                                    .news_card__date
+                                        .news_card__date_content
+                                            span 09
+                                            span Жовтня
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="480" height="381" viewBox="0 0 480 381" fill="none">
+                                            <path d="M467.793 -12.7778L270.344 333.437C252.793 362.196 220.981 381 185.879 381H-209.02C-243.025 381 -274.836 362.196 -292.387 332.331L-489.837 -13.8839C-507.388 -43.7491 -507.388 -80.2509 -489.837 -110.116L-292.387 -456.331C-274.836 -486.196 -244.122 -505 -209.02 -505H185.879C219.884 -505 251.696 -486.196 269.247 -456.331L466.696 -110.116C484.247 -80.2509 484.247 -42.6429 467.793 -12.7778Z" fill="#51C2FB"/>
+                                        </svg>
+        a(href="/").brend_btn.section_news__bottom_btn
+                span(data-title="Більше новин") Більше новин 

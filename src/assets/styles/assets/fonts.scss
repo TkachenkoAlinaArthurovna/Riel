@@ -1,0 +1,73 @@
+@font-face {
+  font-family: 'WixMadeforDisplay';
+  src: url('../fonts/WixMadeforDisplay-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'WixMadeforDisplay';
+  src: url('../fonts/WixMadeforDisplay-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'WixMadeforDisplay';
+  src: url('../fonts/WixMadeforDisplay-Bold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'e-Ukraine';
+  src: url('../fonts/e-Ukraine-Thin.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'e-Ukraine';
+  src: url('../fonts/e-Ukraine-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'e-Ukraine';
+  src: url('../fonts/e-Ukraine-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'e-Ukraine';
+  src: url('../fonts/e-Ukraine-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Riel';
+  src: local('Riel Regular'), local('Riel-Regular'),
+    url('../fonts/Riel-Regular.woff') format('woff'),
+    url('../fonts/Riel-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Riel';
+  src: local('Riel Bold'), local('Riel-Bold'), url('../fonts/Riel-Bold.woff') format('woff'),
+    url('../fonts/Riel-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Riel';
+  src: local('Riel Black'), local('Riel-Black'), url('../fonts/Riel-Black.woff') format('woff'),
+    url('../fonts/Riel-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}

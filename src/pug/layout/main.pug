@@ -1,0 +1,66 @@
+
+-
+block variable
+doctype html
+html(lang="en" data-status="local")
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    //- Edge и ряд мобильных браузеров слишком умны. Отключим это.
+    meta(name='format-detection' content='telephone=no')
+    meta(name='format-detection' content='date=no')
+    meta(name='format-detection' content='address=no')
+    meta(name='format-detection' content='email=no')
+    meta(content='notranslate' name='google')
+    //- <link rel="apple-touch-icon" sizes="180x180" href="./static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./static/favicon-16x16.png">
+    <link rel="mask-icon" href="./static/safari-pinned-tab.svg">
+    <link rel="shortcut icon" href="./static/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="./static/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    block meta
+    block head
+
+  body(class= class_page id= id_page data-barba="wrapper" )
+    // START SVG SPRITE
+    // END SVG SPRITE
+    // START LOADER
+    include ../includes/loader.html
+    // END LOADER
+    // START POPUP MODAL
+
+
+    // END POPUP MODAL
+    // START MENU
+    //- include ../includes/menu.pug
+    // END MENU
+
+    // -------
+    // -------
+    // -------
+    // -------
+
+    // START HEADER
+    block header
+    
+    // END HEADER
+   
+    .page__inner(data-scroll-container)
+      .page__content
+        
+        block content
+          
+   
+
+
+    block footer
+    
+      // END FOOTER
+    block modal
+      
+    block scripts
+    <div class="reloader">
+      <div class="loader"></div>
+    </div>
