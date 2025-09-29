@@ -1,5 +1,6 @@
 .footer {
   position: relative;
+  z-index: 2;
   background: $brend-dark;
   overflow: hidden;
   padding-top: 320px;
@@ -260,7 +261,7 @@
     width: 440px;
     color: $brend-dark;
     @media (max-width: 768px) {
-      width: 100%;
+      width: 90%;
     }
     &__title {
       margin-bottom: 20px;

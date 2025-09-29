@@ -1,0 +1,54 @@
+section.section_news_for_page 
+    .content 
+        .section_news_for_page__wrapper
+            .preloader
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><radialGradient id='a10' cx='.66' fx='.66' cy='.3125' fy='.3125' gradientTransform='scale(1.5)'><stop offset='0' stop-color='#FF156D'></stop><stop offset='.3' stop-color='#FF156D' stop-opacity='.9'></stop><stop offset='.6' stop-color='#FF156D' stop-opacity='.6'></stop><stop offset='.8' stop-color='#FF156D' stop-opacity='.3'></stop><stop offset='1' stop-color='#FF156D' stop-opacity='0'></stop></radialGradient><circle transform-origin='center' fill='none' stroke='url(#a10)' stroke-width='15' stroke-linecap='round' stroke-dasharray='200 1000' stroke-dashoffset='0' cx='100' cy='100' r='70'><animateTransform type='rotate' attributeName='transform' calcMode='spline' dur='2' values='360;0' keyTimes='0;1' keySplines='0 0 1 1' repeatCount='indefinite'></animateTransform></circle><circle transform-origin='center' fill='none' opacity='.2' stroke='#FF156D' stroke-width='15' stroke-linecap='round' cx='100' cy='100' r='70'></circle></svg>
+            - for (let i = 1; i <= 20; i++)
+                a(href="/").news_card
+                    .news_card__img 
+                        img(src="../../assets/images/news/image.jpg" alt="news")
+                    .news_card__title Сучасний спортивний майданчик вже працює у ЖК «Brother»
+                    .news_card__bottom
+                        .news_card__year 2025
+                        .news_card__date
+                            .news_card__date_content
+                                span 09
+                                span Жовтня
+                            <svg xmlns="http://www.w3.org/2000/svg" width="480" height="381" viewBox="0 0 480 381" fill="none">
+                                <path d="M467.793 -12.7778L270.344 333.437C252.793 362.196 220.981 381 185.879 381H-209.02C-243.025 381 -274.836 362.196 -292.387 332.331L-489.837 -13.8839C-507.388 -43.7491 -507.388 -80.2509 -489.837 -110.116L-292.387 -456.331C-274.836 -486.196 -244.122 -505 -209.02 -505H185.879C219.884 -505 251.696 -486.196 269.247 -456.331L466.696 -110.116C484.247 -80.2509 484.247 -42.6429 467.793 -12.7778Z" fill="#51C2FB"/>
+                            </svg>
+        .pagination
+            .pagination_arrow_left.pagination_arrow
+                <svg class="bg" xmlns="http://www.w3.org/2000/svg" width="76" height="68" viewBox="0 0 76 68" fill="none">
+                    <path d="M53.2715 0.499998L22.7402 0.499995C20.2045 0.499995 17.904 1.84928 16.6357 3.9121L1.37695 30.4717C0.192661 32.6113 0.196079 35.3052 1.45898 37.4385L1.46191 37.4434L16.7246 64.0098C17.9949 66.1556 20.2944 67.5 22.7402 67.5L53.2715 67.5C55.6409 67.4999 57.7364 66.321 59.0371 64.4033L59.2861 64.0098L74.5488 37.4434L74.5518 37.4385L74.667 37.2363C75.8147 35.1404 75.7762 32.6298 74.5518 30.5615L74.5488 30.5566L59.2861 3.99023C58.0159 1.84453 55.7172 0.500138 53.2715 0.499998Z" stroke="#F4F5F9" stroke-opacity="0.4"/>
+                </svg>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="34" height="18" viewBox="0 0 34 18" fill="none">
+                    <g clip-path="url(#clip0_789_9074)">
+                        <path d="M3.5 9L33.5 9M3.5 9L10.925 1M3.5 9L7.2125 13L10.925 17" stroke="#F4F5F9" stroke-width="3"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_789_9074">
+                        <rect width="18" height="33" fill="white" transform="matrix(1.19249e-08 1 1 -1.19249e-08 0.5 0)"/>
+                        </clipPath>
+                    </defs>
+                </svg>
+            .pagination__pages 
+                .pagination__current_pages 01
+                .pagination__all_pages 
+                    span з 
+                    span.all_pages 59 
+                    span сторінок
+            .pagination_arrow_right.pagination_arrow
+                <svg class="bg" xmlns="http://www.w3.org/2000/svg" width="76" height="68" viewBox="0 0 76 68" fill="none">
+                    <path d="M53.2715 0.499998L22.7402 0.499995C20.2045 0.499995 17.904 1.84928 16.6357 3.9121L1.37695 30.4717C0.192661 32.6113 0.196079 35.3052 1.45898 37.4385L1.46191 37.4434L16.7246 64.0098C17.9949 66.1556 20.2944 67.5 22.7402 67.5L53.2715 67.5C55.6409 67.4999 57.7364 66.321 59.0371 64.4033L59.2861 64.0098L74.5488 37.4434L74.5518 37.4385L74.667 37.2363C75.8147 35.1404 75.7762 32.6298 74.5518 30.5615L74.5488 30.5566L59.2861 3.99023C58.0159 1.84453 55.7172 0.500138 53.2715 0.499998Z" stroke="#F4F5F9" stroke-opacity="0.4"/>
+                </svg>
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="34" height="18" viewBox="0 0 34 18" fill="none">
+                    <g clip-path="url(#clip0_789_9082)">
+                        <path d="M30.5 9L0.5 9M30.5 9L23.075 17M30.5 9L26.7875 5L23.075 1" stroke="#F4F5F9" stroke-width="3"/>
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_789_9082">
+                        <rect width="18" height="33" fill="white" transform="matrix(1.19249e-08 -1 -1 -1.19249e-08 33.5 18)"/>
+                        </clipPath>
+                    </defs>
+                </svg>

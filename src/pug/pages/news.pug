@@ -19,9 +19,10 @@ block scripts
   script(defer src='./assets/scripts/footer.bundle.js')
   script(defer src='./assets/scripts/index.bundle.js')
 block content
-   include ../includes/section_top_subpage.pug
+  include ../includes/section_top_subpage.pug
     - var page_title = page_title
     - var img_bg = img_bg
+  include ../includes/section_news_for_page.pug
   
 block footer
   include ../includes/footer.pug

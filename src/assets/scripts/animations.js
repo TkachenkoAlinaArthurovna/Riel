@@ -95,6 +95,13 @@ function initAnimations() {
     { transform: 'translate(100%, 100%)' },
     { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
   );
+  if (document.querySelector('.page-template-projects')) {
+    gsap.fromTo(
+      '.btn_filter_mob',
+      { transform: 'translateY(100%)' },
+      { transform: 'translateY(0)', duration: 1, ease: 'power2.out' },
+    );
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initAnimations);

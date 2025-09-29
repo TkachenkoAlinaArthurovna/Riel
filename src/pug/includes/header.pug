@@ -33,7 +33,7 @@ header.header
                         </clipPath>
                         </defs>
                     </svg>   
-            a(href="/projects").header__projects.brend_btn
+            a(href="/projects.html").header__projects.brend_btn
                 span(data-title="Наші проєкти") Наші проєкти
             .header__burger_menu 
                 div МЕНЮ
@@ -50,7 +50,7 @@ header.header
                         span.anim_content_1 Головна
                         span.anim_content_2 Головна
                 li 
-                    a.anim_content(href="/projects") 
+                    a.anim_content(href="/projects.html") 
                         span.anim_content_1 Проєкти
                         span.anim_content_2 Проєкти
                 li 
@@ -58,7 +58,7 @@ header.header
                         span.anim_content_1 Квартири
                         span.anim_content_2 Квартири
                 li 
-                    a.anim_content(href="/news") 
+                    a.anim_content(href="/news.html") 
                         span.anim_content_1 Новини
                         span.anim_content_2 Новини
             .menu__wrapper_social
@@ -122,28 +122,28 @@ header.header
                     .filter__item_title Житловий комплекс:
                     .filter__item_wrapper
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="father")
+                            input.checkbox__input(type="checkbox" id="father" data-filter="project-father" data-name="Father")
                             label.checkbox__label(for="father") Father
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="sister")
+                            input.checkbox__input(type="checkbox" id="sister" data-filter="project-sister" data-name="Sister")
                             label.checkbox__label(for="sister") Sister 
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="brother")
+                            input.checkbox__input(type="checkbox" id="brother" data-filter="project-brother" data-name="Brother")
                             label.checkbox__label(for="brother") Brother
                 .filter__item
                     .filter__item_title Статус:
                     .filter__item_wrapper
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="new")
+                            input.checkbox__input(type="checkbox" id="new" data-filter="status-new" data-name="Новий")
                             label.checkbox__label(for="new") Новий
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="popular")
+                            input.checkbox__input(type="checkbox" id="popular"  data-filter="status-popular" data-name="Популярний")
                             label.checkbox__label(for="popular") Популярний
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="low_price")
+                            input.checkbox__input(type="checkbox" id="low_price" data-filter="status-price" data-name="Ціну знижено")
                             label.checkbox__label(for="low_price") Ціну знижено
             .filter_popup__buttons 
-                a(href="/").brend_btn
+                .brend_btn.filter_popup__btn_delete
                         span(data-title="Очистити") Очистити
-                a(href="/").brend_btn
+                .brend_btn.filter_popup__btn_apply
                         span(data-title="Застосувати") Застосувати

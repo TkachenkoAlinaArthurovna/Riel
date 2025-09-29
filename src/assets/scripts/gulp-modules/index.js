@@ -5,6 +5,7 @@ import './section_news';
 import './section_video';
 import '../modules/form';
 import './filter';
+import './news';
 
 const vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
