@@ -1,10 +1,12 @@
-
 extends ../layout/main
 block variable
   -
-    var title_page = 'index'
-    var id_page = 'id-page-index'
-    var class_page = 'page-template-home'
+    var title_page = 'news'
+    var id_page = 'id-page-news'
+    var class_page = 'page-template-news'
+    var page_title = "Новини"
+    var img_bg = "../../assets/images/bg/top_bg_news.jpg"
+    
     
 block meta
   title= title_page
@@ -17,12 +19,9 @@ block scripts
   script(defer src='./assets/scripts/footer.bundle.js')
   script(defer src='./assets/scripts/index.bundle.js')
 block content
-  include ../includes/section_top.pug
-  include ../includes/section_hot_deals.pug
-  include ../includes/section_btn_projects.pug
-  include ../includes/section_news.pug
-  include ../includes/section_btn_planning.pug
-  include ../includes/section_video.pug
+   include ../includes/section_top_subpage.pug
+    - var page_title = page_title
+    - var img_bg = img_bg
   
 block footer
   include ../includes/footer.pug

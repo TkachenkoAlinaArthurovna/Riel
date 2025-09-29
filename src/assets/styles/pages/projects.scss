@@ -1,0 +1,214 @@
+.section_projects {
+  &__selected {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 48px 0;
+    padding: 28px 0;
+    border-top: 1px solid rgba(244, 245, 249, 0.1);
+    border-bottom: 1px solid rgba(244, 245, 249, 0.1);
+  }
+  &__wrapper {
+    display: flex;
+    gap: 80px;
+    @media (max-width: 1500px) {
+      gap: 0;
+    }
+  }
+  &__filter {
+    width: 340px;
+    @media (max-width: 1500px) {
+      display: none;
+    }
+  }
+  &__filter_result {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
+.project_card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: max(520px, 37.5vw);
+  padding-top: 28px;
+  border-radius: 24px;
+  transition: all 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+  &:hover {
+    @media (min-width: 1024px) {
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+      .project_card__bg {
+        img {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    height: 420px;
+  }
+  &__bg {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: all 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: linear-gradient(0deg, rgba(10, 15, 19, 0) 73.96%, #0a0f13 100%),
+      linear-gradient(180deg, rgba(10, 15, 19, 0) 56.94%, #0a0f13 100%),
+      linear-gradient(180deg, rgba(10, 15, 19, 0) 56.94%, #0a0f13 100%),
+      linear-gradient(180deg, rgba(10, 15, 19, 0) 56.94%, #0a0f13 100%);
+    overflow: hidden;
+  }
+  &__note {
+    position: absolute;
+    z-index: 3;
+    top: 10px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    height: 32px;
+    padding-left: 16px;
+    border-radius: 100px 0 0 100px;
+    @include text-16;
+    background: #6858cf;
+    white-space: nowrap;
+    @media (max-width: 480px) {
+      @include text-14;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: -10px;
+      display: block;
+      height: 100%;
+      width: 10px;
+      height: 50px;
+      background-image: url('../../assets/images/note_decor.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
+  &__top {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 28px;
+    text-align: center;
+    span:first-child {
+      @include text-16;
+      @media (max-width: 480px) {
+        @include text-14;
+      }
+    }
+    span:last-child {
+      @include text-36;
+      @media (max-width: 480px) {
+        @include text-32;
+      }
+    }
+  }
+  &__address {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding: 28px;
+    border-radius: 0 0 24px 24px;
+    @include text-14;
+    text-transform: uppercase;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &__price {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 28px;
+    text-align: center;
+    span:first-child {
+      @include text-16;
+      @media (max-width: 480px) {
+        @include text-14;
+      }
+    }
+    span:last-child {
+      @include text-36;
+      @media (max-width: 480px) {
+        @include text-32;
+      }
+    }
+  }
+  &__features {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 28px;
+    span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 38px;
+      padding: 0px 16px;
+      border-radius: 100px;
+      text-align: center;
+      @include text-16;
+      line-height: 100%;
+      @media (max-width: 480px) {
+        height: 32px;
+        @include text-14;
+      }
+    }
+    span:nth-child(1) {
+      background: $brend-red;
+    }
+    span:nth-child(2) {
+      background: $brend-green;
+    }
+  }
+}
