@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //Це об'єкт в якому ключ це назва фільтру, значення це масив з обраними значеннями цього фільтру
     let selectedFilter = {};
 
+    function getFilterKeysCount(obj) {
+      document.querySelector('.btn_filter_mob .number span').textContent = Object.keys(obj).length;
+    }
+
     if (filterPopupBtnDelete) {
       filterPopupBtnDelete.addEventListener('click', () => {
         // знімаємо всі чекбокси
@@ -29,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // оновлюємо відображення карток
         filterCards();
+        getFilterKeysCount(selectedFilter);
       });
     }
 
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // оновлюємо відображення карток
         filterCards();
-
+        getFilterKeysCount(selectedFilter);
         btnDelete.style.display = 'none';
       });
     }
@@ -78,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = show ? 'flex' : 'none';
       });
       setPagination();
+      getFilterKeysCount(selectedFilter);
       setTimeout(() => {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
@@ -131,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   if (selectedFilter[key].length === 0) delete selectedFilter[key];
                 }
                 filterCards();
+                getFilterKeysCount(selectedFilter);
               });
               // вставляємо в контейнер
               sectionProjectsSelected.appendChild(item);
@@ -162,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
         filterCards();
+        getFilterKeysCount(selectedFilter);
       });
     });
 
@@ -191,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         preloader.style.opacity = '1';
         preloader.style.visibility = 'visible';
         filterCards();
+        getFilterKeysCount(selectedFilter);
         popupFilter.classList.remove('active');
         setTimeout(() => {
           preloader.style.opacity = '0';
@@ -227,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log(card, index);
         const start = (currentPage - 1) * itemsPerPage;
         const end = currentPage * itemsPerPage;
+        console.log(start);
         card.style.display = index >= start && index < end ? 'flex' : 'none';
       });
 

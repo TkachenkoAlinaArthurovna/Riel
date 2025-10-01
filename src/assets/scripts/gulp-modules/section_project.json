@@ -1,0 +1,229 @@
+{
+    "status": "OK",
+    "code": 200,
+    "messages": "common.SUCCESSFUL_REQUEST",
+    "meta": {
+        "count": 9,
+        "totalCount": 9,
+        "limit": 0,
+        "offset": 0,
+        "page": 1,
+        "totalPages": 1,
+        "totalPriceUah": null,
+        "totalPriceUsd": null,
+        "totalSize": null
+    },
+    "data": [
+        {
+            "id": 91,
+            "name": "1",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2022-07-31",
+            "images": [
+                {
+                    "id": 8338,
+                    "path": "/project/render/88926944ae4eb00b9a99d83e3a7b7d26/original.jpg",
+                    "create_at": "2020-06-25T13:27:59+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 28,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (6)",
+                "id": 28
+            }
+        },
+        {
+            "id": 94,
+            "name": "4.1",
+            "floor_count": 8,
+            "level_count": 9,
+            "exploitation_date": "2021-07-21",
+            "images": [],
+            "project_id": 8,
+            "building_id": 29,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (4,5)",
+                "id": 29
+            }
+        },
+        {
+            "id": 95,
+            "name": "4.2",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2021-07-21",
+            "images": [],
+            "project_id": 8,
+            "building_id": 29,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (4,5)",
+                "id": 29
+            }
+        },
+        {
+            "id": 96,
+            "name": "5.1",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2021-07-21",
+            "images": [
+                {
+                    "id": 8337,
+                    "path": "/project/render/76ae84a061d8dc5200eaf383b0437d5d/original.jpg",
+                    "create_at": "2020-06-25T13:27:31+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 29,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (4,5)",
+                "id": 29
+            }
+        },
+        {
+            "id": 261,
+            "name": "1",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2024-12-30",
+            "images": [
+                {
+                    "id": 8339,
+                    "path": "/project/render/f42ae9cd135b56f27b9bc19450478164/original.jpg",
+                    "create_at": "2020-06-25T13:29:50+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 75,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (1б)",
+                "id": 75
+            }
+        },
+        {
+            "id": 262,
+            "name": "1",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2024-12-30",
+            "images": [
+                {
+                    "id": 8341,
+                    "path": "/project/render/d57505853354214e8f978f8c6b16c668/original.jpg",
+                    "create_at": "2020-06-25T13:30:41+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 76,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (2б)",
+                "id": 76
+            }
+        },
+        {
+            "id": 263,
+            "name": "1",
+            "floor_count": 8,
+            "level_count": 9,
+            "exploitation_date": "2024-10-31",
+            "images": [
+                {
+                    "id": 8342,
+                    "path": "/project/render/ba74eefb5b619732fbb95fc5b9a9708d/original.jpg",
+                    "create_at": "2020-06-25T13:30:58+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 77,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (3б)",
+                "id": 77
+            }
+        },
+        {
+            "id": 266,
+            "name": "2",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2024-12-30",
+            "images": [
+                {
+                    "id": 8340,
+                    "path": "/project/render/d72a427d78b78de7ae3b500339e1a2dd/original.jpg",
+                    "create_at": "2020-06-25T13:30:11+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 75,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (1б)",
+                "id": 75
+            }
+        },
+        {
+            "id": 267,
+            "name": "2",
+            "floor_count": 9,
+            "level_count": 10,
+            "exploitation_date": "2024-10-31",
+            "images": [
+                {
+                    "id": 8343,
+                    "path": "/project/render/42a07bb22451a52cf3d8e38e3c896f72/original.jpg",
+                    "create_at": "2020-06-25T13:31:08+03:00",
+                    "order_number": 0
+                }
+            ],
+            "project_id": 8,
+            "building_id": 77,
+            "project": {
+                "name": "Компаньйон",
+                "id": 8
+            },
+            "building": {
+                "name": "Компаньйон (3б)",
+                "id": 77
+            }
+        }
+    ]
+}

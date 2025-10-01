@@ -77,30 +77,43 @@ function initAnimations() {
     );
   }
   //
-  if (window.innerWidth > 1300) {
+  if (
+    document.querySelector('.page-template-projects') ||
+    document.querySelector('.page-template-news') ||
+    document.querySelector('.page-template-flats')
+  ) {
+    if (window.innerWidth > 1300) {
+      gsap.fromTo(
+        '.section_top_subpage .section_top_subpage__breadcrumbs',
+        { transform: 'translate(-100%, -100%)' },
+        { transform: 'translate(0, 0)', duration: 1.1, ease: 'power2.out' },
+      );
+    }
     gsap.fromTo(
-      '.section_top_subpage .section_top_subpage__breadcrumbs',
+      '.section_top_subpage .section_top_subpage__top_left',
       { transform: 'translate(-100%, -100%)' },
-      { transform: 'translate(0, 0)', duration: 1.1, ease: 'power2.out' },
+      { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
     );
-  }
-  gsap.fromTo(
-    '.section_top_subpage .section_top_subpage__top_left',
-    { transform: 'translate(-100%, -100%)' },
-    { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
-  );
 
-  gsap.fromTo(
-    '.section_top_subpage .section_top_subpage__bottom_right',
-    { transform: 'translate(100%, 100%)' },
-    { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
-  );
-  if (document.querySelector('.page-template-projects')) {
     gsap.fromTo(
-      '.btn_filter_mob',
-      { transform: 'translateY(100%)' },
-      { transform: 'translateY(0)', duration: 1, ease: 'power2.out' },
+      '.section_top_subpage .section_top_subpage__bottom_right',
+      { transform: 'translate(100%, 100%)' },
+      { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
     );
+    if (document.querySelector('.page-template-projects')) {
+      gsap.fromTo(
+        '.page-template-projects .btn_filter_mob',
+        { transform: 'translateY(100%)' },
+        { transform: 'translateY(0)', duration: 1, ease: 'power2.out' },
+      );
+    }
+    if (document.querySelector('.page-template-flats')) {
+      gsap.fromTo(
+        '.page-template-flats .btn_filter_mob',
+        { transform: 'translateY(100%)' },
+        { transform: 'translateY(0)', duration: 1, ease: 'power2.out' },
+      );
+    }
   }
 }
 

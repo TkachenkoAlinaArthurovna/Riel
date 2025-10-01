@@ -54,7 +54,7 @@ header.header
                         span.anim_content_1 Проєкти
                         span.anim_content_2 Проєкти
                 li 
-                    a.anim_content(href="/flats") 
+                    a.anim_content(href="/flats.html") 
                         span.anim_content_1 Квартири
                         span.anim_content_2 Квартири
                 li 
@@ -117,7 +117,7 @@ header.header
                     <path d="M6.40234 5.58301L11.8398 11.1152L17.2148 5.64746L18.6172 7.07422L13.2422 12.542L18.6172 18.0088L17.2148 19.4355L11.8398 13.9687L6.40234 19.5L5 18.0742L10.4375 12.542L5 7.00879L6.40234 5.58301Z" fill="#F4F5F9"/>
                 </svg>
             .filter_popup__title Фільтр
-            .filter
+            .filter.filter_projects
                 .filter__item
                     .filter__item_title Житловий комплекс:
                     .filter__item_wrapper
@@ -142,6 +142,22 @@ header.header
                         .checkbox 
                             input.checkbox__input(type="checkbox" id="low_price" data-filter="status-price" data-name="Ціну знижено")
                             label.checkbox__label(for="low_price") Ціну знижено
+            .filter.filter_flats
+                .filter__item
+                    .filter__item_title Житловий комплекс:
+                    .filter_flats__project.filter__item_wrapper
+                .filter__item
+                    .filter__item_title Тип:
+                    .filter_flats__type.filter__item_wrapper
+                .filter__item
+                    .filter__item_title Кількість кімнат:
+                    .filter_flats__room_count.filter__item_wrapper
+                .filter__item
+                    .filter__item_title Площа м²:
+                    .filter_flats__size.filter__slider
+                .filter__item
+                    .filter__item_title Поверх:
+                    .filter_flats__floor.filter__slider
             .filter_popup__buttons 
                 .brend_btn.filter_popup__btn_delete
                         span(data-title="Очистити") Очистити
