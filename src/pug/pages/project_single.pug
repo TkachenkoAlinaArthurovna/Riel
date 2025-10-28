@@ -1,0 +1,42 @@
+extends ../layout/main
+block variable
+  -
+    var title_page = 'project_single'
+    var id_page = 'id-page-project_single'
+    var class_page = 'page-template-project_single'
+    var page_title = "Father"
+    var img_bg = "../../assets/images/father/bg.jpg"
+    var top_text = "Затишний<br>простір"
+    var bottom_text = "— затишний<br>простір для<br>життя"
+    var bottom_text_mob = "для життя"
+    var title_for_flats_list = "Доступні квартири"
+    
+block meta
+  title= title_page
+  meta(name='description' content='')
+block head
+  link(rel='stylesheet' href="./assets/styles/main.min.css")
+block scripts
+  script(defer src='./assets/scripts/vendors.bundle.js')
+  script(defer src='./assets/scripts/header.bundle.js')
+  script(defer src='./assets/scripts/footer.bundle.js')
+  script(defer src='./assets/scripts/index.bundle.js')
+block content
+  include ../includes/section_top.pug
+    - var page_title = page_title
+    - var img_bg = img_bg
+    - var top_text = top_text
+    - var bottom_text = bottom_text
+    - var bottom_text_mob = bottom_text_mob
+  include ../includes/section_hot_deals.pug
+    - var title_for_flats_list = title_for_flats_list
+  include ../includes/section_view.pug
+  include ../includes/section_benefits.pug
+  include ../includes/section_gallery.pug
+  include ../includes/section_more_projects.pug
+      
+block footer
+  include ../includes/footer.pug
+
+block header
+  include ../includes/header.pug

@@ -4,7 +4,10 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 function initAnimations() {
-  if (document.querySelector('.page-template-home')) {
+  if (
+    document.querySelector('.page-template-home') ||
+    document.querySelector('.page-template-project_single')
+  ) {
     gsap.fromTo(
       '.section_top__top_right ',
       { transform: 'translate(100%, -100%)' },
@@ -16,71 +19,74 @@ function initAnimations() {
       { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
     );
 
-    gsap.fromTo(
-      '.section_btn_projects .section_for_btn__top_left',
-      { transform: 'translate(-100%, 100%)' },
-      {
-        transform: 'translate(0, 0)',
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.section_btn_projects',
-          start: 'top 50%',
-          toggleActions: 'play none none none',
+    if (document.querySelector('.page-template-home')) {
+      gsap.fromTo(
+        '.section_btn_projects .section_for_btn__top_left',
+        { transform: 'translate(-100%, 100%)' },
+        {
+          transform: 'translate(0, 0)',
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.section_btn_projects',
+            start: 'top 50%',
+            toggleActions: 'play none none none',
+          },
         },
-      },
-    );
+      );
 
-    gsap.fromTo(
-      '.section_btn_projects .section_for_btn__bottom_right',
-      { transform: 'translate(100%, -100%)' },
-      {
-        transform: 'translate(0, 0)',
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.section_btn_projects',
-          start: 'top 50%',
-          toggleActions: 'play none none none',
+      gsap.fromTo(
+        '.section_btn_projects .section_for_btn__bottom_right',
+        { transform: 'translate(100%, -100%)' },
+        {
+          transform: 'translate(0, 0)',
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.section_btn_projects',
+            start: 'top 50%',
+            toggleActions: 'play none none none',
+          },
         },
-      },
-    );
+      );
 
-    gsap.fromTo(
-      '.section_btn_planning .section_for_btn__top_left',
-      { transform: 'translate(-100%, 100%)' },
-      {
-        transform: 'translate(0, 0)',
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.section_btn_planning',
-          start: 'top 50%',
-          toggleActions: 'play none none none',
+      gsap.fromTo(
+        '.section_btn_planning .section_for_btn__top_left',
+        { transform: 'translate(-100%, 100%)' },
+        {
+          transform: 'translate(0, 0)',
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.section_btn_planning',
+            start: 'top 50%',
+            toggleActions: 'play none none none',
+          },
         },
-      },
-    );
+      );
 
-    gsap.fromTo(
-      '.section_btn_planning .section_for_btn__bottom_right',
-      { transform: 'translate(100%, -100%)' },
-      {
-        transform: 'translate(0, 0)',
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.section_btn_planning',
-          start: 'top 50%',
-          toggleActions: 'play none none none',
+      gsap.fromTo(
+        '.section_btn_planning .section_for_btn__bottom_right',
+        { transform: 'translate(100%, -100%)' },
+        {
+          transform: 'translate(0, 0)',
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.section_btn_planning',
+            start: 'top 50%',
+            toggleActions: 'play none none none',
+          },
         },
-      },
-    );
+      );
+    }
   }
   //
   if (
     document.querySelector('.page-template-projects') ||
     document.querySelector('.page-template-news') ||
-    document.querySelector('.page-template-flats')
+    (document.querySelector('.page-template-flats') &&
+      document.querySelector('.section_flats__pagination'))
   ) {
     if (window.innerWidth > 1300) {
       gsap.fromTo(
@@ -100,7 +106,10 @@ function initAnimations() {
       { transform: 'translate(100%, 100%)' },
       { transform: 'translate(0, 0)', duration: 1, ease: 'power2.out' },
     );
-    if (document.querySelector('.page-template-projects')) {
+    if (
+      document.querySelector('.page-template-projects') &&
+      !document.querySelector('.page-template-project_single')
+    ) {
       gsap.fromTo(
         '.page-template-projects .btn_filter_mob',
         { transform: 'translateY(100%)' },

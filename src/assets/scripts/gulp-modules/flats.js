@@ -1,122 +1,66 @@
 import axios from 'axios';
-import data from './units_project.json'; // локальні дані
 
-const unitsMock = () => data;
+import { initPagination } from './helpers/pagination';
+import { adresses, projectIds, colors } from './helpers/constants.js';
+import { setUnits } from './helpers/setUnits.js';
+import { updateHeight } from './helpers/updateHeight.js';
+import { initFilterPopup } from './helpers/filterPopup.js';
+import { getunits } from './helpers/getUnits.js';
+import { initSelectedFilterFromURL } from './helpers/initSelectedFilterFromURL';
+import { syncInputsWithSelectedFilter } from './helpers/syncInputsWithSelectedFilter';
+import { countVisibleCards } from './helpers/countVisibleCards';
+import { updateURLFromSelectedFilter } from './helpers/updateURLFromSelectedFilter';
+import { initResetFilters } from './helpers/resetFilters';
+import { populateFilter, populateSliderFilter } from './helpers/populateFilters';
+import { chooseRightInputs } from './helpers/chooseRightInputs';
+import { scrollToFilterResults } from './helpers/scrollToFilterResults.js';
+import { createSizeFilterItem } from './helpers/createSizeFilterItem.js';
+import { createFloorFilterItem } from './helpers/createFloorFilterItem.js';
+import { createRangeFilterItem } from './helpers/createRangeFilterItem.js';
+import { createFilterChip } from './helpers/createSelectedFilterItem.js';
+import { renderSelectedFiltersOnLoad } from './helpers/renderSelectedFiltersOnLoad';
 
-const baseUrl = window.location.origin;
 const wrapper = document.querySelector('.section_flats__filter_result_wrapper');
+//Це секція в якій обрані значення з фільтру
+const sectionFlatsSelected = document.querySelector('.section_flats__selected_wrapper');
+//Видаляє всі фільтри
+const btnDelete = document.querySelector('.btn_delete');
+const filterPopupBtnDelete = document.querySelector('.filter_popup__btn_delete');
+const popupFilter = document.querySelector('.filter_popup');
+//Прелоадер
+const preloader = document.querySelector('.preloader');
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.querySelector('.page-template-flats')) {
-    //Це секція в якій обрані значення з фільтру
-    const sectionFlatsSelected = document.querySelector('.section_flats__selected_wrapper');
-    //Видаляє всі фільтри
-    const btnDelete = document.querySelector('.btn_delete');
-    const filterPopupBtnDelete = document.querySelector('.filter_popup__btn_delete');
-    //Збираємо всі картки
-    const flatCards = document.querySelectorAll('.flat_card');
-    //Прелоадер
-    const preloader = document.querySelector('.preloader');
+  if (
+    document.querySelector('.page-template-flats') &&
+    document.querySelector('.section_flats__pagination')
+  ) {
+    const pagination = initPagination();
+
+    // Виклик при завантаженні сторінки
     //Це об'єкт в якому ключ це назва фільтру, значення це масив з обраними значеннями цього фільтру
-    let selectedFilter = {};
+    let selectedFilter = initSelectedFilterFromURL();
+    sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
+    let unitsData;
+    //----------//
 
-    function getFilterKeysCount(obj) {
-      document.querySelector('.btn_filter_mob .number span').textContent = Object.keys(obj).length;
-    }
+    (async () => {
+      const unitsResponse = await getunits();
+      if (unitsResponse?.data) {
+        unitsData = unitsResponse.data.data;
 
-    if (filterPopupBtnDelete) {
-      filterPopupBtnDelete.addEventListener('click', () => {
-        // знімаємо всі чекбокси
-
-        const filterInputs = document.querySelectorAll('.filter_flats input');
-        filterInputs.forEach(input => {
-          if (input.type === 'checkbox') {
-            // сбрасываем чекбоксы
-            input.checked = false;
-          } else if (input.type === 'range') {
-            // если это диапазонный слайдер
-            if (input.id.endsWith('-min')) {
-              input.value = input.min; // вернуть в начало
-            } else if (input.id.endsWith('-max')) {
-              input.value = input.max; // вернуть в конец
-            }
-
-            // обновляем UI (чтобы цифры/линейка обновились)
-            input.dispatchEvent(new Event('input'));
-            input.dispatchEvent(new Event('change'));
-          }
-        });
-        // очищаємо об’єкт selectedFilter
-        selectedFilter = {};
-
-        // оновлюємо відображення карток
-        filterCards();
-        popupFilter.classList.remove('active');
-        getFilterKeysCount(selectedFilter);
-      });
-    }
-
-    if (btnDelete) {
-      btnDelete.addEventListener('click', () => {
-        // знімаємо всі чекбокси
-        const filterInputs = document.querySelectorAll('.section_flats input');
-        filterInputs.forEach(input => {
-          if (input.type === 'checkbox') {
-            // сбрасываем чекбоксы
-            input.checked = false;
-          } else if (input.type === 'range') {
-            // если это диапазонный слайдер
-            if (input.id.endsWith('-min')) {
-              input.value = input.min; // вернуть в начало
-            } else if (input.id.endsWith('-max')) {
-              input.value = input.max; // вернуть в конец
-            }
-
-            // обновляем UI (чтобы цифры/линейка обновились)
-            input.dispatchEvent(new Event('input'));
-            input.dispatchEvent(new Event('change'));
-          }
-        });
-
-        // очищаємо об’єкт selectedFilter
-        selectedFilter = {};
-
-        // очищаємо контейнер обраних
-        if (sectionFlatsSelected) {
-          sectionFlatsSelected.innerHTML = '';
-        }
-
-        // оновлюємо відображення карток
-        filterCards();
-
-        btnDelete.style.display = 'none';
-        getFilterKeysCount(selectedFilter);
-      });
-    }
-
-    async function getunits() {
-      const formData = new FormData();
-      formData.append('action', 'units');
-      const url = '/wp-admin/admin-ajax.php';
-
-      // Локальний режим з мок-даними
-      if (true) {
-        return await new Promise(resolve => {
-          resolve({
-            data: unitsMock(),
-          });
+        setUnits(unitsData, wrapper, pagination, filterCards, countVisibleCards);
+        //Кнопки очищення
+        initResetFilters({
+          filterCards,
+          popupFilter: popupFilter,
+          sectionFlatsSelected: sectionFlatsSelected,
+          btnDelete: btnDelete,
+          filterPopupBtnDelete: filterPopupBtnDelete,
+          unitsData,
         });
       }
-
-      //Запит на бекенд
-      try {
-        const response = await axios.post(url, formData);
-        return response;
-      } catch (error) {
-        console.error('Помилка при завантаженні квартир:', error);
-        return null;
-      }
-    }
+    })();
 
     async function loadUnits() {
       const res = await getunits();
@@ -124,87 +68,177 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const data = res.data;
 
-      setUnits(data.data);
       // Фільтр ЖК
-      populateFilter(
-        data.data,
-        'project.name',
-        document.querySelector('.filter__item_wrapper.project'),
-        'project',
-      );
-      populateFilter(
-        data.data,
-        'project.name',
-        document.querySelector('.filter_flats__project'),
-        'project',
-      );
+      if (window.innerWidth > 1500) {
+        populateFilter(
+          data.data,
+          'project.name',
+          document.querySelector('.filter__item_wrapper.project'),
+          'project',
+        );
+      } else {
+        populateFilter(
+          data.data,
+          'project.name',
+          document.querySelector('.filter_flats__project'),
+          'project',
+        );
+      }
+
       // Фільтр типу
-      populateFilter(
-        data.data,
-        'unit_type.name',
-        document.querySelector('.filter__item_wrapper.type'),
-        'type',
-      );
-      populateFilter(
-        data.data,
-        'unit_type.name',
-        document.querySelector('.filter_flats__type'),
-        'type',
-      );
+      if (window.innerWidth > 1500) {
+        populateFilter(
+          data.data,
+          'unit_type.name',
+          document.querySelector('.filter__item_wrapper.type'),
+          'type',
+        );
+      } else {
+        populateFilter(
+          data.data,
+          'unit_type.name',
+          document.querySelector('.filter_flats__type'),
+          'type',
+        );
+      }
       // Фільтр кімнат
-      populateFilter(
-        data.data,
-        'room_count',
-        document.querySelector('.filter__item_wrapper.room_count'),
-        'room_count',
-      );
-      populateFilter(
-        data.data,
-        'room_count',
-        document.querySelector('.filter_flats__room_count'),
-        'room_count',
-      );
+      if (window.innerWidth > 1500) {
+        populateFilter(
+          data.data,
+          'room_count',
+          document.querySelector('.filter__item_wrapper.room_count'),
+          'room_count',
+        );
+      } else {
+        populateFilter(
+          data.data,
+          'room_count',
+          document.querySelector('.filter_flats__room_count'),
+          'room_count',
+        );
+      }
+      // Ціна
+
+      if (window.innerWidth > 1500) {
+        populateSliderFilter(
+          data.data,
+          'total_price',
+          document.querySelector('.filter__slider.price'),
+          'Ціна',
+        );
+      } else {
+        populateSliderFilter(
+          data.data,
+          'total_price',
+          document.querySelector('.filter_flats__price'),
+          'Ціна',
+        );
+      }
       // Площа
-      populateSliderFilter(
-        data.data,
-        'real_size',
-        document.querySelector('.filter__slider.size'),
-        'Площа',
-      );
-      populateSliderFilter(
-        data.data,
-        'real_size',
-        document.querySelector('.filter_flats__size'),
-        'Площа',
-      );
+      if (window.innerWidth > 1500) {
+        populateSliderFilter(
+          data.data,
+          'real_size',
+          document.querySelector('.filter__slider.size'),
+          'Площа',
+        );
+      } else {
+        populateSliderFilter(
+          data.data,
+          'real_size',
+          document.querySelector('.filter_flats__size'),
+          'Площа',
+        );
+      }
       // Поверх (витягуємо цифру з floor.name)
-      populateSliderFilter(
-        data.data,
-        unit => {
-          const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
-          return match ? Number(match[0]) : null;
-        },
-        document.querySelector('.filter__slider.floor'),
-        'Поверх',
+      if (window.innerWidth > 1500) {
+        populateSliderFilter(
+          data.data,
+          unit => {
+            const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+            return match ? Number(match[0]) : null;
+          },
+          document.querySelector('.filter__slider.floor'),
+          'Поверх',
+        );
+      } else {
+        populateSliderFilter(
+          data.data,
+          unit => {
+            const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+            return match ? Number(match[0]) : null;
+          },
+          document.querySelector('.filter_flats__floor'),
+          'Поверх',
+        );
+      }
+
+      unitsData = data.data;
+      if (
+        selectedFilter.project &&
+        selectedFilter.project.length > 0 &&
+        Object.keys(selectedFilter).length === 1
+      ) {
+        console.log('Підлаштовуєм фільтр під ЖК');
+        chooseRightInputs(unitsData, true);
+      }
+      if (Object.keys(selectedFilter).length > 1 && selectedFilter.project) {
+        // 1️⃣ Зберігаємо повну копію
+        const originalFilter = { ...selectedFilter };
+
+        // 2️⃣ Створюємо версію тільки з проектом
+        const projectOnlyFilter = { project: selectedFilter.project };
+
+        // 3️⃣ Замінюємо у sessionStorage тимчасово
+        sessionStorage.setItem('selectedFilter', JSON.stringify(projectOnlyFilter));
+
+        // 4️⃣ Будуємо фільтри тільки по ЖК
+        chooseRightInputs(unitsData, true);
+
+        // 5️⃣ Відновлюємо повний selectedFilter назад
+        sessionStorage.setItem('selectedFilter', JSON.stringify(originalFilter));
+
+        // 6️⃣ Синхронізуємо інпути з відновленим фільтром
+        syncInputsWithSelectedFilter(originalFilter, unitsData);
+      }
+
+      renderSelectedFiltersOnLoad(
+        filterCards,
+        updateURLFromSelectedFilter,
+        syncInputsWithSelectedFilter,
+        unitsData,
       );
-      populateSliderFilter(
-        data.data,
-        unit => {
-          const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
-          return match ? Number(match[0]) : null;
-        },
-        document.querySelector('.filter_flats__floor'),
-        'Поверх',
-      );
-      getFilterKeysCount(selectedFilter);
+
+      syncInputsWithSelectedFilter(unitsData);
+      setUnits(unitsData, wrapper, pagination, filterCards, countVisibleCards);
+      countVisibleCards();
     }
     loadUnits();
 
     function filterCards(input, value) {
+      const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
       preloader.style.opacity = '1';
       preloader.style.visibility = 'visible';
 
       const flatCards = document.querySelectorAll('.flat_card');
+
+      // 🟢 Якщо selectedFilter порожній — показуємо всі картки і виходимо
+      if (!selectedFilter || Object.keys(selectedFilter).length === 0) {
+        flatCards.forEach(card => {
+          card.dataset.filtered = 'true';
+          card.style.display = 'flex';
+        });
+
+        pagination.setPagination();
+        countVisibleCards();
+
+        setTimeout(() => {
+          preloader.style.opacity = '0';
+          preloader.style.visibility = 'hidden';
+        }, 300);
+
+        return; // ⛔ виходимо з функції
+      }
 
       flatCards.forEach(card => {
         let show = true;
@@ -237,104 +271,50 @@ document.addEventListener('DOMContentLoaded', () => {
             let cardValue = null;
             if (filterName === 'Площа') cardValue = parseFloat(card.dataset.size);
             if (filterName === 'Поверх') cardValue = parseFloat(card.dataset.floor);
+            if (filterName === 'Ціна') cardValue = parseFloat(card.dataset.total_price);
 
-            if (cardValue !== null) {
-              if (cardValue < currentMin || cardValue > currentMax) {
-                show = false; // ❌ картка не підходить
-              }
+            if (cardValue < currentMin || cardValue > currentMax || isNaN(cardValue)) {
+              show = false; // ❌ картка не підходить
             }
+
             if (show == true) {
               //Показуємо кнопку, яка видаляє обрані фільтри
               btnDelete.style.display = 'block';
               document.querySelectorAll('[data-name="floor"]').forEach(el => el.remove());
 
+              if ('Ціна_min' in selectedFilter || 'Ціна_max' in selectedFilter) {
+                createRangeFilterItem(
+                  'Ціна',
+                  'total_price',
+                  selectedFilter,
+                  sectionFlatsSelected,
+                  btnDelete,
+                  filterCards,
+                  updateURLFromSelectedFilter,
+                );
+              }
+
               if ('Площа_min' in selectedFilter || 'Площа_max' in selectedFilter) {
-                document.querySelectorAll('[data-name="size"]').forEach(el => el.remove());
-                const min = document.querySelector('[data-filter="Площа_min"]').value;
-                const max = document.querySelector('[data-filter="Площа_max"]').value;
-                const item = document.createElement('div');
-                item.classList.add('section_flats__selected_item');
-                item.dataset.id = `${min}-${max}`;
-                item.dataset.name = `size`;
-                item.innerHTML = `
-                      <span>${min}-${max}</span>
-                      <svg class="delete-item" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.02344 0.938965L6.02344 4.93994L9.97656 0.986816L11.0371 2.04736L7.08398 6.00049L11.0371 9.95264L9.97656 11.0132L6.02344 7.06103L2.02344 11.061L0.962891 9.99951L4.96289 6.00049L0.96289 1.99951L2.02344 0.938965Z" fill="#1D3541"/>
-                      </svg>
-                  `;
-                const close = item.querySelector('.delete-item');
-                close.addEventListener('click', () => {
-                  item.remove(); // видаляємо блок
-                  const minInput = document.querySelector('[data-filter="Площа_min"]');
-                  const maxInput = document.querySelector('[data-filter="Площа_max"]');
-
-                  if (minInput && maxInput) {
-                    // Скидаємо значення на початкові (min і max атрибути)
-                    minInput.value = minInput.min;
-                    maxInput.value = maxInput.max;
-
-                    // Викликаємо подію input, щоб оновити слайдер і фільтр
-                    minInput.dispatchEvent(new Event('input'));
-                    maxInput.dispatchEvent(new Event('input'));
-                  }
-
-                  if (selectedFilter['Площа_min']) {
-                    delete selectedFilter['Площа_min'];
-                  }
-                  if (selectedFilter['Площа_max']) {
-                    delete selectedFilter['Площа_max'];
-                  }
-
-                  filterCards();
-                  if (Object.keys(selectedFilter).length === 0) {
-                    btnDelete.style.display = 'none';
-                  }
-                });
-                sectionFlatsSelected.appendChild(item);
+                createRangeFilterItem(
+                  'Площа',
+                  'size',
+                  selectedFilter,
+                  sectionFlatsSelected,
+                  btnDelete,
+                  filterCards,
+                  updateURLFromSelectedFilter,
+                );
               }
               if ('Поверх_min' in selectedFilter || 'Поверх_max' in selectedFilter) {
-                document.querySelectorAll('[data-name="floor"]').forEach(el => el.remove());
-                const min = document.querySelector('[data-filter="Поверх_min"]').value;
-                const max = document.querySelector('[data-filter="Поверх_max"]').value;
-                const item = document.createElement('div');
-                item.classList.add('section_flats__selected_item');
-                item.dataset.id = `${min}-${max}`;
-                item.dataset.name = `floor`;
-                item.innerHTML = `
-                      <span>${min}-${max}</span>
-                      <svg class="delete-item" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.02344 0.938965L6.02344 4.93994L9.97656 0.986816L11.0371 2.04736L7.08398 6.00049L11.0371 9.95264L9.97656 11.0132L6.02344 7.06103L2.02344 11.061L0.962891 9.99951L4.96289 6.00049L0.96289 1.99951L2.02344 0.938965Z" fill="#1D3541"/>
-                      </svg>
-                  `;
-                const close = item.querySelector('.delete-item');
-                close.addEventListener('click', () => {
-                  item.remove(); // видаляємо блок
-                  const minInput = document.querySelector('[data-filter="Поверх_min"]');
-                  const maxInput = document.querySelector('[data-filter="Поверх_max"]');
-
-                  if (minInput && maxInput) {
-                    // Скидаємо значення на початкові (min і max атрибути)
-                    minInput.value = minInput.min;
-                    maxInput.value = maxInput.max;
-
-                    // Викликаємо подію input, щоб оновити слайдер і фільтр
-                    minInput.dispatchEvent(new Event('input'));
-                    maxInput.dispatchEvent(new Event('input'));
-                  }
-
-                  if (selectedFilter['Поверх_min']) {
-                    delete selectedFilter['Поверх_min'];
-                  }
-                  if (selectedFilter['Поверх_max']) {
-                    delete selectedFilter['Поверх_max'];
-                  }
-
-                  filterCards();
-                  if (Object.keys(selectedFilter).length === 0) {
-                    btnDelete.style.display = 'none';
-                  }
-                });
-                sectionFlatsSelected.appendChild(item);
+                createRangeFilterItem(
+                  'Поверх',
+                  'floor',
+                  selectedFilter,
+                  sectionFlatsSelected,
+                  btnDelete,
+                  filterCards,
+                  updateURLFromSelectedFilter,
+                );
               }
             }
           });
@@ -344,279 +324,226 @@ document.addEventListener('DOMContentLoaded', () => {
         card.dataset.filtered = show ? 'true' : 'false';
         card.style.display = show ? 'flex' : 'none';
       });
-      setPagination();
-      getFilterKeysCount(selectedFilter);
+      const cards = document.querySelectorAll('.flat_card');
+      const emptyBlock = document.querySelector('.empty');
+
+      // перевіряємо, чи є хоча б одна видима картка
+      const hasVisible = Array.from(cards).some(card => card.style.display !== 'none');
+
+      // додаємо або прибираємо клас
+      if (!hasVisible) {
+        emptyBlock.classList.add('active');
+      } else {
+        emptyBlock.classList.remove('active');
+      }
+      pagination.setPagination();
+      countVisibleCards();
       setTimeout(() => {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
       }, 500);
     }
 
-    // Функція для відмальовки карток
-
-    const setUnits = units => {
-      units.forEach(unit => {
-        wrapper.innerHTML = ''; // очищаємо обгортку
-
-        units.forEach(unit => {
-          const unitHTML = `
-      <a href="/" class="flat_card" data-filtered="true" data-project=${
-        unit.project.name
-      } data-room_count=${unit.room_count} data-type=${unit.unit_type.name} data-size=${
-            unit.real_size
-          } data-floor=${parseInt(unit.floor.name.replace(/[^-\d]/g, ''), 10)}>
-        <div class="flat_card__hover">
-          <span style="background:#68d23f;"></span>
-        </div>
-        <!--<div class="flat_card__note">Новинка</div>-->
-        <div class="flat_card__top">
-          <span>Житловий комплекс</span>
-          <span>${unit.project.name}</span>
-        </div>
-        <div class="flat_card__img">
-          <img src="${
-            unit.images?.[1]?.path
-              ? `https://source-riel.propertymate.ai/${unit.images[1].path}`
-              : 'assets/images/no_image.gif'
-          }"   alt="planning" />
-        </div>
-        <div class="flat_card__center">
-          <div class="flat_card__center_left">
-            <span>${unit.unit_type.name} м²</span>
-            <span>${unit.real_size}</span>
-          </div>
-          <div class="flat_card__center_center">
-            <span>/</span>
-          </div>
-          <div class="flat_card__center_right">
-            <span>грн/м²</span>
-            <span>${unit.price_m2}</span>
-          </div>
-        </div>
-        <div class="flat_card__bottom">
-          <span>Секція: ${unit.section.name}</span>
-          <span>Поверх: ${parseInt(unit.floor.name.replace(/[^-\d]/g, ''), 10)}</span>
-          <span>Кімнат: ${unit.room_count}</span>
-        </div>
-        <div class="flat_card__address">
-          <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5.50073 0C8.14043 0 10.4782 1.66034 10.4783 4.83008C10.4783 5.49423 10.1269 6.46565 9.95093 6.86816L5.50073 16L1.05054 6.86816C0.874556 6.46565 0.523193 5.49423 0.523193 4.83008C0.523248 1.66034 2.86104 4.59894e-06 5.50073 0ZM5.50073 2.84375C4.32252 2.84375 3.36694 3.79933 3.36694 4.97754C3.36719 6.15554 4.32268 7.11035 5.50073 7.11035C6.67858 7.11011 7.6333 6.15539 7.63354 4.97754C7.63354 3.79948 6.67873 2.844 5.50073 2.84375Z" fill="#F4F5F9"/>
-          </svg>
-          <span>Адреса</span>
-        </div>
-      </a>
-    `;
-
-          wrapper.insertAdjacentHTML('beforeend', unitHTML);
-        });
-      });
-      getFilterKeysCount(selectedFilter);
-      setPagination();
-    };
-
-    //Функція для формування чекбоксів в фільтрі
-
-    function populateFilter(units, field, wrapper, dataFilterPrefix) {
-      // отримуємо значення
-      const values = units
-        .map(unit => {
-          if (typeof field === 'function') return field(unit);
-          const keys = field.split('.');
-          return keys.reduce((acc, key) => acc?.[key], unit);
-        })
-        .filter(Boolean);
-
-      // унікальні та відсортовані
-      const uniqueValues = [...new Set(values)].sort((a, b) => {
-        if (typeof a === 'number' && typeof b === 'number') return a - b;
-        return a.toString().localeCompare(b.toString());
-      });
-
-      // очищаємо wrapper
-      wrapper.innerHTML = '';
-
-      // формуємо чекбокси
-      uniqueValues.forEach((val, index) => {
-        const id = `${dataFilterPrefix}-${index}`;
-        const checkboxHTML = `
-      <div class="checkbox">
-        <input class="checkbox__input" type="checkbox" id="${id}" data-filter="${dataFilterPrefix}-${val}" data-name="${val}">
-        <label class="checkbox__label" for="${id}">${val}</label>
-      </div>
-    `;
-        wrapper.insertAdjacentHTML('beforeend', checkboxHTML);
-      });
+    // Збираємо всі інпути в блоці фільтра і вішаєм слухач
+    let containerToUse;
+    if (window.innerWidth > 1500) {
+      containerToUse = document.querySelector('.section_flats__filter.filter');
+    } else {
+      containerToUse = document.querySelector('.filter_flats');
     }
-
-    //Функція для формування повзунків в фільтрі
-
-    function populateSliderFilter(units, field, wrapper, label) {
-      // Отримуємо всі числові значення
-      const values = units
-        .map(unit => {
-          if (typeof field === 'function') return field(unit);
-          const keys = field.split('.');
-          return keys.reduce((acc, key) => acc?.[key], unit);
-        })
-        .filter(v => typeof v === 'number');
-
-      if (values.length === 0) return;
-
-      const minValue = Math.min(...values);
-      const maxValue = Math.max(...values);
-
-      // Очищаємо контейнер
-      wrapper.innerHTML = '';
-
-      // HTML слайдера
-      wrapper.innerHTML = `
-    <div class="values">
-      <span id="${label}-min-value">${minValue}</span>
-      <span id="${label}-max-value">${maxValue}</span>
-    </div>
-    <div class="slider-wrapper">
-      <input data-filter="${label}_min" type="range" id="${label}-min" min="${minValue}" max="${maxValue}" step="${
-        label == 'Площа' ? 0.1 : 1
-      }" value="${minValue}">
-      <input data-filter="${label}_max" type="range" id="${label}-max" min="${minValue}" max="${maxValue}" step="${
-        label == 'Площа' ? 0.1 : 1
-      }" value="${maxValue}">
-      <div class="slider-track"></div>
-    </div>
-  `;
-
-      const sliderWrapper = wrapper.querySelector('.slider-wrapper');
-      const sliderTrack = sliderWrapper.querySelector('.slider-track');
-      const sliderMin = wrapper.querySelector(`#${label}-min`);
-      const sliderMax = wrapper.querySelector(`#${label}-max`);
-      const minValueSpan = wrapper.querySelector(`#${label}-min-value`);
-      const maxValueSpan = wrapper.querySelector(`#${label}-max-value`);
-
-      function updateSlider() {
-        if (Number(sliderMin.value) > Number(sliderMax.value)) sliderMin.value = sliderMax.value;
-
-        minValueSpan.textContent = sliderMin.value;
-        maxValueSpan.textContent = sliderMax.value;
-
-        const minPercent =
-          ((sliderMin.value - sliderMin.min) / (sliderMin.max - sliderMin.min)) * 100;
-        const maxPercent =
-          ((sliderMax.value - sliderMax.min) / (sliderMax.max - sliderMax.min)) * 100;
-
-        // sliderTrack.style.background = `linear-gradient(to right, #ddd ${minPercent}%, #FB6A46 ${minPercent}%, #FB6A46 ${maxPercent}%, #ddd ${maxPercent}%)`;
-      }
-
-      sliderMin.addEventListener('input', updateSlider);
-      sliderMax.addEventListener('input', updateSlider);
-      updateSlider();
-    }
-
-    // Збираємо всі інпути в блоці фільтра
-    const filterContainer1 = document.querySelector('.section_flats__filter.filter');
-    const filterContainer2 = document.querySelector('.filter_flats');
-
-    [filterContainer1, filterContainer2].forEach((container, index) => {
-      if (container) {
-        container.addEventListener('change', e => {
+    let isSyncing = false;
+    if (containerToUse) {
+      // окремо ловимо подію тільки для проектів
+      containerToUse.addEventListener('change', e => {
+        if (e.target.matches('[data-filter^="project-"]')) {
           const input = e.target;
-          if (input.tagName === 'INPUT') {
-            let [key, value] = input.dataset.filter.split('-');
-            if (input.type == 'range') {
-              value = input.value;
-              selectedFilter[key] = [value];
-              index == 0 ? filterCards() : '';
-              return;
+          console.log('Підлаштовуєм фільтр під ЖК');
+          const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
+
+          chooseRightInputs(unitsData);
+
+          // 🟢 Ідея: «Користувач зняв усі ЖК → показуємо всі можливості фільтрації знову».
+          if (!selectedFilter.project) {
+            for (const key in selectedFilter) {
+              delete selectedFilter[key];
             }
+            sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
 
-            if (input.checked) {
-              //Показуємо кнопку, яка видаляє обрані фільтри
-              btnDelete.style.display = 'block';
+            if (sectionFlatsSelected) sectionFlatsSelected.innerHTML = '';
 
-              // якщо ключа ще немає – створюємо масив
-              if (!selectedFilter[key]) {
-                selectedFilter[key] = [];
-              }
-              // додаємо значення, якщо ще немає
-              if (!selectedFilter[key].includes(value)) {
-                selectedFilter[key].push(value);
-              }
+            if (Object.keys(selectedFilter).length === 0) {
+              btnDelete.style.display = 'none';
+            }
+            chooseRightInputs(unitsData, false);
+          }
+          // 🔹 Якщо користувач ЗНІМАЄ АБО СТАВИТЬ галочку на проекті, але інші проекти ще є
+          if (selectedFilter.project && selectedFilter.project.length > 0) {
+            console.log('TYT');
+            //  Створюємо копію оригінального фільтра
+            const originalFilter = { ...selectedFilter };
+            // Створюємо версію, де залишаємо тільки проекти
+            const projectOnlyFilter = { project: [...selectedFilter.project] };
+            // Зберігаємо тимчасовий варіант у sessionStorage
+            sessionStorage.setItem('selectedFilter', JSON.stringify(projectOnlyFilter));
+            // Відмальовуємо фільтр під залишкові ЖК
+            chooseRightInputs(unitsData, true);
+            //Повертаємо тимчасову версію з усіма іншими фільтрами
+            sessionStorage.setItem('selectedFilter', JSON.stringify(originalFilter));
+            //  Синхронізуємо інпути назад
+            syncInputsWithSelectedFilter(unitsData);
+          }
+        }
+      });
+      containerToUse.addEventListener('change', e => {
+        if (isSyncing) return; // 🚫 пропускаємо, якщо зараз синхронізація
+        const input = e.target;
+        if (input.tagName === 'INPUT') {
+          let [key, value] = input.dataset.filter.split('-');
+
+          if (input.type == 'range') {
+            const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
+            value = input.value;
+            input.setAttribute('value', value);
+            selectedFilter[key] = [value];
+
+            const minAttr = parseFloat(input.min);
+            const maxAttr = parseFloat(input.max);
+            const val = parseFloat(input.value);
+
+            if (val === minAttr || val === maxAttr) {
+              delete selectedFilter[key];
               if (sectionFlatsSelected) {
-                //Додаєм обраний фільтр у верхній рядок обраних фільтрів
-                if (
-                  !sectionFlatsSelected.querySelector(
-                    `.section_flats__selected_item[data-id="${value}"]`,
-                  )
-                ) {
-                  const item = document.createElement('div');
-                  item.classList.add('section_flats__selected_item');
-                  item.dataset.id = value; // додаємо data-id
-                  item.innerHTML = `
-            <span>${input.dataset.name}</span>
-            <svg class="delete-item" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.02344 0.938965L6.02344 4.93994L9.97656 0.986816L11.0371 2.04736L7.08398 6.00049L11.0371 9.95264L9.97656 11.0132L6.02344 7.06103L2.02344 11.061L0.962891 9.99951L4.96289 6.00049L0.96289 1.99951L2.02344 0.938965Z" fill="#1D3541"/>
-            </svg>
-        `;
-                  const close = item.querySelector('.delete-item');
-                  close.addEventListener('click', () => {
-                    item.remove(); // видаляємо блок
-                    input.checked = false; // знімаємо чекбокс
-                    input.dispatchEvent(new Event('change'));
-
-                    // оновлюємо фільтр
-                    if (selectedFilter[key]) {
-                      selectedFilter[key] = selectedFilter[key].filter(v => v !== value);
-                      if (selectedFilter[key].length === 0) delete selectedFilter[key];
-                    }
-                    if (Object.keys(selectedFilter).length === 0) {
-                      btnDelete.style.display = 'none';
-                    }
-                    filterCards();
-                  });
-                  // вставляємо в контейнер
-                  sectionFlatsSelected.appendChild(item);
+                let type;
+                if (input.id.includes('Ціна')) {
+                  type = 'total_price';
                 }
-              }
-            } else {
-              // видаляємо значення
-              if (selectedFilter[key]) {
-                selectedFilter[key] = selectedFilter[key].filter(v => v !== value);
-                // якщо масив порожній – видаляємо ключ
-                if (selectedFilter[key].length === 0) {
-                  delete selectedFilter[key];
+                if (input.id.includes('Площа')) {
+                  type = 'size';
                 }
-              }
-
-              // видаляємо відповідний блок із sectionFlatsSelected
-              if (sectionFlatsSelected) {
+                if (input.id.includes('Поверх')) {
+                  type = 'floor';
+                }
                 const itemToRemove = sectionFlatsSelected.querySelector(
-                  `.section_flats__selected_item[data-id="${value}"]`,
+                  `.section_flats__selected_item[data-name="${type}"]`,
                 );
                 if (itemToRemove) {
                   itemToRemove.remove();
                 }
               }
+            }
 
-              //після того як ми видалили значення з selectedFilter
+            sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
 
-              if (Object.keys(selectedFilter).length === 0) {
-                btnDelete.style.display = 'none';
+            // if (window.innerWidth > 1500) {
+            filterCards();
+            updateURLFromSelectedFilter(selectedFilter);
+            isSyncing = true;
+            syncInputsWithSelectedFilter(selectedFilter, unitsData);
+            isSyncing = false;
+            // }
+            return;
+          }
+
+          if (input.checked) {
+            let selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
+            //Показуємо кнопку, яка видаляє обрані фільтри
+            btnDelete.style.display = 'block';
+            // якщо ключа ще немає – створюємо масив
+            if (!selectedFilter[key]) {
+              selectedFilter[key] = [];
+              sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
+            }
+            // додаємо значення, якщо ще немає
+            if (!selectedFilter[key].includes(value)) {
+              selectedFilter[key].push(value);
+              sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
+            }
+
+            if (sectionFlatsSelected) {
+              createFilterChip({
+                id: value,
+                label: input.dataset.name,
+                dataName: key,
+                sectionFlatsSelected,
+                btnDelete,
+                selectedFilter,
+                onDelete: () => {
+                  let selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
+                  input.checked = false;
+                  // input.dispatchEvent(new Event('input'));
+                  // input.dispatchEvent(new Event('change'));
+                  console.log(selectedFilter[key]);
+                  selectedFilter[key] = selectedFilter[key]?.filter(v => v !== value) || [];
+                  console.log(selectedFilter[key]);
+                  if (selectedFilter[key].length === 0) delete selectedFilter[key];
+                  sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
+                  isSyncing = true;
+                  syncInputsWithSelectedFilter(unitsData);
+                  isSyncing = false;
+                },
+                filterCards,
+                updateURLFromSelectedFilter,
+              });
+            }
+          } else {
+            const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
+            // видаляємо значення
+            if (selectedFilter[key]) {
+              selectedFilter[key] = selectedFilter[key].filter(v => v !== value);
+              sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
+              // якщо масив порожній – видаляємо ключ
+              if (selectedFilter[key].length === 0) {
+                delete selectedFilter[key];
+                sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
               }
             }
-            index == 0 ? filterCards() : '';
-          }
-        });
-      }
-    });
 
+            // видаляємо відповідний блок із sectionFlatsSelected
+            if (sectionFlatsSelected) {
+              const itemToRemove = sectionFlatsSelected.querySelector(
+                `.section_flats__selected_item[data-id="${value}"]`,
+              );
+              if (itemToRemove) {
+                itemToRemove.remove();
+              }
+            }
+
+            //після того як ми видалили значення з selectedFilter
+
+            if (Object.keys(selectedFilter).length === 0) {
+              btnDelete.style.display = 'none';
+            }
+          }
+
+          // if (window.innerWidth > 1500) {
+          filterCards();
+          updateURLFromSelectedFilter();
+
+          isSyncing = true;
+          syncInputsWithSelectedFilter(unitsData);
+          isSyncing = false;
+          // }
+        }
+      });
+    }
+
+    // Кнопка в попапі "Застосувати"
     const applyBtn = document.querySelector('.filter_popup__btn_apply');
 
     if (applyBtn) {
       applyBtn.addEventListener('click', () => {
+        // const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
         preloader.style.opacity = '1';
         preloader.style.visibility = 'visible';
-        filterCards();
+        // filterCards();
+        // updateURLFromSelectedFilter(selectedFilter);
         popupFilter.classList.remove('active');
-        getFilterKeysCount(selectedFilter);
+        countVisibleCards();
+        scrollToFilterResults();
+        // chooseRightInputs(unitsData);
+        // isSyncing = true;
+        // syncInputsWithSelectedFilter(unitsData);
+        // isSyncing = false;
         setTimeout(() => {
           preloader.style.opacity = '0';
           preloader.style.visibility = 'hidden';
@@ -624,140 +551,76 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    //Пагінація
-
-    const leftArrow = document.querySelector('.section_flats__pagination_arrow_left');
-    const rightArrow = document.querySelector('.section_flats__pagination_arrow_right');
-    const currentPageEl = document.querySelector('.section_flats__current_pages');
-    const allPagesEl = document.querySelector('.all_pages');
-
-    const itemsPerPage = 6; // кількість карток на сторінку
-
-    let currentPage = 1;
-    let totalPages = 1;
-
-    function showPage(page) {
-      const filteredElements = getFilteredElements();
-      totalPages = Math.ceil(filteredElements.length / itemsPerPage) || 1;
-
-      // обмежуємо номер сторінки
-      if (page < 1) page = 1;
-      if (page > totalPages) page = totalPages;
-      currentPage = page;
-      currentPageEl.textContent = currentPage.toString().padStart(2, '0');
-      allPagesEl.textContent = totalPages;
-
-      // показуємо/ховаємо картки
-      filteredElements.forEach((card, index) => {
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = currentPage * itemsPerPage;
-
-        card.style.display = index >= start && index < end ? 'flex' : 'none';
-      });
-
-      // Деактивація кнопок
-      if (currentPage === 1) {
-        leftArrow.classList.add('disabled');
-      } else {
-        leftArrow.classList.remove('disabled');
-      }
-      if (currentPage === totalPages) {
-        rightArrow.classList.add('disabled');
-      } else {
-        rightArrow.classList.remove('disabled');
-      }
-
-      // Приховуємо пагінацію, якщо сторінка одна
-      const paginationWrapper = document.querySelector('.section_flats__pagination.pagination');
-      if (paginationWrapper) {
-        paginationWrapper.style.display = totalPages > 1 ? 'flex' : 'none';
-      }
-    }
-
-    function getFilteredElements() {
-      return Array.from(document.querySelectorAll('[data-filtered="true"]'));
-    }
-
-    const setPagination = () => {
-      const filteredElements = getFilteredElements();
-      totalPages = Math.ceil(filteredElements.length / itemsPerPage) || 1; // перерахунок сторінок
-      currentPage = 1;
-
-      currentPageEl.textContent = currentPage.toString().padStart(2, '0');
-      allPagesEl.textContent = totalPages;
-
-      showPage(currentPage); // показуємо першу сторінку
-    };
-
-    // обробники кнопок
-    leftArrow.addEventListener('click', () => {
-      preloader.style.opacity = '1';
-      preloader.style.visibility = 'visible';
-
-      showPage(currentPage - 1);
-
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-      }, 1000);
-    });
-
-    rightArrow.addEventListener('click', () => {
-      preloader.style.opacity = '1';
-      preloader.style.visibility = 'visible';
-
-      showPage(currentPage + 1);
-
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-      }, 1000);
-    });
-
-    setPagination();
-
     //Висота блока з картками, щоб не скакав
-
-    function updateHeight() {
-      const filterResult = document.querySelector('.section_flats__filter_result');
-      if (filterResult) {
-        filterResult.style.minHheight = 'auto'; // скидаємо стару висоту
-        const height = filterResult.offsetHeight; // поточна висота
-        filterResult.style.minHheighteight = height + 'px';
-      }
-    }
-
     updateHeight();
     window.addEventListener('resize', () => {
       updateHeight();
     });
+    //Попап фільтру
+    initFilterPopup();
 
-    //Попап фільтр
-    const btnOpenFilter = document.querySelector('.btn_filter_mob button');
-    const popupFilter = document.querySelector('.filter_popup');
-    const btnClose = document.querySelector('.filter_popup__close');
-    const filterPopUpWrapper = document.querySelector('.filter_popup__wrapper');
+    //Сортування
+    const customSelect = document.querySelector('.section_flats__custom-select');
+    const trigger = customSelect.querySelector('.section_flats__custom-select-trigger');
+    const optionsContainer = customSelect.querySelector('.section_flats__custom-select-options');
+    const options = optionsContainer.querySelectorAll('.custom-option');
+    const selectedText = trigger.querySelector('span');
 
-    if (btnOpenFilter && popupFilter) {
-      btnOpenFilter.addEventListener('click', () => {
-        popupFilter.classList.add('active');
+    const cardsWrapper = document.querySelector('.section_flats__filter_result_wrapper');
+    const cards = Array.from(cardsWrapper.querySelectorAll('.flat_card'));
+
+    // Відкрити/закрити селект
+    trigger.addEventListener('click', e => {
+      e.stopPropagation(); // 🚫 не даємо події піти далі
+      e.stopImmediatePropagation();
+
+      if (customSelect.classList.contains('open')) {
+        customSelect.classList.remove('open');
+      } else {
+        customSelect.classList.add('open');
+      }
+    });
+
+    // Вибір опції
+    options.forEach(option => {
+      option.addEventListener('click', e => {
+        e.stopPropagation(); // 🚫 не даємо закрити одразу після вибору
+
+        options.forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedText.textContent = option.textContent;
+        customSelect.classList.remove('open');
+
+        const sortValue = option.dataset.value;
+
+        sortCards(sortValue);
       });
-    }
+    });
 
-    if (btnClose && popupFilter) {
-      btnClose.addEventListener('click', () => {
-        popupFilter.classList.remove('active');
-      });
-    }
+    // Закриття при кліку поза селектом
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.section_flats__custom-select')) {
+        customSelect.classList.remove('open');
+      }
+    });
 
-    // закрыть попап по клику на wrapper (оверлей)
-    if (filterPopUpWrapper && popupFilter) {
-      popupFilter.addEventListener('click', e => {
-        if (e.target === popupFilter) {
-          // клик именно на фон, а не на содержимое
-          popupFilter.classList.remove('active');
-        }
-      });
+    function sortCards(type) {
+      const sorted = [...cards];
+
+      if (type === 'price-asc') {
+        sorted.sort((a, b) => +a.dataset.total_price - +b.dataset.total_price);
+      } else if (type === 'price-desc') {
+        sorted.sort((a, b) => +b.dataset.total_price - +a.dataset.total_price);
+      } else if (type === 'size-asc') {
+        sorted.sort((a, b) => +a.dataset.size - +b.dataset.size);
+      } else if (type === 'size-desc') {
+        sorted.sort((a, b) => +b.dataset.size - +a.dataset.size);
+      }
+
+      // Оновлюємо DOM
+      cardsWrapper.innerHTML = '';
+      sorted.forEach(card => cardsWrapper.appendChild(card));
+      pagination.setPagination();
     }
   }
 });

@@ -1,0 +1,33 @@
+extends ../layout/main
+block variable
+  -
+    var title_page = 'flat_single'
+    var id_page = 'id-page-flat_single'
+    var class_page = 'page-template-flat_single'
+    var breadcrumbs_1 = "Приміщення"
+    var breadcrumbs_1_link = "./flats"
+    
+block meta
+  title= title_page
+  meta(name='description' content='')
+block head
+  link(rel='stylesheet' href="./assets/styles/main.min.css")
+block scripts
+  script(defer src='./assets/scripts/vendors.bundle.js')
+  script(defer src='./assets/scripts/header.bundle.js')
+  script(defer src='./assets/scripts/footer.bundle.js')
+  script(defer src='./assets/scripts/index.bundle.js')
+block content
+  include ../includes/section_breadcrumbs.pug
+    - var breadcrumbs_1 = breadcrumbs_1
+    - var breadcrumbs_1_link = breadcrumbs_1_link
+  include ../includes/section_flat_details.pug
+  include ../includes/section_benefits.pug
+  include ../includes/section_view.pug
+  include ../includes/section_more_projects.pug
+      
+block footer
+  include ../includes/footer.pug
+
+block header
+  include ../includes/header.pug

@@ -5,6 +5,12 @@ block variable
     var title_page = 'index'
     var id_page = 'id-page-index'
     var class_page = 'page-template-home'
+    var page_title = "Riel"
+    var img_bg = "../../assets/images/top_section/bg.jpg"
+    var top_text = "Будуємо<br>системно —"
+    var bottom_text = "Добудовуємо<br>завжди"
+    var bottom_text_mob = ""
+    var title_for_flats_list = "Гарачі пропозиції"
     
 block meta
   title= title_page
@@ -18,7 +24,13 @@ block scripts
   script(defer src='./assets/scripts/index.bundle.js')
 block content
   include ../includes/section_top.pug
+    - var page_title = page_title
+    - var img_bg = img_bg
+    - var top_text = top_text
+    - var bottom_text = bottom_text
+    - var bottom_text_mob = bottom_text_mob
   include ../includes/section_hot_deals.pug
+    - var title_for_flats_list = title_for_flats_list
   include ../includes/section_btn_projects.pug
   include ../includes/section_news.pug
   include ../includes/section_btn_planning.pug

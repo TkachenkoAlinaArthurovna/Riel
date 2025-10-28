@@ -6,17 +6,14 @@ section.section_projects
         .section_projects__wrapper 
             .section_projects__filter.filter
                 .filter__item
-                    .filter__item_title Житловий комплекс:
+                    .filter__item_title Місто:
                     .filter__item_wrapper
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="father" data-filter="project-father" data-name="Father")
-                            label.checkbox__label(for="father") Father
+                            input.checkbox__input(type="checkbox" id="kyiv" data-filter="city-kyiv" data-name="Київ")
+                            label.checkbox__label(for="kyiv") Київ
                         .checkbox 
-                            input.checkbox__input(type="checkbox" id="sister" data-filter="project-sister" data-name="Sister")
-                            label.checkbox__label(for="sister") Sister 
-                        .checkbox 
-                            input.checkbox__input(type="checkbox" id="brother" data-filter="project-brother" data-name="Brother")
-                            label.checkbox__label(for="brother") Brother
+                            input.checkbox__input(type="checkbox" id="lviv" data-filter="city-lviv" data-name="Львів")
+                            label.checkbox__label(for="lviv") Львів 
                 .filter__item
                     .filter__item_title Статус:
                     .filter__item_wrapper
@@ -41,7 +38,7 @@ section.section_projects
                 .preloader
                     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><radialGradient id='a10' cx='.66' fx='.66' cy='.3125' fy='.3125' gradientTransform='scale(1.5)'><stop offset='0' stop-color='#FF156D'></stop><stop offset='.3' stop-color='#FF156D' stop-opacity='.9'></stop><stop offset='.6' stop-color='#FF156D' stop-opacity='.6'></stop><stop offset='.8' stop-color='#FF156D' stop-opacity='.3'></stop><stop offset='1' stop-color='#FF156D' stop-opacity='0'></stop></radialGradient><circle transform-origin='center' fill='none' stroke='url(#a10)' stroke-width='15' stroke-linecap='round' stroke-dasharray='200 1000' stroke-dashoffset='0' cx='100' cy='100' r='70'><animateTransform type='rotate' attributeName='transform' calcMode='spline' dur='2' values='360;0' keyTimes='0;1' keySplines='0 0 1 1' repeatCount='indefinite'></animateTransform></circle><circle transform-origin='center' fill='none' opacity='.2' stroke='#FF156D' stroke-width='15' stroke-linecap='round' cx='100' cy='100' r='70'></circle></svg>
                 - for (let i = 1; i <= 10; i++)
-                    a(href="/" data-project="father" data-status="popular" data-filtered="true").project_card 
+                    a(href="/project_single.html" data-city="kyiv" data-status="popular" data-filtered="true").project_card 
                         .project_card__bg
                             img(src="../../assets/images/projects/father.png" alt="project")
                         .project_card__note Популярний
@@ -77,7 +74,7 @@ section.section_projects
                                     <path d="M5.50073 0C8.14043 0 10.4782 1.66034 10.4783 4.83008C10.4783 5.49423 10.1269 6.46565 9.95093 6.86816L5.50073 16L1.05054 6.86816C0.874556 6.46565 0.523193 5.49423 0.523193 4.83008C0.523248 1.66034 2.86104 4.59894e-06 5.50073 0ZM5.50073 2.84375C4.32252 2.84375 3.36694 3.79933 3.36694 4.97754C3.36719 6.15554 4.32268 7.11035 5.50073 7.11035C6.67858 7.11011 7.6333 6.15539 7.63354 4.97754C7.63354 3.79948 6.67873 2.844 5.50073 2.84375Z" fill="#F4F5F9"/>
                                 </svg>
                                 span вул. Промислова, 50
-                    a(href="/" data-project="sister" data-status="new" data-filtered="true").project_card 
+                    a(href="/project_single.html" data-city="lviv" data-status="new" data-filtered="true").project_card 
                         .project_card__bg
                             img(src="../../assets/images/projects/sister.jpg" alt="project")
                         .project_card__note Новий

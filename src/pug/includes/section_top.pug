@@ -1,5 +1,5 @@
 section.section_top 
-    img.bg(src="../../assets/images/top_section/bg.jpg" alt="background" loading="lazy")
+    img.bg(src=img_bg alt="background" loading="lazy")
     .section_top__top_right 
         div 
             span Квартири від грн м²
@@ -9,7 +9,7 @@ section.section_top
         </svg>
     .section_top__bottom_left 
         .section_top__bottom_left_wrapper
-            span Riel
+            span=page_title
             .arrow_down 
                 .arrow_down__wrapper
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -19,8 +19,9 @@ section.section_top
         <svg class="bottom-left-decor" xmlns="http://www.w3.org/2000/svg" width="461" height="381" viewBox="0 0 461 381" fill="none">
             <path d="M185.879 0C220.981 0 252.793 18.804 270.344 47.563L460.506 381H0V0H185.879Z" fill="#FB9046"/>
         </svg>
-    .section_top__top_left Будуємо<br>системно — 
-    .section_top__bottom_right Добудовуємо<br>завжди
+    .section_top__top_left !{top_text}
+    .section_top__bottom_right !{bottom_text}
+    .section_top__bottom_right_text_mob !{bottom_text_mob}
     .section_top__bottom_right_mob 
         span Квартири від грн м²
         span 48 000

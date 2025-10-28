@@ -3,6 +3,19 @@ section.section_flats
         .section_flats__selected
             .section_flats__selected_wrapper
             button.btn_delete Очистити
+            <div class="section_flats__custom-select" id="sortSelect">
+                <div class="section_flats__custom-select-trigger">
+                    <span>Без сортування</span>
+                    <div class="arrow"></div>
+                </div>
+                <div class="section_flats__custom-select-options">
+                    <span class="custom-option selected" data-value="">Без сортування</span>
+                    <span class="custom-option" data-value="price-asc">Ціна — за зростанням</span>
+                    <span class="custom-option" data-value="price-desc">Ціна — за спаданням</span>
+                    <span class="custom-option" data-value="size-asc">Площа — за зростанням</span>
+                    <span class="custom-option" data-value="size-desc">Площа — за спаданням</span>
+                </div>
+            </div>
         .section_flats__wrapper 
             .section_flats__filter.filter
                 .filter__item
@@ -14,6 +27,9 @@ section.section_flats
                 .filter__item
                     .filter__item_title Кількість кімнат:
                     .filter__item_wrapper.room_count
+                .filter__item
+                    .filter__item_title Ціна:
+                    .filter__slider.price
                 .filter__item
                     .filter__item_title Площа м²:
                     .filter__slider.size
@@ -32,6 +48,7 @@ section.section_flats
                 .preloader
                     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><radialGradient id='a10' cx='.66' fx='.66' cy='.3125' fy='.3125' gradientTransform='scale(1.5)'><stop offset='0' stop-color='#FF156D'></stop><stop offset='.3' stop-color='#FF156D' stop-opacity='.9'></stop><stop offset='.6' stop-color='#FF156D' stop-opacity='.6'></stop><stop offset='.8' stop-color='#FF156D' stop-opacity='.3'></stop><stop offset='1' stop-color='#FF156D' stop-opacity='0'></stop></radialGradient><circle transform-origin='center' fill='none' stroke='url(#a10)' stroke-width='15' stroke-linecap='round' stroke-dasharray='200 1000' stroke-dashoffset='0' cx='100' cy='100' r='70'><animateTransform type='rotate' attributeName='transform' calcMode='spline' dur='2' values='360;0' keyTimes='0;1' keySplines='0 0 1 1' repeatCount='indefinite'></animateTransform></circle><circle transform-origin='center' fill='none' opacity='.2' stroke='#FF156D' stroke-width='15' stroke-linecap='round' cx='100' cy='100' r='70'></circle></svg>
                 .section_flats__filter_result_wrapper    
+                .empty Немає таких помешкань   
     .section_flats__pagination.pagination
         .section_flats__pagination_arrow_left.pagination_arrow
             <svg class="bg" xmlns="http://www.w3.org/2000/svg" width="76" height="68" viewBox="0 0 76 68" fill="none">

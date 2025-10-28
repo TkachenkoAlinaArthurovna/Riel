@@ -382,19 +382,11 @@
     }
   }
 }
-.pagination_arrow.disabled {
+.pagination_arrow.disabled,
+.pagination_arrow.swiper-button-disabled {
   opacity: 0.2;
   cursor: auto;
-  &:hover {
-    @media (min-width: 1024px) {
-      .bg {
-        fill: $brend-dark;
-      }
-      .icon path {
-        stroke: $brend-white;
-      }
-    }
-  }
+  pointer-events: none;
 }
 .pagination_arrow {
   position: relative;

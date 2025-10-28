@@ -121,15 +121,7 @@ header.header
                 .filter__item
                     .filter__item_title Житловий комплекс:
                     .filter__item_wrapper
-                        .checkbox 
-                            input.checkbox__input(type="checkbox" id="father" data-filter="project-father" data-name="Father")
-                            label.checkbox__label(for="father") Father
-                        .checkbox 
-                            input.checkbox__input(type="checkbox" id="sister" data-filter="project-sister" data-name="Sister")
-                            label.checkbox__label(for="sister") Sister 
-                        .checkbox 
-                            input.checkbox__input(type="checkbox" id="brother" data-filter="project-brother" data-name="Brother")
-                            label.checkbox__label(for="brother") Brother
+                       
                 .filter__item
                     .filter__item_title Статус:
                     .filter__item_wrapper
@@ -153,6 +145,9 @@ header.header
                     .filter__item_title Кількість кімнат:
                     .filter_flats__room_count.filter__item_wrapper
                 .filter__item
+                    .filter__item_title Ціна:
+                    .filter_flats__price.filter__slider
+                .filter__item
                     .filter__item_title Площа м²:
                     .filter_flats__size.filter__slider
                 .filter__item
@@ -163,3 +158,13 @@ header.header
                         span(data-title="Очистити") Очистити
                 .brend_btn.filter_popup__btn_apply
                         span(data-title="Застосувати") Застосувати
+    .connect_popup
+        a(href="tel:+380735823310").brend_btn
+            span(data-title="Виклик +38 (073) 582 33 10") Виклик +38 (073) 582 33 10
+        .brend_btn
+            span(data-title="Замовити зворотній дзвінок") Замовити зворотній дзвінок
+        .connect_popup__close 
+            span СКАСУВАТИ
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
+                <path d="M6.90234 5.58301L12.3398 11.1152L17.7148 5.64746L19.1172 7.07422L13.7422 12.542L19.1172 18.0088L17.7148 19.4355L12.3398 13.9687L6.90234 19.5L5.5 18.0742L10.9375 12.542L5.5 7.00879L6.90234 5.58301Z" fill="#F4F5F9"/>
+            </svg>
