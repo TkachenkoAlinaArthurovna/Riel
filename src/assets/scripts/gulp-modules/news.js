@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Всі картки
     const allCards = Array.from(document.querySelectorAll('.news_card'));
-    console.log(allCards);
 
     function showPage(page) {
       totalPages = Math.ceil(allCards.length / itemsPerPage) || 1;

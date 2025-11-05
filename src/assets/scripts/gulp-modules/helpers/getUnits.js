@@ -1,6 +1,6 @@
 // getUnits.js
 import axios from 'axios';
-import data from '../units.json'; // якщо є локальний json-файл із моками
+import data from '../StockSite.json'; // якщо є локальний json-файл із моками
 
 // локальна функція для мок-даних
 const unitsMock = () => data;
@@ -23,6 +23,7 @@ export async function getunits() {
 
   try {
     const response = await axios.post(url, formData);
+
     return response;
   } catch (error) {
     console.error('Помилка при завантаженні квартир:', error);

@@ -17,11 +17,11 @@ export function filterUnitsBySelectedFilter(unitsData) {
       switch (key) {
         // ✅ Проєкт (ЖК)
         case 'project':
-          return values.includes(unit.project?.name);
+          return values.includes(unit.project_name);
 
         // ✅ Тип (апартамент, квартира, офіс)
-        case 'type':
-          return values.includes(unit.unit_type?.name);
+        // case 'type':
+        //   return values.includes(unit.unit_type?.name);
 
         // ✅ Кімнатність
         case 'room_count':
@@ -29,11 +29,11 @@ export function filterUnitsBySelectedFilter(unitsData) {
 
         // ✅ Ціна — мінімум
         case 'Ціна_min':
-          return unit.total_price >= parseFloat(values[0]);
+          return unit.total_price_uah >= parseFloat(values[0]);
 
         // ✅ Ціна — максимум
         case 'Ціна_max':
-          return unit.total_price <= parseFloat(values[0]);
+          return unit.total_price_uah <= parseFloat(values[0]);
 
         // ✅ Площа — мінімум
         case 'Площа_min':
@@ -45,11 +45,11 @@ export function filterUnitsBySelectedFilter(unitsData) {
 
         // ✅ Поверх — мінімум
         case 'Поверх_min':
-          return unit.floor?.order_number >= parseInt(values[0]);
+          return unit.floor_name >= parseInt(values[0]);
 
         // ✅ Поверх — максимум
         case 'Поверх_max':
-          return unit.floor?.order_number <= parseInt(values[0]);
+          return unit.floor_name <= parseInt(values[0]);
 
         default:
           return true;

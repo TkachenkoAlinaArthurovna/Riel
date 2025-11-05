@@ -46,8 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     (async () => {
       const unitsResponse = await getunits();
+
       if (unitsResponse?.data) {
-        unitsData = unitsResponse.data.data;
+        unitsData = unitsResponse.data;
 
         setUnits(unitsData, wrapper, pagination, filterCards, countVisibleCards);
         //Кнопки очищення
@@ -71,47 +72,47 @@ document.addEventListener('DOMContentLoaded', () => {
       // Фільтр ЖК
       if (window.innerWidth > 1500) {
         populateFilter(
-          data.data,
-          'project.name',
+          data,
+          'project_name',
           document.querySelector('.filter__item_wrapper.project'),
           'project',
         );
       } else {
         populateFilter(
-          data.data,
-          'project.name',
+          data,
+          'project_name',
           document.querySelector('.filter_flats__project'),
           'project',
         );
       }
 
       // Фільтр типу
-      if (window.innerWidth > 1500) {
-        populateFilter(
-          data.data,
-          'unit_type.name',
-          document.querySelector('.filter__item_wrapper.type'),
-          'type',
-        );
-      } else {
-        populateFilter(
-          data.data,
-          'unit_type.name',
-          document.querySelector('.filter_flats__type'),
-          'type',
-        );
-      }
+      // if (window.innerWidth > 1500) {
+      //   populateFilter(
+      //     data,
+      //     'unit_type.name',
+      //     document.querySelector('.filter__item_wrapper.type'),
+      //     'type',
+      //   );
+      // } else {
+      //   populateFilter(
+      //     data,
+      //     'unit_type.name',
+      //     document.querySelector('.filter_flats__type'),
+      //     'type',
+      //   );
+      // }
       // Фільтр кімнат
       if (window.innerWidth > 1500) {
         populateFilter(
-          data.data,
+          data,
           'room_count',
           document.querySelector('.filter__item_wrapper.room_count'),
           'room_count',
         );
       } else {
         populateFilter(
-          data.data,
+          data,
           'room_count',
           document.querySelector('.filter_flats__room_count'),
           'room_count',
@@ -121,15 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (window.innerWidth > 1500) {
         populateSliderFilter(
-          data.data,
-          'total_price',
+          data,
+          'total_price_uah',
           document.querySelector('.filter__slider.price'),
           'Ціна',
         );
       } else {
         populateSliderFilter(
-          data.data,
-          'total_price',
+          data,
+          'total_price_uah',
           document.querySelector('.filter_flats__price'),
           'Ціна',
         );
@@ -137,14 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // Площа
       if (window.innerWidth > 1500) {
         populateSliderFilter(
-          data.data,
+          data,
           'real_size',
           document.querySelector('.filter__slider.size'),
           'Площа',
         );
       } else {
         populateSliderFilter(
-          data.data,
+          data,
           'real_size',
           document.querySelector('.filter_flats__size'),
           'Площа',
@@ -153,9 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Поверх (витягуємо цифру з floor.name)
       if (window.innerWidth > 1500) {
         populateSliderFilter(
-          data.data,
+          data,
           unit => {
-            const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+            const match = unit.floor_name.match(/-?\d+/); // враховуємо можливий знак "-"
             return match ? Number(match[0]) : null;
           },
           document.querySelector('.filter__slider.floor'),
@@ -163,9 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       } else {
         populateSliderFilter(
-          data.data,
+          data,
           unit => {
-            const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+            const match = unit.floor_name.match(/-?\d+/); // враховуємо можливий знак "-"
             return match ? Number(match[0]) : null;
           },
           document.querySelector('.filter_flats__floor'),
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       }
 
-      unitsData = data.data;
+      unitsData = data;
       if (
         selectedFilter.project &&
         selectedFilter.project.length > 0 &&
@@ -378,7 +379,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           // 🔹 Якщо користувач ЗНІМАЄ АБО СТАВИТЬ галочку на проекті, але інші проекти ще є
           if (selectedFilter.project && selectedFilter.project.length > 0) {
-            console.log('TYT');
             //  Створюємо копію оригінального фільтра
             const originalFilter = { ...selectedFilter };
             // Створюємо версію, де залишаємо тільки проекти
@@ -472,9 +472,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   input.checked = false;
                   // input.dispatchEvent(new Event('input'));
                   // input.dispatchEvent(new Event('change'));
-                  console.log(selectedFilter[key]);
+
                   selectedFilter[key] = selectedFilter[key]?.filter(v => v !== value) || [];
-                  console.log(selectedFilter[key]);
+
                   if (selectedFilter[key].length === 0) delete selectedFilter[key];
                   sessionStorage.setItem('selectedFilter', JSON.stringify(selectedFilter));
                   isSyncing = true;

@@ -6,21 +6,15 @@ const unitsMock = () => data;
 document.addEventListener('DOMContentLoaded', function() {
   if (document.querySelector('.page-template-project_single')) {
     const adresses = {
-      '2': 'вул. Володимира Великого, 10',
-      '3': 'вул. Б. Хмельницького, 116',
-      '4': 'вул. Б. Хмельницького, 207',
-      '8': 'вул. Проектована, 1',
-      '17': 'вул. Рудненська, 8',
-      '22': 'вул. Залізнична, 7',
+      Америка: 'вул. Володимира Великого, 10',
+      Вежа: 'вул. Б. Хмельницького, 207',
+      Компаньйон: 'вул. Проектована, 1',
+      'Ріел Сіті': 'вул. Рудненська, 8',
+      Шенген: 'вул. Залізнична, 7',
+      'Велика Британія': 'вул. Шевченка, 31',
+      'Новий Форт': 'вул. Волинська 9',
     };
-    const colors = {
-      '2': '#696969',
-      '3': '#40E0D0',
-      '4': '#696969',
-      '8': '#e6e621ff',
-      '17': '#e6e621ff',
-      '22': '#696969',
-    };
+    const colors = {};
     async function getunits() {
       const formData = new FormData();
       formData.append('action', 'units');
@@ -59,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
       wrapper.innerHTML = ''; // очищаємо обгортку
       let count = 0;
       const selectedUnits = units
-        .filter(unit => unit.project.name === project) // обираємо юніти потрібного проекту
+        .filter(unit => unit.project_name === project) // обираємо юніти потрібного проекту
         .sort((a, b) => a.room_count - b.room_count) // сортуємо від меншого до більшого
         .slice(0, 5); // берем перщі 5
 
@@ -73,16 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 data-room_count="${unit.room_count || null}" 
                 data-type="${unit.unit_type?.name || null}" 
                 data-size="${unit.real_size || null}" 
-                data-floor="${unit.floor?.order_number || null}" 
+                data-floor="${unit.floor_name ? unit.floor_name.match(/-?\d+/)?.[0] || null : null}"
                 data-id=${unit.id}
             >
         <div class="flat_card__hover">
-          <span style="background:${colors[unit.project.id] || '#DCDCDC'};"></span>
+          <span style="background:${colors[unit.id] || '#DCDCDC'};"></span>
         </div>
         <!--<div class="flat_card__note">Новинка</div>-->
         <div class="flat_card__top">
           <span>Житловий комплекс</span>
-          ${unit.project?.name ? `<span>${unit.project.name}</span>` : ''}
+          ${unit.project?.name ? `<span>${unit.project_name}</span>` : ''}
         </div>
         <div class="flat_card__img">
           <img src="${
@@ -93,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="flat_card__center">
           <div class="flat_card__center_left">
-            ${unit.unit_type?.name ? `<span>${unit.unit_type.name} м²</span>` : `<span>м²</span>`}
+            ${true ? `<span>Помешкання м²</span>` : `<span>м²</span>`}
             ${
               unit.real_size && unit.real_size !== 0
                 ? `<span>${unit.real_size}</span>`
@@ -106,17 +100,17 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="flat_card__center_right">
             <span>грн/м²</span>
             <span>${
-              unit.total_price && unit.total_price !== 0
-                ? Number(unit.total_price).toLocaleString('uk-UA')
+              unit.total_price_uah && unit.total_price_uah !== 0
+                ? Number(unit.total_price_uah).toLocaleString('uk-UA')
                 : '-'
             }</span>
           </div>
         </div>
         <div class="flat_card__bottom">
-          ${unit.section?.name ? `<span>Секція: ${unit.section.name}</span>` : ''}
+          ${unit.section_name ? `<span>Секція: ${unit.section_name}</span>` : ''}
           ${
-            unit.floor?.order_number && unit.floor.order_number !== 0
-              ? `<span>Поверх: ${unit.floor.order_number}</span>`
+            unit.floor_name && unit.floor_name !== 0
+              ? `<span>Поверх: ${unit.floor_name}</span>`
               : ''
           }
           ${
@@ -126,12 +120,12 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         </div>
         ${
-          adresses[unit.project.id]
+          adresses[unit.project_name]
             ? `<div class="flat_card__address">
       <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.50073 0C8.14043 0 10.4782 1.66034 10.4783 4.83008C10.4783 5.49423 10.1269 6.46565 9.95093 6.86816L5.50073 16L1.05054 6.86816C0.874556 6.46565 0.523193 5.49423 0.523193 4.83008C0.523248 1.66034 2.86104 4.59894e-06 5.50073 0ZM5.50073 2.84375C4.32252 2.84375 3.36694 3.79933 3.36694 4.97754C3.36719 6.15554 4.32268 7.11035 5.50073 7.11035C6.67858 7.11011 7.6333 6.15539 7.63354 4.97754C7.63354 3.79948 6.67873 2.844 5.50073 2.84375Z" fill="#F4F5F9"/>
       </svg>
-      <span>${adresses[unit.project.id]}</span>
+      <span>${adresses[unit.project_name]}</span>
     </div>`
             : ''
         }

@@ -8,10 +8,10 @@
 export function populateFilter(units, field, wrapper, dataFilterPrefix) {
   // отримуємо значення
   const values = units
-    .filter(unit => unit.project?.name !== 'Залишки')
     .map(unit => {
       if (typeof field === 'function') return field(unit);
       const keys = field.split('.');
+
       return keys.reduce((acc, key) => acc?.[key], unit);
     })
     .filter(Boolean);
@@ -47,7 +47,7 @@ export function populateFilter(units, field, wrapper, dataFilterPrefix) {
  */
 export function populateSliderFilter(units, field, wrapper, label) {
   const values = units
-    .filter(unit => unit.project?.name !== 'Залишки')
+    .filter(unit => unit.project_name !== 'Залишки')
     .map(unit => {
       if (typeof field === 'function') return field(unit);
       const keys = field.split('.');
@@ -61,19 +61,12 @@ export function populateSliderFilter(units, field, wrapper, label) {
   const maxValue = Math.max(...values);
 
   wrapper.innerHTML = `
-    <div class="values">
-      <!--<span id="${label}-min-value">${Math.ceil(minValue)}</span>-->
-      <!--<span id="${label}-max-value">${Math.ceil(maxValue)}</span>-->
-    </div>
+    
     <div class="slider-wrapper">
-      <input data-filter="${label}_min" type="range" id="${label}-min" min="${Math.ceil(
-    minValue,
-  )}" max="${Math.ceil(maxValue)}" step="${
+      <input data-filter="${label}_min" type="range" id="${label}-min" min="${minValue}" max="${maxValue}" step="${
     label == 'Площа' || label == 'Ціна' ? 0.1 : 1
   }" value="${minValue}">
-      <input data-filter="${label}_max" type="range" id="${label}-max" min="${Math.ceil(
-    minValue,
-  )}" max="${Math.ceil(maxValue)}" step="${
+      <input data-filter="${label}_max" type="range" id="${label}-max" min="${minValue}" max="${maxValue}" step="${
     label == 'Площа' || label == 'Ціна' ? 0.1 : 1
   }" value="${maxValue}">
 

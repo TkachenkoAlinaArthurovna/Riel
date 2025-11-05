@@ -255,10 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const filterValues = selectedFilter[key]; // масив допустимих значень
           //Якщо ми не заходимо в if то всі картки залишаться з show = true
           //Якщо значення картки не в масиві – ховаємо картку
-          // console.log(filterValues);
-          console.log(cardValue);
+
           if (!filterValues.includes(cardValue)) {
-            // console.log(cardValue);
             show = false;
             break; // немає сенсу перевіряти інші ключі
           }

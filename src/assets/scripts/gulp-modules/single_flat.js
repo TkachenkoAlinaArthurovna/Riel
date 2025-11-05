@@ -109,29 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
           '.section_flat_details__flat_info .unit-complex',
         );
         if (unitComplex && flat?.project?.name) {
-          unitComplex.textContent = `${flat.project.name}`;
-          unitComplex.href = locations[flat.project.name];
+          unitComplex.textContent = `${flat.project_name}`;
+          unitComplex.href = locations[flat.project_name];
         } else {
           unitComplex.textContent = '-';
           unitComplex.href = 'https://www.google.com/maps';
         }
         const unitLocation = document.querySelector('.unit-location');
         if (unitLocation && flat?.project?.name) {
-          unitLocation.href = locations[flat.project.name];
+          unitLocation.href = locations[flat.project_name];
         } else {
           unitLocation.href = 'https://www.google.com/maps';
         }
         const unitSection = document.querySelector(
           '.section_flat_details__flat_info .unit-section',
         );
-        if (unitSection && flat?.section?.name) {
-          unitSection.textContent = `${flat.section.name}`;
+        if (unitSection && flat?.section_name) {
+          unitSection.textContent = `${flat.section_name}`;
         } else {
           unitSection.textContent = '-';
         }
         const unitFloor = document.querySelector('.section_flat_details__flat_info .unit-floor');
-        if (unitFloor && flat?.floor?.order_number != null) {
-          unitFloor.textContent = `${flat.floor.order_number}`;
+        if (unitFloor && flat?.floor_name != null) {
+          unitFloor.textContent = `${flat.floor_name}`;
         } else {
           unitFloor.textContent = '-';
         }
@@ -148,14 +148,14 @@ document.addEventListener('DOMContentLoaded', function() {
           unitSize2.textContent = '-';
         }
         const unitFullPrice = document.querySelector('.flat_info__price .full-price');
-        if (unitFullPrice && flat?.total_price) {
-          unitFullPrice.textContent = `${formatPrice(flat.total_price)} грн`;
+        if (unitFullPrice && flat?.total_price_uah) {
+          unitFullPrice.textContent = `${formatPrice(flat.total_price_uah)} грн`;
         } else {
           unitFullPrice.textContent = '-';
         }
         const unitMPrice = document.querySelector('.flat_info__price .m-price');
-        if (unitMPrice && flat?.price_m2) {
-          unitMPrice.textContent = `${formatPrice(flat.price_m2)} грн/м²`;
+        if (unitMPrice) {
+          unitMPrice.textContent = `50 000 грн/м²`;
         } else {
           unitMPrice.textContent = '-';
         }

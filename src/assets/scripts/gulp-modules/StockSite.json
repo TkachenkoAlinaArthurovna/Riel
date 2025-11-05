@@ -1,0 +1,1748 @@
+[
+  {
+    "id": 24396,
+    "project_name": "Америка",
+    "section_name": "4",
+    "floor_name": "10",
+    "number": "117",
+    "design_size": 89.2,
+    "real_size": 88.7,
+    "total_price_uah": 4455578,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/c7466c0b4d9eb1ecd6600054448c89a9/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/a0b09ee4a06210540ad9944a7ddae6d1/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/486b60e6ca64599b6930d960f45e3334/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27588,
+    "project_name": "Америка",
+    "section_name": "К1-С2",
+    "floor_name": "17",
+    "number": "1031",
+    "design_size": 73.93,
+    "real_size": 76.5,
+    "total_price_uah": 3842748,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/fd917aff865118cbb4421c2ea1903662/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/21ff28e437ccf3ff8db2847e7cb85478/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/3290c7b295052b3e6323918af91c88a1/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27590,
+    "project_name": "Америка",
+    "section_name": "К1-С2",
+    "floor_name": "17",
+    "number": "1033",
+    "design_size": 59.42,
+    "real_size": 60.1,
+    "total_price_uah": 3018943,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/7253789b14f68afa78590330ec211892/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/e36e9d3173980aef766f9874ace63735/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/b436689a28bb62b9e831fdab06272e5a/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27591,
+    "project_name": "Америка",
+    "section_name": "К1-С2",
+    "floor_name": "17",
+    "number": "1034",
+    "design_size": 66.76,
+    "real_size": 67.3,
+    "total_price_uah": 3380613,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/60a369299792308d5d38980876e9d3e5/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/770cf7f450b3c4ce0bc5bc0c1ffaa9ba/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/f1c448caec76b6ff933c6ee88e4a8ad2/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27592,
+    "project_name": "Америка",
+    "section_name": "К1-С2",
+    "floor_name": "17",
+    "number": "1035",
+    "design_size": 98.34,
+    "real_size": 99.7,
+    "total_price_uah": 5008130,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/1ead5127c4c5ead84f364daadea9fa2b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/ae9b3cb13de644451bad32231f5625f9/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/bc84c81719fb4aa294211a8d96fcaf47/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27608,
+    "project_name": "Америка",
+    "section_name": "К3-С1",
+    "floor_name": "17",
+    "number": "353а",
+    "design_size": 60.61,
+    "real_size": 60.3,
+    "total_price_uah": 3028989,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/91feb9b90079c20cc06fd1a48a47375f/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/6c3de265d5958418faeef8d43e04a8f8/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/8604be2873925f112e70db556326a6dd/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27609,
+    "project_name": "Америка",
+    "section_name": "К3-С1",
+    "floor_name": "17",
+    "number": "354а",
+    "design_size": 67.98,
+    "real_size": 68.3,
+    "total_price_uah": 3430845,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/e610180dc9b946f646d5ae4de073109b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/a43e2a92584d2e519c482e04f3022ae8/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/8e246bcf4951b170bae02f94c068ed5f/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 27612,
+    "project_name": "Америка",
+    "section_name": "К3-С1",
+    "floor_name": "17",
+    "number": "357а",
+    "design_size": 60.95,
+    "real_size": 60.9,
+    "total_price_uah": 3059128,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/10ab99595c460451b5facccd25ccb75d/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/647751c55e9a7b7924ea22a6ee5513c5/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/6b860fd3f3a8bae3f3ab2bbd6bf70de3/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23876,
+    "project_name": "Америка",
+    "section_name": "С2",
+    "floor_name": "Поверх 8",
+    "number": "103",
+    "design_size": 166.52,
+    "real_size": 164.5,
+    "total_price_uah": 8263164,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/5f3b63760587878892a245305c6b2b73/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/f3fdd1a3e00589aae7ec3b04444aacde/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/b833a6dedf538cb70706f59e02471735/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23904,
+    "project_name": "Америка",
+    "section_name": "С3",
+    "floor_name": "Поверх 8",
+    "number": "104",
+    "design_size": 104.5,
+    "real_size": 102.9,
+    "total_price_uah": 5168872,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/0721182e5e767b35f3acf347ecc4a7d3/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/c9c2dafa10089e841ad76b8a78203741/original.png",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/8c05d3fae5cdcc90fead06cd0edee43f/original.png",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 18271,
+    "project_name": "Вежа",
+    "section_name": "5.1",
+    "floor_name": "Поверх 1",
+    "number": "2",
+    "design_size": 87.33,
+    "real_size": 85.9,
+    "total_price_uah": 4314928,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/7bfe10a9f748390cc1dfc961d35031a5/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/165d598fae9c88101928920783f493cb/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/c0f684aa01d78c736187434dafa14252/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 18307,
+    "project_name": "Вежа",
+    "section_name": "6.1",
+    "floor_name": "Поверх 1",
+    "number": "177",
+    "design_size": 80.03,
+    "real_size": 80.3,
+    "total_price_uah": 4033629,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/4d6cd1960b41f3568feb164f81892191/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/e4bf7fddf2550a35d33be33b147b7fc9/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/a0865b9f6face760027f82d3175535d9/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20196,
+    "project_name": "Вежа",
+    "section_name": "7.1",
+    "floor_name": "1",
+    "number": "3",
+    "design_size": 139.1,
+    "real_size": 0.0,
+    "total_price_uah": 6073103,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/2a74b490600072680d57a339df0fca38/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/8354d909f9f28adc926a7357dcd54753/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/958159ce7a7e541c0f73a84d6750780d/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 26252,
+    "project_name": "Вежа",
+    "section_name": "7.1",
+    "floor_name": "10",
+    "number": "78",
+    "design_size": 81.43,
+    "real_size": 0.0,
+    "total_price_uah": 4090391,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/241ea9ef680f85b02273282a5599c656/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/458232e542cf9284da1f4413f7e02443/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/36458b76c6b805344c76f1e2753c3d4a/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20403,
+    "project_name": "Вежа",
+    "section_name": "8.1",
+    "floor_name": "1",
+    "number": "4",
+    "design_size": 85.33,
+    "real_size": 0.0,
+    "total_price_uah": 4286296,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/4254b04ba7caea785bb12433da50bd0b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/d0680fe48cd01035f12ed8947e174701/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/4d258b763868c6e4af79a8191e8c0f7f/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 2384,
+    "project_name": "Вежа",
+    "section_name": "А1",
+    "floor_name": "1",
+    "number": "2",
+    "design_size": 78.1,
+    "real_size": 78.4,
+    "total_price_uah": 3938188,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/2b8dd2d0e1cebe8e73ef0e865207ce2c/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/71ac65f6ae32e0ac42440868cc1f7181/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/f7da87c4dabe9f1b4e04d97854899517/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 2386,
+    "project_name": "Вежа",
+    "section_name": "А1",
+    "floor_name": "1",
+    "number": "4",
+    "design_size": 97.02,
+    "real_size": 98.7,
+    "total_price_uah": 4957898,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/5f397946868fadbd233866183f7d9a3a/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/730d70b938a078ad7214a3be768e5afd/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/168c101241808b266298a6b53851ddf9/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 2401,
+    "project_name": "Вежа",
+    "section_name": "А1",
+    "floor_name": "4",
+    "number": "19",
+    "design_size": 94.04,
+    "real_size": 95.0,
+    "total_price_uah": 4772040,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/53c1f9349d8a6f1e776107745711871b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/8009970ee83fd3d5f25fcc0029a3b759/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/43d8ed9a631b602e36d89a5d2af1aca6/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 18693,
+    "project_name": "Вежа",
+    "section_name": "А1",
+    "floor_name": "9",
+    "number": "44",
+    "design_size": 94.04,
+    "real_size": 95.2,
+    "total_price_uah": 4782086,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/a5d7c66e41d480c47cb5c88bf855a0b5/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/2d25366105690bab5c797930e7126faa/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/e7478d7d78828d97631a59d7a622857e/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 2425,
+    "project_name": "Вежа",
+    "section_name": "А2",
+    "floor_name": "1",
+    "number": "47",
+    "design_size": 83.5,
+    "real_size": 83.6,
+    "total_price_uah": 4199395,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/953a28d5c4259d4067d2644a24ad49f8/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/8f38a0da21a8954e87be58eeb7c9bde7/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/0f787dbd27be35557c0a7ec4b9817d15/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 9407,
+    "project_name": "Велика Британія",
+    "section_name": "1",
+    "floor_name": "0",
+    "number": "1",
+    "design_size": 112.0,
+    "real_size": 110.7,
+    "total_price_uah": 5560682,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/bf5c52e8e4aaa41bddea6627726b760e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/a2cac8bd83bf55fda32214ec431f2cfa/original.png",
+        "order_number": 1
+      }
+    ]
+  },
+  {
+    "id": 32542,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "1",
+    "design_size": 45.15,
+    "real_size": 44.4,
+    "total_price_uah": 1299150,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/5cdc667271556ea64d3e98c902ce4d3c/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/699be5a2c8a3773b84e15563f0bc2234/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/99cf937fe7ed57a0fe2ad41b12d14000/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32590,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "1",
+    "design_size": 45.07,
+    "real_size": 44.5,
+    "total_price_uah": 1302076,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/3b18979d5d27822c742590724be4dad3/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/e8b97dc5b50a5179e99afada79463e59/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/db3246d3db7c906b0ab3345d368843da/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32591,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "2",
+    "design_size": 36.88,
+    "real_size": 36.8,
+    "total_price_uah": 1076773,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/c9eb2f7e4c692b8fc94222c0d162ac40/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/af16cc259edb03bee56a7ac60c141ba4/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/ce02ff190b94236e18abff03a6724653/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32543,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "2",
+    "design_size": 44.7,
+    "real_size": 44.2,
+    "total_price_uah": 1293298,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/01c2987886ef0830adaf372bfd48fa87/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/95b8aee38b75e625f9b5f51230eefeb5/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/a89aea9848f8b6c533a549f24b5efd37/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32593,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "4",
+    "design_size": 41.36,
+    "real_size": 41.3,
+    "total_price_uah": 1208443,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/82e8550a4f1a32b2f3dd46cc3a7f2b62/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/cb6d82ea38b379829e9af99c58a29d03/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/110d7c82e6cf9f1308f26aef4959f375/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32594,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "5",
+    "design_size": 29.4,
+    "real_size": 29.0,
+    "total_price_uah": 848544,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/0d0846cc71999d5c1a5fc6dadb3c91ef/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/3f432750c31b42eb5cf7268b08edcefa/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/2a5847edd69a40465813bc6320756127/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32546,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "5",
+    "design_size": 42.02,
+    "real_size": 41.5,
+    "total_price_uah": 1214295,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/c514710408d8324ea63186a165ce3026/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/2a4bb19630f35fe700b6a124e42c018a/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/0f97b9af8f56fba6d2bd07d0998d54c5/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32547,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "6",
+    "design_size": 33.07,
+    "real_size": 31.6,
+    "total_price_uah": 924620,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/0c3311509e43a1aa935d14456a078f6e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/5d6fde59d7a300c5d0772416006a9c8c/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/daa647dba103fa81aff19a260c19318f/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32595,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "6",
+    "design_size": 30.2,
+    "real_size": 29.7,
+    "total_price_uah": 869026,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/3438a5168b6c6514d76455d3075c559f/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/97fd572fb0639dfa203f34d03ad117d8/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/294fa25cc5612baa3da51aca1c8ff7f9/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32596,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "7",
+    "design_size": 45.06,
+    "real_size": 44.3,
+    "total_price_uah": 1296224,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/8ad231439416b145d4cfa21eb6d9ec46/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/9eaa18db7d653a1c5ef0b54bfd5b9935/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/6dfec40818b713ee4bafdcb27935527d/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32549,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "-1",
+    "number": "8",
+    "design_size": 44.7,
+    "real_size": 44.1,
+    "total_price_uah": 1290372,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/f4c0073ea3337c82a37382f7e2b0d8ba/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/520feb2e17ab974c59974a3ad01c82c9/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/c1f8ba93188d5ce9f6929cb145ab886e/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32581,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "Поверх -1",
+    "number": "2",
+    "design_size": 44.42,
+    "real_size": 43.7,
+    "total_price_uah": 1278668,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/dab69b91a356f6563e5fc1ab4e263da0/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/a453f138d8535440dbdd4b088a80c357/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/12808c680fe9176f5d7fb8b6f8f72f2b/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32582,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "Поверх -1",
+    "number": "3",
+    "design_size": 61.31,
+    "real_size": 60.4,
+    "total_price_uah": 1767312,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/cb4bf2b3dcd49b7e229446e02853cd2a/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/f5b0c34fca12aa8114f03cb27f776e20/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/416a612de7415c425f71b99fc315f17e/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32583,
+    "project_name": "Компаньйон",
+    "section_name": "1",
+    "floor_name": "Поверх -1",
+    "number": "4",
+    "design_size": 36.35,
+    "real_size": 35.8,
+    "total_price_uah": 1047513,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/fb4a791952915a979c63868be280af25/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/112e7e94cb65ece49bd699bdf5be5284/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/4f63faa7d3f0ae80a79534d70fa951e1/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32606,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "11",
+    "design_size": 44.69,
+    "real_size": 44.1,
+    "total_price_uah": 1290372,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/66e6de35d3ec3d4a3b1d55ec910a7ac9/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/a2757ec294b54f868b3cdb7ac4179efc/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/115d88ddc5b6316009e82234b6173d87/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32607,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "12",
+    "design_size": 38.92,
+    "real_size": 35.6,
+    "total_price_uah": 1041660,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/4d2c1afed0e302faea6a1118eb8688a5/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/9577475b3eb7e250e826a30c0ab74267/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/117844594913cc45223488a1c07b73df/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32608,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "13",
+    "design_size": 35.79,
+    "real_size": 35.1,
+    "total_price_uah": 1027030,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/4390db5c6f0fa75d83fbf7c79f5f0e3b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/0a23e641942876f406f74d7c88861c89/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/bf0b0889ca0732967daef9504b935b1c/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32609,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "14",
+    "design_size": 32.01,
+    "real_size": 31.6,
+    "total_price_uah": 924620,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/60cf5f0d1bf81d32f10bc23db9c8fac4/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/b09ce4939072e1c3029c3111e0705735/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/d95b6fd2d9fa78a6a73106fa13c94b3b/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32562,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "14",
+    "design_size": 42.1,
+    "real_size": 41.6,
+    "total_price_uah": 1217221,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/cbb4592d1f50f0936b9fefb6990bc184/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/f22544133e2fa6bb8fd7df973256a4ee/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/1aab903e84319850ea1fdc11a7592eeb/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32563,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "15",
+    "design_size": 52.53,
+    "real_size": 52.2,
+    "total_price_uah": 1527379,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/3cd3258bcb0c0b50432ec5177e8080c4/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/3f403ee185135fe0c84d81c46faacfdb/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/874460374ee5804c3cd6916888a6803a/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32564,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "16",
+    "design_size": 29.06,
+    "real_size": 28.4,
+    "total_price_uah": 830987,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/f5d6194a9da59e7d9bd56ada64b93b2e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/e84152d2247a187e8d2a98884ef7f654/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/bfbd25c0080f1931fa5cf00940b01288/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32611,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "16",
+    "design_size": 30.15,
+    "real_size": 29.7,
+    "total_price_uah": 869026,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/50ebf88f975dc7323c24b605d0993153/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/f9559531c297f17597691d885cb9efdc/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/c2635c9449a345e6428e761e1a6229b8/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32613,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "18",
+    "design_size": 26.74,
+    "real_size": 26.2,
+    "total_price_uah": 766615,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/6890fab024315c3dfd673bf7fc959f86/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/6874ad4313b941af2a10477c524b27f6/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/0a81dedef77e8ace9d96e523318cb155/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 32557,
+    "project_name": "Компаньйон",
+    "section_name": "2",
+    "floor_name": "-1",
+    "number": "9",
+    "design_size": 44.39,
+    "real_size": 43.8,
+    "total_price_uah": 1281594,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/9bcccda384e97c21b62f47aab6219b0a/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/73a86ab4d07b4c285c2fe7d6f6fe4aeb/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/45dc6b6b0d730c9a0af1a4762ddae776/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23992,
+    "project_name": "Новий Форт",
+    "section_name": "А3",
+    "floor_name": "6",
+    "number": "97",
+    "design_size": 76.29,
+    "real_size": 77.9,
+    "total_price_uah": 3750028,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/c9522a79a0a112b453705e367e8c703e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/d510655da0f91440e94ef05a02a9f6dc/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/9d7db5c8042fb1d247a0f6083a951c03/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23953,
+    "project_name": "Новий Форт",
+    "section_name": "Б2",
+    "floor_name": "6",
+    "number": "74",
+    "design_size": 93.58,
+    "real_size": 109.1,
+    "total_price_uah": 5023618,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/2c41e306937fd77ccbbc18ba64825d75/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/3ff8f6d50a58325866b470af0d8d5409/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/0d9c9943fb865010d8db27f87465f41c/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23996,
+    "project_name": "Новий Форт",
+    "section_name": "В1",
+    "floor_name": "Поверх 7",
+    "number": "41б",
+    "design_size": 83.94,
+    "real_size": 86.6,
+    "total_price_uah": 4313840,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/d6b88d5eb2b949e5d4e1d86bda3a8573/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/df939de9a0463e86bef9b2b078be17d1/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/8c1c76c03196cdde021607c8938621c7/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 23997,
+    "project_name": "Новий Форт",
+    "section_name": "В1",
+    "floor_name": "Поверх 7",
+    "number": "47б",
+    "design_size": 93.33,
+    "real_size": 96.4,
+    "total_price_uah": 4721305,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/92f3d8aaa18a0e49db5b7287a32d93d9/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/1abd3db83e8f04d1a646f181e15f76e9/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/f4ed76f275c921365eae7d985b68fe28/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 19416,
+    "project_name": "Новий Форт",
+    "section_name": "Г2",
+    "floor_name": "Поверх 5",
+    "number": "26",
+    "design_size": 110.68,
+    "real_size": 0.0,
+    "total_price_uah": 5559677,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/f4febd3d44ebe03f6110d129f38df00e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/bebcba928d0363fc60e02db80df4f851/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/51bbfa7bce57ab682185e1c6fd829da1/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 29218,
+    "project_name": "Новий Форт",
+    "section_name": "Г2",
+    "floor_name": "Поверх 6",
+    "number": "27б",
+    "design_size": 73.25,
+    "real_size": 0.0,
+    "total_price_uah": 3526181,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/0f89389ec51828083684a46ae1b3c749/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/c021f898540d547632115a9f8815083c/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/aa7a83d7f3fb848f4c298ae918ac9dc3/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 19441,
+    "project_name": "Новий Форт",
+    "section_name": "Г3",
+    "floor_name": "Поверх 5",
+    "number": "20",
+    "design_size": 114.32,
+    "real_size": 0.0,
+    "total_price_uah": 5742522,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/b807d7f7253c69428ad0f392926ce040/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/e0bfe9e3d275546318878ee3f390c5b6/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/cd1ccdb5f6b07bbb739f88f05aeafff6/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 29219,
+    "project_name": "Новий Форт",
+    "section_name": "Г3",
+    "floor_name": "Поверх 6",
+    "number": "19б",
+    "design_size": 73.81,
+    "real_size": 0.0,
+    "total_price_uah": 3553139,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/1d1c9c934dd156a73737f7299a0e8386/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/5c0f718102205d2768021aae9c4cd628/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/441c5a57905831b365e9fe8e94a3a816/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 8435,
+    "project_name": "Ріел Сіті",
+    "section_name": "4",
+    "floor_name": "12",
+    "number": "108",
+    "design_size": 89.23,
+    "real_size": 94.4,
+    "total_price_uah": 4741900,
+    "room_count": 3,
+    "images": [
+      {
+        "path": "/project/render/f8ea98d5d234a55e4bb92fd29222823c/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/3764f6cb2173e1686e92ff57e6556a54/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/559eb13613bd0304421be6e2b4e6f5fc/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 15700,
+    "project_name": "Шенген",
+    "section_name": "11.1",
+    "floor_name": "Поверх 10",
+    "number": "79",
+    "design_size": 73.29,
+    "real_size": 72.3,
+    "total_price_uah": 3631773,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/b98f044a5eb1993d8ea7c575c008c81b/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/95447e48957a6a52647cbd92f6fcc1e8/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/99a0917986a3c0ffa4fb56b977c27fa7/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20898,
+    "project_name": "Шенген",
+    "section_name": "4.3",
+    "floor_name": "Поверх -1",
+    "number": "П022",
+    "design_size": 48.03,
+    "real_size": 48.3,
+    "total_price_uah": 1615448,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/dbd6de04ab94eb3d24abe6b80c182468/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/346e692b021bae20939f9ec577260e48/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/3cb73566760b536c0aa8f2c80df7584a/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13363,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 1",
+    "number": "2",
+    "design_size": 78.79,
+    "real_size": 81.0,
+    "total_price_uah": 4068792,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/5d5d69290fe9b28dd23b9cdc5b9a8137/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/596d05f387325d37acfbf8869fe89794/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/e52aea010287e63bac649970da09faad/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13424,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 10",
+    "number": "64",
+    "design_size": 78.79,
+    "real_size": 80.8,
+    "total_price_uah": 4058745,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/f55de83314c1ca9458c33023363ad2ca/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/0021c74e05c31f526effb3ebc38519b4/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/6228a595c08eddd77936dfdcb8af186d/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13431,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 11",
+    "number": "71",
+    "design_size": 78.79,
+    "real_size": 80.6,
+    "total_price_uah": 4048699,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/aed119fcdb295cfd95aba5d9e64e9cbc/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/0a7c7ee1f5eaa5f0693e785d5b7ae49e/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/6c9a3ce19760d285381fa66131115342/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13368,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 2",
+    "number": "8",
+    "design_size": 78.79,
+    "real_size": 81.0,
+    "total_price_uah": 4068792,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/85046506c4f69b9fa92f9e56ef22136d/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/7cd8dd1703e7f24c8e53112521935c7e/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/d86d5e91d7ef961a84e1681cbfcfcc87/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13382,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 4",
+    "number": "22",
+    "design_size": 78.79,
+    "real_size": 81.0,
+    "total_price_uah": 4068792,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/94735b56a61e47dfaf08bfc81a38a797/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/acf1e9e171dd5bb53b5fc3effaa9cfdd/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/c7d5582647af9ba67d0dcb61180b488d/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13389,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 5",
+    "number": "29",
+    "design_size": 78.79,
+    "real_size": 80.3,
+    "total_price_uah": 4033629,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/568ab0a20a91bf98b8c9df6db9f97fcb/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/300635d10855d3f759c18afa6b4a2801/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/ae208e7eec6a8bc1b49e077c4a02a44d/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13410,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 8",
+    "number": "50",
+    "design_size": 78.79,
+    "real_size": 80.3,
+    "total_price_uah": 4033629,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/d966e7f23803c0fa8f05199929d63dcb/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/2027dddbe4ce0dd23b0b1b29d682731a/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/01310abd3feaa7075ac8d38926c1e3d9/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 13417,
+    "project_name": "Шенген",
+    "section_name": "5.1",
+    "floor_name": "Поверх 9",
+    "number": "57",
+    "design_size": 78.79,
+    "real_size": 81.1,
+    "total_price_uah": 4073815,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/4fdf998bfccb5f25572cdd5531f85b5e/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/59e3ee0fe77bda9084b1de9acdfc15fa/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/3b46afd8aeac54362a24f93cf93b9851/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20523,
+    "project_name": "Шенген",
+    "section_name": "9.1",
+    "floor_name": "1",
+    "number": "4",
+    "design_size": 68.76,
+    "real_size": 0.0,
+    "total_price_uah": 3453952,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/e1d702219b120d0d51a51e02a31a7cb2/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/7115ba51aa963c5ad6e072b16fa4cb0b/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/a71336b18db218c62dd22d591b0d0fda/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20525,
+    "project_name": "Шенген",
+    "section_name": "9.1",
+    "floor_name": "1",
+    "number": "6",
+    "design_size": 75.78,
+    "real_size": 0.0,
+    "total_price_uah": 3806580,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/0aeee82a2140f31172b0f8438906fdab/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/0d80dc8820a8a0dfc99dfaeb2b1b85ce/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/fa1fc1808683f42ed1a477141b37bb72/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20563,
+    "project_name": "Шенген",
+    "section_name": "9.1",
+    "floor_name": "8",
+    "number": "44",
+    "design_size": 69.95,
+    "real_size": 0.0,
+    "total_price_uah": 3513728,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/43848b464155c25ce4541a64a5ead9b6/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/cfef7b171b6545ce3581d3daff2fcd60/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/b97ead6352e8d6fae8660baa125fdfae/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20594,
+    "project_name": "Шенген",
+    "section_name": "9.2",
+    "floor_name": "1",
+    "number": "3",
+    "design_size": 68.3,
+    "real_size": 0.0,
+    "total_price_uah": 3430845,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/dceb880a78e2e62a0802650b9b57f4c7/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/b4af766ab4362fb808c11963e8cffc8f/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/12e09b08bb285b85bd7fd118a0dbe204/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20866,
+    "project_name": "Шенген",
+    "section_name": "9.2",
+    "floor_name": "-1",
+    "number": "7a",
+    "design_size": 37.21,
+    "real_size": 0.0,
+    "total_price_uah": 1244530,
+    "room_count": 1,
+    "images": [
+      {
+        "path": "/project/render/e6d50cc9062324cb41680ea61b35292a/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/eee2ae5655554b6012a92f1e001035da/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/4fa46c40aa4f9e626daa84f469284e52/original.jpg",
+        "order_number": 2
+      }
+    ]
+  },
+  {
+    "id": 20600,
+    "project_name": "Шенген",
+    "section_name": "9.2",
+    "floor_name": "2",
+    "number": "9",
+    "design_size": 68.3,
+    "real_size": 0.0,
+    "total_price_uah": 3430845,
+    "room_count": 2,
+    "images": [
+      {
+        "path": "/project/render/8914e8328daa9c58ca09c6cc21cae6d2/original.jpg",
+        "order_number": 0
+      },
+      {
+        "path": "/project/render/32269c019679f5b39d2b717d64ab5814/original.jpg",
+        "order_number": 1
+      },
+      {
+        "path": "/project/render/6197ae48e90d8041089ed259c623f8d3/original.jpg",
+        "order_number": 2
+      }
+    ]
+  }
+]

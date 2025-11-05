@@ -6,14 +6,14 @@ export function chooseRightInputs(unitsData, projects = true) {
   if (window.innerWidth > 1500) {
     populateFilter(
       unitsData,
-      'project.name',
+      'project_name',
       document.querySelector('.filter__item_wrapper.project'),
       'project',
     );
   } else {
     populateFilter(
       unitsData,
-      'project.name',
+      'project_name',
       document.querySelector('.filter_flats__project'),
       'project',
     );
@@ -24,16 +24,16 @@ export function chooseRightInputs(unitsData, projects = true) {
   }
 
   // Фільтр типу
-  if (window.innerWidth > 1500) {
-    populateFilter(
-      units,
-      'unit_type.name',
-      document.querySelector('.filter__item_wrapper.type'),
-      'type',
-    );
-  } else {
-    populateFilter(units, 'unit_type.name', document.querySelector('.filter_flats__type'), 'type');
-  }
+  // if (window.innerWidth > 1500) {
+  //   populateFilter(
+  //     units,
+  //     'unit_type.name',
+  //     document.querySelector('.filter__item_wrapper.type'),
+  //     'type',
+  //   );
+  // } else {
+  //   populateFilter(units, 'unit_type.name', document.querySelector('.filter_flats__type'), 'type');
+  // }
   // Фільтр кімнат
   if (window.innerWidth > 1500) {
     populateFilter(
@@ -54,14 +54,14 @@ export function chooseRightInputs(unitsData, projects = true) {
   if (window.innerWidth > 1500) {
     populateSliderFilter(
       units,
-      'total_price',
+      'total_price_uah',
       document.querySelector('.filter__slider.price'),
       'Ціна',
     );
   } else {
     populateSliderFilter(
       units,
-      'total_price',
+      'total_price_uah',
       document.querySelector('.filter_flats__price'),
       'Ціна',
     );
@@ -87,7 +87,7 @@ export function chooseRightInputs(unitsData, projects = true) {
     populateSliderFilter(
       units,
       unit => {
-        const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+        const match = unit.floor_name.match(/-?\d+/); // враховуємо можливий знак "-"
         return match ? Number(match[0]) : null;
       },
       document.querySelector('.filter__slider.floor'),
@@ -97,7 +97,7 @@ export function chooseRightInputs(unitsData, projects = true) {
     populateSliderFilter(
       units,
       unit => {
-        const match = unit.floor?.name?.match(/-?\d+/); // враховуємо можливий знак "-"
+        const match = unit.floor_name.match(/-?\d+/); // враховуємо можливий знак "-"
         return match ? Number(match[0]) : null;
       },
       document.querySelector('.filter_flats__floor'),
