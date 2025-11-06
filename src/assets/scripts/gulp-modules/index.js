@@ -71,12 +71,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const wrapper = section.querySelector('.swiper-wrapper');
 
     const setUnits = units => {
+      console.log(units.length);
       wrapper.innerHTML = ''; // очищаємо обгортку
       let count = 0;
       const selectedUnits = units
-        .filter(unit => unit.total_price && unit.total_price > 0) // залишаємо тільки з ціною
-        .sort((a, b) => a.total_price - b.total_price) // сортуємо за зростанням ціни
-        .slice(0, 5); // беремо 5 найдешевших
+        .filter(
+          unit => unit.total_price && unit.total_price > 0 && unit.project.name !== 'Залишки', // ← ДОДАНО виключення
+        )
+        .sort((a, b) => a.total_price - b.total_price)
+        .reduce((acc, unit) => {
+          const projectExists = acc.some(item => item.project_id === unit.project_id);
+          if (!projectExists) {
+            acc.push(unit);
+          }
+          return acc;
+        }, [])
+        .slice(0, 5);
+
+      console.log('🏆 5 найдешевших (без "Залишків"):', selectedUnits);
+
+      function transliterateUkrainian(text, removeSpaces = true) {
+        const ukrainianMap = {
+          а: 'a',
+          б: 'b',
+          в: 'v',
+          г: 'g',
+          ґ: 'g',
+          д: 'd',
+          е: 'e',
+          є: 'ye',
+          ж: 'zh',
+          з: 'z',
+          и: 'y',
+          і: 'i',
+          ї: 'yi',
+          й: 'y',
+          к: 'k',
+          л: 'l',
+          м: 'm',
+          н: 'n',
+          о: 'o',
+          п: 'p',
+          р: 'r',
+          с: 's',
+          т: 't',
+          у: 'u',
+          ф: 'f',
+          х: 'kh',
+          ц: 'ts',
+          ч: 'ch',
+          ш: 'sh',
+          щ: 'sch',
+          ь: 'y',
+          ю: 'yu',
+          я: 'ya',
+          А: 'A',
+          Б: 'B',
+          В: 'V',
+          Г: 'G',
+          Ґ: 'G',
+          Д: 'D',
+          Е: 'E',
+          Є: 'Ye',
+          Ж: 'Zh',
+          З: 'Z',
+          И: 'Y',
+          І: 'I',
+          Ї: 'Yi',
+          Й: 'Y',
+          К: 'K',
+          Л: 'L',
+          М: 'M',
+          Н: 'N',
+          О: 'O',
+          П: 'P',
+          Р: 'R',
+          С: 'S',
+          Т: 'T',
+          У: 'U',
+          Ф: 'F',
+          Х: 'Kh',
+          Ц: 'Ts',
+          Ч: 'Ch',
+          Ш: 'Sh',
+          Щ: 'Sch',
+          Ь: 'Y',
+          Ю: 'Yu',
+          Я: 'Ya',
+        };
+
+        const hasCyrillic = /[а-яєіїґА-ЯЄІЇҐ]/.test(text);
+
+        let result;
+
+        if (hasCyrillic) {
+          // ✅ КИРИЛИЦЯ - конвертуй
+          result = text
+            .split('')
+            .map(char => ukrainianMap[char] || char)
+            .join('')
+            .toLowerCase();
+        } else {
+          // ✅ ЛАТИНИЦЯ - не конвертуй, просто обробляй
+          result = text.toLowerCase();
+        }
+
+        // ✅ ВИДАЛИ ПРОБІЛИ ДЛЯ ОБОХ (якщо removeSpaces = true)
+        if (removeSpaces) {
+          result = result.replace(/\s+/g, '');
+        }
+
+        return result;
+      }
 
       selectedUnits.forEach(unit => {
         console.log(unit);
@@ -85,20 +191,21 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="swiper-slide">
             <a href="/flats?id=${unit.id}" 
                 class="flat_card" data-filtered="true"  
-                data-project="${unit.project_name || null}" 
+                data-project="${unit.project.name || null}" 
                 data-room_count="${unit.room_count || null}" 
                 data-type="${unit.unit_type?.name || 'Помешкання'}" 
                 data-size="${unit.real_size || null}" 
-                data-floor="${unit.floor_name ? unit.floor_name.match(/-?\d+/)?.[0] || null : null}"
+                data-floor="${unit.floor.name ? unit.floor.name.match(/-?\d+/)?.[0] || null : null}"
                 data-id=${unit.id}
             >
         <div class="flat_card__hover">
-          <span style="background:${colors[unit.id] || '#DCDCDC'};"></span>
+          <span style="background:${colors[unit.id] ||
+            '#DCDCDC'};"  data-color="${transliterateUkrainian(unit.project.name) || ''}"></span>
         </div>
         <!--<div class="flat_card__note">Новинка</div>-->
         <div class="flat_card__top">
           <span>Житловий комплекс</span>
-          <span>${unit.project_name}</span>
+          <span>${unit.project.name || null}</span>
         </div>
         <div class="flat_card__img">
           <img src="${
@@ -122,8 +229,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="flat_card__center_right">
             <span>грн/м²</span>
             <span>${
-              unit.total_price_uah && unit.total_price_uah !== 0
-                ? Number(unit.total_price_uah).toLocaleString('uk-UA')
+              unit.total_price && unit.total_price !== 0
+                ? Number(unit.total_price).toLocaleString('uk-UA')
                 : '-'
             }</span>
           </div>

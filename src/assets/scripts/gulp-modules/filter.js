@@ -3,23 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.page-template-projects') &&
     !document.querySelector('.page-template-project_single')
   ) {
-    //Це секція в якій обрані значення з фільтру
     const sectionProjectsSelected = document.querySelector('.section_projects__selected_wrapper');
-    //Видаляє всі фільтри
     const btnDelete = document.querySelector('.btn_delete');
     const filterPopupBtnDelete = document.querySelector('.filter_popup__btn_delete');
-    //Збираємо всі картки
     const projectCards = document.querySelectorAll('.project_card');
-    //Прелоадер
     const preloader = document.querySelector('.preloader');
 
+    // ✅ ВИПРАВЛЕНО - Видалено дублювання
     function syncInputsWithSelectedFilter() {
       const allInputs = document.querySelectorAll(
         '.section_projects__filter input, .filter_projects input',
       );
 
       allInputs.forEach(input => {
-        const filterKey = input.dataset.filter?.split('-')[0]; // для слайдерів буде 'Площа' або 'Поверх'
+        const filterKey = input.dataset.filter?.split('-')[0];
 
         if (!filterKey) return;
 
@@ -33,33 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
 
+        // ✅ ВИПРАВЛЕНО - Єдиний блок для range без дублювання
         if (input.type === 'range') {
-          if (selectedFilter[`${filterKey}`]) {
-            input.value = selectedFilter[`${filterKey}`];
-
-            input.setAttribute('value', selectedFilter[`${filterKey}`]);
+          if (selectedFilter[filterKey]) {
+            input.value = selectedFilter[filterKey];
+            input.setAttribute('value', selectedFilter[filterKey]);
+            // оновлюємо UI слайдера
+            input.dispatchEvent(new Event('input'));
           }
-          if (selectedFilter[`${filterKey}`]) {
-            input.value = selectedFilter[`${filterKey}`];
-
-            input.setAttribute('value', selectedFilter[`${filterKey}`]);
-          }
-
-          // filterCards();
-          // оновлюємо UI слайдера
-          input.dispatchEvent(new Event('input'));
         }
       });
     }
 
     //Пагінація
-
     const leftArrow = document.querySelector('.section_projects__pagination_arrow_left');
     const rightArrow = document.querySelector('.section_projects__pagination_arrow_right');
     const currentPageEl = document.querySelector('.section_projects__current_pages');
     const allPagesEl = document.querySelector('.all_pages');
 
-    const itemsPerPage = 6; // кількість карток на сторінку
+    const itemsPerPage = 6;
 
     let currentPage = 1;
     let totalPages = 1;
@@ -68,14 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const filteredElements = getFilteredElements();
       totalPages = Math.ceil(filteredElements.length / itemsPerPage) || 1;
 
-      // обмежуємо номер сторінки
       if (page < 1) page = 1;
       if (page > totalPages) page = totalPages;
       currentPage = page;
       currentPageEl.textContent = currentPage.toString().padStart(2, '0');
       allPagesEl.textContent = totalPages;
 
-      // показуємо/ховаємо картки
       filteredElements.forEach((card, index) => {
         const start = (currentPage - 1) * itemsPerPage;
         const end = currentPage * itemsPerPage;
@@ -83,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = index >= start && index < end ? 'flex' : 'none';
       });
 
-      // Деактивація кнопок
       if (currentPage === 1) {
         leftArrow.classList.add('disabled');
       } else {
@@ -95,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rightArrow.classList.remove('disabled');
       }
 
-      // Приховуємо пагінацію, якщо сторінка одна
       const paginationWrapper = document.querySelector('.section_projects__pagination.pagination');
       if (paginationWrapper) {
         paginationWrapper.style.display = totalPages > 1 ? 'flex' : 'none';
@@ -108,16 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setPagination = () => {
       const filteredElements = getFilteredElements();
-      totalPages = Math.ceil(filteredElements.length / itemsPerPage) || 1; // перерахунок сторінок
+      totalPages = Math.ceil(filteredElements.length / itemsPerPage) || 1;
       currentPage = 1;
 
       currentPageEl.textContent = currentPage.toString().padStart(2, '0');
       allPagesEl.textContent = totalPages;
 
-      showPage(currentPage); // показуємо першу сторінку
+      showPage(currentPage);
     };
 
-    // обробники кнопок
     leftArrow.addEventListener('click', () => {
       preloader.style.opacity = '1';
       preloader.style.visibility = 'visible';
@@ -142,22 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1000);
     });
 
-    //Зчитуємо з url параметри для фільтрації і встановлюємо в selectedFilter
     function initSelectedFilterFromURL() {
       const params = new URLSearchParams(window.location.search);
       const selectedFilter = {};
 
-      // пробігаємось по всіх параметрах у URL
       for (const [key, value] of params.entries()) {
-        // якщо значення містить коми – робимо масив, інакше обертаємо в масив
         selectedFilter[key] = value.includes(',') ? value.split(',') : [value];
       }
 
       return selectedFilter;
     }
 
-    // Виклик при завантаженні сторінки
-    //Це об'єкт в якому ключ це назва фільтру, значення це масив з обраними значеннями цього фільтру
     let selectedFilter = initSelectedFilterFromURL();
 
     syncInputsWithSelectedFilter();
@@ -166,18 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateURLFromSelectedFilter(selectedFilter) {
       const url = new URL(window.location);
 
-      // спершу видаляємо всі старі параметри
       url.search = '';
 
-      // пробігаємось по selectedFilter
       for (const key in selectedFilter) {
         if (selectedFilter[key] && selectedFilter[key].length > 0) {
-          // якщо значень кілька – об'єднуємо через кому
           url.searchParams.set(key, selectedFilter[key].join(','));
         }
       }
 
-      // змінюємо URL без перезавантаження
       window.history.replaceState({}, '', url);
     }
 
@@ -192,27 +167,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function countVisibleCards() {
-      document.querySelector(
-        '.btn_filter_mob .number span',
-      ).textContent = document.querySelectorAll('.project_card[data-filtered="true"]').length;
+      const numberSpan = document.querySelector('.btn_filter_mob .number span');
+      if (numberSpan) {
+        numberSpan.textContent = document.querySelectorAll(
+          '.project_card[data-filtered="true"]',
+        ).length;
+      }
     }
 
     if (filterPopupBtnDelete) {
       filterPopupBtnDelete.addEventListener('click', () => {
-        // знімаємо всі чекбокси
-
+        const filterPopUpInputs = document.querySelectorAll('.filter input[type="checkbox"]');
         filterPopUpInputs.forEach(input => {
           input.checked = false;
         });
-        // очищаємо об’єкт selectedFilter
         selectedFilter = {};
 
-        // очищаємо контейнер обраних
         if (sectionProjectsSelected) {
           sectionProjectsSelected.innerHTML = '';
         }
 
-        // оновлюємо відображення карток
         filterCards();
         updateURLFromSelectedFilter(selectedFilter);
         countVisibleCards();
@@ -221,18 +195,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnDelete) {
       btnDelete.addEventListener('click', () => {
-        // знімаємо всі чекбокси
+        const filterInputs = document.querySelectorAll('.section_projects input[type="checkbox"]');
         filterInputs.forEach(input => (input.checked = false));
 
-        // очищаємо об’єкт selectedFilter
         selectedFilter = {};
 
-        // очищаємо контейнер обраних
         if (sectionProjectsSelected) {
           sectionProjectsSelected.innerHTML = '';
         }
 
-        // оновлюємо відображення карток
         filterCards();
         updateURLFromSelectedFilter(selectedFilter);
         countVisibleCards();
@@ -240,27 +211,31 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // setPagination();
+    // ✅ ВИПРАВЛЕНО
 
-    //Ця функція відповідає за те які картки показувати
     function filterCards() {
+      // ✅ Перевір чи preloader існує
+      if (!preloader) {
+        console.warn('⚠️ Preloader не знайдено');
+        return;
+      }
+
       preloader.style.opacity = '1';
       preloader.style.visibility = 'visible';
+
       projectCards.forEach(card => {
         let show = true;
 
-        // перебираємо всі ключі у selectedFilter
         for (let key in selectedFilter) {
-          const cardValue = card.dataset[key]; // значення картки, напр. data-status, data-project
-          const filterValues = selectedFilter[key]; // масив допустимих значень
-          //Якщо ми не заходимо в if то всі картки залишаться з show = true
-          //Якщо значення картки не в масиві – ховаємо картку
+          const cardValue = card.dataset[key];
+          const filterValues = selectedFilter[key];
 
           if (!filterValues.includes(cardValue)) {
             show = false;
-            break; // немає сенсу перевіряти інші ключі
+            break;
           }
         }
+
         if (show) {
           card.dataset.filtered = 'true';
         } else {
@@ -268,15 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         card.style.display = show ? 'flex' : 'none';
       });
+
       setPagination();
       countVisibleCards();
+
       setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
+        // ✅ Перевір ще раз перед змінами
+        if (preloader) {
+          preloader.style.opacity = '0';
+          preloader.style.visibility = 'hidden';
+        }
       }, 500);
     }
 
-    // Збираємо всі інпути в блоці фільтра
     const filterInputs = document.querySelectorAll('.section_projects input[type="checkbox"]');
 
     filterInputs.forEach(input => {
@@ -284,19 +263,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const [key, value] = input.dataset.filter.split('-');
 
         if (input.checked) {
-          //Показуємо кнопку, яка видаляє обрані фільтри
           btnDelete.style.display = 'block';
 
-          // якщо ключа ще немає – створюємо масив
           if (!selectedFilter[key]) {
             selectedFilter[key] = [];
           }
-          // додаємо значення, якщо ще немає
           if (!selectedFilter[key].includes(value)) {
             selectedFilter[key].push(value);
           }
           if (sectionProjectsSelected) {
-            //Додаєм обраний фільтр у верхній рядок обраних фільтрів
             if (
               !sectionProjectsSelected.querySelector(
                 `.section_projects__selected_item[data-id="${value}"]`,
@@ -304,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ) {
               const item = document.createElement('div');
               item.classList.add('section_projects__selected_item');
-              item.dataset.id = value; // додаємо data-id
+              item.dataset.id = value;
               item.innerHTML = `
             <span>${input.dataset.name}</span>
             <svg class="delete-item" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,11 +288,10 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
               const close = item.querySelector('.delete-item');
               close.addEventListener('click', () => {
-                item.remove(); // видаляємо блок
-                input.checked = false; // знімаємо чекбокс
+                item.remove();
+                input.checked = false;
                 input.dispatchEvent(new Event('change'));
 
-                // оновлюємо фільтр
                 if (selectedFilter[key]) {
                   selectedFilter[key] = selectedFilter[key].filter(v => v !== value);
                   if (selectedFilter[key].length === 0) delete selectedFilter[key];
@@ -326,21 +300,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateURLFromSelectedFilter(selectedFilter);
                 countVisibleCards();
               });
-              // вставляємо в контейнер
               sectionProjectsSelected.appendChild(item);
             }
           }
         } else {
-          // видаляємо значення
           if (selectedFilter[key]) {
             selectedFilter[key] = selectedFilter[key].filter(v => v !== value);
-            // якщо масив порожній – видаляємо ключ
             if (selectedFilter[key].length === 0) {
               delete selectedFilter[key];
             }
           }
 
-          // видаляємо відповідний блок із sectionProjectsSelected
           if (sectionProjectsSelected) {
             const itemToRemove = sectionProjectsSelected.querySelector(
               `.section_projects__selected_item[data-id="${value}"]`,
@@ -350,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
 
-          // після того як ми видалили значення з selectedFilter
           if (Object.keys(selectedFilter).length === 0) {
             btnDelete.style.display = 'none';
           }
@@ -387,7 +356,10 @@ document.addEventListener('DOMContentLoaded', () => {
         filterCards();
         updateURLFromSelectedFilter(selectedFilter);
         countVisibleCards();
-        popupFilter.classList.remove('active');
+        const popupFilter = document.querySelector('.filter_popup');
+        if (popupFilter) {
+          popupFilter.classList.remove('active');
+        }
         scrollToFilterResults();
         setTimeout(() => {
           preloader.style.opacity = '0';
@@ -396,13 +368,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    //Висота блока з картками, щоб не скакав
-
     function updateHeight() {
       const filterResult = document.querySelector('.section_projects__filter_result');
       if (filterResult) {
-        filterResult.style.minHeight = 'auto'; // скидаємо стару висоту
-        const height = filterResult.offsetHeight; // поточна висота
+        filterResult.style.minHeight = 'auto';
+        const height = filterResult.offsetHeight;
         filterResult.style.minHeight = height + 'px';
       }
     }
@@ -412,7 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateHeight();
     });
 
-    //Попап фільтр
     const btnOpenFilter = document.querySelector('.btn_filter_mob button');
     const popupFilter = document.querySelector('.filter_popup');
     const btnClose = document.querySelector('.filter_popup__close');
@@ -430,11 +399,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // закрыть попап по клику на wrapper (оверлей)
     if (wrapper && popupFilter) {
       popupFilter.addEventListener('click', e => {
         if (e.target === popupFilter) {
-          // клик именно на фон, а не на содержимое
           popupFilter.classList.remove('active');
         }
       });

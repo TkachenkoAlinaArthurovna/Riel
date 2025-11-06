@@ -2,6 +2,7 @@ import { populateFilter, populateSliderFilter } from './populateFilters';
 import { filterUnitsBySelectedFilter } from './filterUnitsBySelectedFilter';
 
 export function chooseRightInputs(unitsData, projects = true) {
+  console.log('unitsData', unitsData);
   // Фільтр ЖК
   if (window.innerWidth > 1500) {
     populateFilter(

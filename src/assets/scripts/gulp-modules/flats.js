@@ -332,11 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const hasVisible = Array.from(cards).some(card => card.style.display !== 'none');
 
       // додаємо або прибираємо клас
-      if (!hasVisible) {
-        emptyBlock.classList.add('active');
-      } else {
-        emptyBlock.classList.remove('active');
+      if (emptyBlock) {
+        if (!hasVisible) {
+          emptyBlock.classList.add('active');
+        } else {
+          emptyBlock.classList.remove('active');
+        }
       }
+
       pagination.setPagination();
       countVisibleCards();
       setTimeout(() => {

@@ -437,6 +437,7 @@
   }
   .swiper-slide {
     width: min-content;
+    height: auto;
   }
   .swiper-slide:last-child {
     margin-right: 40px;
@@ -458,6 +459,7 @@
   flex-direction: column;
   width: 460px;
   // height: 674px;
+  height: 100%;
   margin-bottom: 10px;
   padding: 28px;
   border-radius: 24px;
@@ -651,6 +653,46 @@
     @media (max-width: 480px) {
       height: 86px;
     }
+
+    [data-color='ameryka'] {
+      background-color: #696969 !important;
+    }
+    [data-color='vezha'] {
+      background-color: #696969 !important;
+    }
+
+    [data-color='zalyshky'] {
+      background-color: #696969 !important;
+    }
+
+    [data-color='shengen'] {
+      background-color: #696969 !important;
+    }
+
+    [data-color='brama'] {
+      background-color: #40e0d0 !important;
+    }
+
+    [data-color='kompanyyon'] {
+      background-color: #e6e621ff !important;
+    }
+
+    [data-color='rielsiti'] {
+      background-color: #e6e621ff !important;
+    }
+
+    [data-color='brother'] {
+      background-color: #fb6a46 !important;
+    }
+
+    [data-color='sister'] {
+      background-color: #7077fb !important;
+    }
+
+    [data-color='father'] {
+      background-color: #5db263 !important;
+    }
+
     span {
       display: block;
       width: 100%;
