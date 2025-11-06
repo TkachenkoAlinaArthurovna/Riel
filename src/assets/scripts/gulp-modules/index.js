@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="flat_card" href="/flats" 
                 class="btn_more"
             >
-              <span>Дивитись всі квартири</span>
+              <span>Дивитись всі помешкання</span>
             </a>
       </div>
     `;
