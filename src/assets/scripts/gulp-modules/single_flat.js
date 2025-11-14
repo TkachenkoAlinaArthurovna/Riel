@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const res = await getunits();
         if (!res) return;
         const data = res.data;
+        console.log(data);
         flat = data.data.find(item => item.id === Number(idValue));
         // Заповнюємо хлібні крихти
         const unitNumber = document.querySelector('.section_breadcrumbs .unit-number');

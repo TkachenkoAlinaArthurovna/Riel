@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${
             unit.images?.[1]?.path
               ? `https://source-riel.propertymate.ai/${unit.images[1].path}`
-              : 'assets/images/no_image.gif'
+              : '/wp-content/themes/3d/assets/images/no_image.gif'
           }"   alt="planning" />
         </div>
         <div class="flat_card__center">
