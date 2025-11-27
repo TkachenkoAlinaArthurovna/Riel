@@ -46,10 +46,18 @@ document.addEventListener('DOMContentLoaded', function() {
       })();
 
       async function loadUnits() {
+<<<<<<< HEAD
         const data = unitsData;
         if (!data) return;
         console.log(data);
         flat = data.find(item => item.id === Number(idValue));
+=======
+        const res = await getunits();
+        if (!res) return;
+        const data = res.data;
+        console.log(data);
+        flat = data.data.find(item => item.id === Number(idValue));
+>>>>>>> 3213fd333ccd40fd5161ae3b874e26c606430d12
         // Заповнюємо хлібні крихти
         const unitNumber = document.querySelector('.section_breadcrumbs .unit-number');
         if (flat.unit_type_name && flat.number) {
