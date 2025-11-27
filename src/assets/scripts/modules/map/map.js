@@ -1,4 +1,3 @@
-import { swiperMap } from '../../gulp-modules';
 import mapStyle from './map-style';
 
 export default async function googleMap() {
@@ -254,7 +253,6 @@ export default async function googleMap() {
         }
       });
 
-      swiperMap.update();
     });
   });
 }

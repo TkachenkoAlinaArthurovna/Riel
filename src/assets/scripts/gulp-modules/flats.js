@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const unitsResponse = await getunits();
 
       if (unitsResponse?.data) {
-        unitsData = unitsResponse.data;
+        unitsData = unitsResponse.data.data;
 
         setUnits(unitsData, wrapper, pagination, filterCards, countVisibleCards);
         //Кнопки очищення
@@ -623,4 +623,4 @@ document.addEventListener('DOMContentLoaded', () => {
       // pagination.setPagination();
     }
   }
-});
+}, { once: true });

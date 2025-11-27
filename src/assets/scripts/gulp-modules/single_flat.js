@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const unitsResponse = await getunits();
 
         if (unitsResponse?.data) {
-          unitsData = unitsResponse.data;
+          unitsData = unitsResponse.data.data;
           loadUnits();
         }
       })();

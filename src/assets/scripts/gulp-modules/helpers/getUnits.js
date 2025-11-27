@@ -22,7 +22,6 @@ export async function getunits() {
 
   try {
     const response = await axios.post(url, formData);
-
     return response;
   } catch (error) {
     console.error('Помилка при завантаженні квартир:', error);

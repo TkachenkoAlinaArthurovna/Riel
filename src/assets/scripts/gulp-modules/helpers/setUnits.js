@@ -4,114 +4,121 @@ import { adresses, projectIds, colors } from './constants.js'; // якщо const
 export function setUnits(units, wrapper, pagination, filterCards, countVisibleCards) {
   wrapper.innerHTML = ''; // очищаємо обгортку
 
+  let arrHtml = [];
+  function transliterateUkrainian(text, removeSpaces = true) {
+    const ukrainianMap = {
+      а: 'a',
+      б: 'b',
+      в: 'v',
+      г: 'g',
+      ґ: 'g',
+      д: 'd',
+      е: 'e',
+      є: 'ye',
+      ж: 'zh',
+      з: 'z',
+      и: 'y',
+      і: 'i',
+      ї: 'yi',
+      й: 'y',
+      к: 'k',
+      л: 'l',
+      м: 'm',
+      н: 'n',
+      о: 'o',
+      п: 'p',
+      р: 'r',
+      с: 's',
+      т: 't',
+      у: 'u',
+      ф: 'f',
+      х: 'kh',
+      ц: 'ts',
+      ч: 'ch',
+      ш: 'sh',
+      щ: 'sch',
+      ь: 'y',
+      ю: 'yu',
+      я: 'ya',
+      А: 'A',
+      Б: 'B',
+      В: 'V',
+      Г: 'G',
+      Ґ: 'G',
+      Д: 'D',
+      Е: 'E',
+      Є: 'Ye',
+      Ж: 'Zh',
+      З: 'Z',
+      И: 'Y',
+      І: 'I',
+      Ї: 'Yi',
+      Й: 'Y',
+      К: 'K',
+      Л: 'L',
+      М: 'M',
+      Н: 'N',
+      О: 'O',
+      П: 'P',
+      Р: 'R',
+      С: 'S',
+      Т: 'T',
+      У: 'U',
+      Ф: 'F',
+      Х: 'Kh',
+      Ц: 'Ts',
+      Ч: 'Ch',
+      Ш: 'Sh',
+      Щ: 'Sch',
+      Ь: 'Y',
+      Ю: 'Yu',
+      Я: 'Ya',
+    };
+
+    const hasCyrillic = /[а-яєіїґА-ЯЄІЇҐ]/.test(text);
+
+    let result;
+
+    if (hasCyrillic) {
+      // ✅ КИРИЛИЦЯ - конвертуй
+      result = text
+        .split('')
+        .map(char => ukrainianMap[char] || char)
+        .join('')
+        .toLowerCase();
+    } else {
+      // ✅ ЛАТИНИЦЯ - не конвертуй, просто обробляй
+      result = text.toLowerCase();
+    }
+
+    // ✅ ВИДАЛИ ПРОБІЛИ ДЛЯ ОБОХ (якщо removeSpaces = true)
+    if (removeSpaces) {
+      result = result.replace(/\s+/g, '');
+    }
+
+    return result;
+  }
+
+  const projectsIds = {
+    Америка: 252,
+    Компаньйон: 0,
+    'Новий Форт': 230,
+    'Велика Британія': 314,
+    Вежа: 180,
+    Шенген: 110,
+    'Ріел Сіті': 26,
+  };
+
   units.forEach(unit => {
+
+    
     if (unit.project_name != 'Залишки') {
       // const link =
       //   unit.id && projectIds?.[unit.id]
       //     ? `/flats?id=${unit.id}&project=${projectIds[unit.id]}`
       //     : `/flats?id=${unit.id}`;
-      function transliterateUkrainian(text, removeSpaces = true) {
-        const ukrainianMap = {
-          а: 'a',
-          б: 'b',
-          в: 'v',
-          г: 'g',
-          ґ: 'g',
-          д: 'd',
-          е: 'e',
-          є: 'ye',
-          ж: 'zh',
-          з: 'z',
-          и: 'y',
-          і: 'i',
-          ї: 'yi',
-          й: 'y',
-          к: 'k',
-          л: 'l',
-          м: 'm',
-          н: 'n',
-          о: 'o',
-          п: 'p',
-          р: 'r',
-          с: 's',
-          т: 't',
-          у: 'u',
-          ф: 'f',
-          х: 'kh',
-          ц: 'ts',
-          ч: 'ch',
-          ш: 'sh',
-          щ: 'sch',
-          ь: 'y',
-          ю: 'yu',
-          я: 'ya',
-          А: 'A',
-          Б: 'B',
-          В: 'V',
-          Г: 'G',
-          Ґ: 'G',
-          Д: 'D',
-          Е: 'E',
-          Є: 'Ye',
-          Ж: 'Zh',
-          З: 'Z',
-          И: 'Y',
-          І: 'I',
-          Ї: 'Yi',
-          Й: 'Y',
-          К: 'K',
-          Л: 'L',
-          М: 'M',
-          Н: 'N',
-          О: 'O',
-          П: 'P',
-          Р: 'R',
-          С: 'S',
-          Т: 'T',
-          У: 'U',
-          Ф: 'F',
-          Х: 'Kh',
-          Ц: 'Ts',
-          Ч: 'Ch',
-          Ш: 'Sh',
-          Щ: 'Sch',
-          Ь: 'Y',
-          Ю: 'Yu',
-          Я: 'Ya',
-        };
-
-        const hasCyrillic = /[а-яєіїґА-ЯЄІЇҐ]/.test(text);
-
-        let result;
-
-        if (hasCyrillic) {
-          // ✅ КИРИЛИЦЯ - конвертуй
-          result = text
-            .split('')
-            .map(char => ukrainianMap[char] || char)
-            .join('')
-            .toLowerCase();
-        } else {
-          // ✅ ЛАТИНИЦЯ - не конвертуй, просто обробляй
-          result = text.toLowerCase();
-        }
-
-        // ✅ ВИДАЛИ ПРОБІЛИ ДЛЯ ОБОХ (якщо removeSpaces = true)
-        if (removeSpaces) {
-          result = result.replace(/\s+/g, '');
-        }
-
-        return result;
-      }
-      const projectsIds = {
-        Америка: 252,
-        Компаньйон: 0,
-        'Новий Форт': 230,
-        'Велика Британія': 314,
-        Вежа: 180,
-        Шенген: 110,
-        'Ріел Сіті': 26,
-      };
+      
+      
       const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
       const unitHTML = `
         <a href=${link}
@@ -127,18 +134,13 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
           <div class="flat_card__hover">
             
             <span style="background:${colors[unit.id] ||
-              '#DCDCDC'};"  data-color="${transliterateUkrainian(unit.project_name) || ''}"></span>
+              '#DCDCDC'};" ></span>
           </div>
           <div class="flat_card__top">
             <span>Житловий комплекс</span>
             ${unit.project_name ? `<span>${unit.project_name}</span>` : ''}
           </div>
           <div class="flat_card__img">
-            <img src="${
-              unit.images?.[1]?.path
-                ? `https://source-riel.propertymate.ai${unit.images[1].path}`
-                : '/wp-content/themes/3d/assets/images/no_image.gif'
-            }" alt="planning" />
           </div>
           <div class="flat_card__center">
             <div class="flat_card__center_left">
@@ -184,10 +186,11 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
           }
         </a>
       `;
-
-      wrapper.insertAdjacentHTML('beforeend', unitHTML);
+      arrHtml.push(unitHTML);
+      // wrapper.insertAdjacentHTML('beforeend', unitHTML);
     }
   });
+  wrapper.innerHTML = arrHtml.join('');
 
   filterCards();
   countVisibleCards();
