@@ -1,3 +1,6 @@
+.title-red {
+  color: red;
+}
 .desktop_hide {
   display: none;
   @media (max-width: 1024px) {
@@ -21,6 +24,8 @@
   margin: 0 40px;
   background-color: $brend-green;
   cursor: pointer;
+  text-transform: uppercase;
+  word-spacing: 0.1em;
   @media (max-width: 480px) {
     height: 40px;
     margin: 0 22px;
@@ -121,6 +126,7 @@
   .section_title {
     margin-bottom: 80px;
     font-weight: 600;
+    word-spacing: 0.3em;
     @media (max-width: 768px) {
       margin-bottom: 40px;
     }
@@ -363,6 +369,7 @@
     top: 148px;
     left: 40px;
     @include text-96-56-32;
+    word-spacing: 0.3em;
     text-transform: uppercase;
     color: $brend-white;
     @media (max-width: 768px) {
@@ -379,6 +386,7 @@
     bottom: 40px;
     right: 40px;
     @include text-96-56-32;
+    word-spacing: 0.3em;
     color: $brend-white;
     text-align: end;
     @media (max-width: 768px) {
@@ -391,9 +399,11 @@
   }
   &__bottom_right_text_mob {
     display: none;
+    word-spacing: 0.3em;
   }
   &__bottom_right_mob {
     display: none;
+    word-spacing: 0.3em;
     @media (max-width: 480px) {
       position: absolute;
       z-index: 2;
@@ -805,6 +815,7 @@
       top: 40px;
       left: 40px;
       @include text-96-56-32;
+      word-spacing: 0.3em;
     }
   }
   &__bottom_right {
@@ -836,6 +847,7 @@
       right: 40px;
       text-align: end;
       @include text-96-56-32;
+      word-spacing: 0.3em;
     }
   }
 }
@@ -881,6 +893,9 @@
     }
   }
   .swiper-slide {
+    display: flex;
+    align-items: stretch;
+    height: auto;
     @media (max-width: 768px) {
       width: 344px;
     }
@@ -897,6 +912,7 @@
 .news_card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
@@ -1045,6 +1061,7 @@
   }
   &__title {
     @include text-36;
+    text-transform: uppercase;
 
     @media (max-width: 480px) {
       @include text-32;

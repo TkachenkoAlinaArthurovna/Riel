@@ -1,7 +1,4 @@
-import axios from 'axios';
-import data from './units.json'; // локальні дані
-
-const unitsMock = () => data;
+import { getunits } from './helpers/getUnits.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   if (document.querySelector('.page-template-project_single')) {
@@ -15,35 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
       'Новий Форт': 'вул. Волинська 9',
     };
     const colors = {};
-    async function getunits() {
-      const formData = new FormData();
-      formData.append('action', 'units');
-      const url = '/wp-admin/admin-ajax.php';
 
-      // Локальний режим з мок-даними
-      if (true) {
-        return await new Promise(resolve => {
-          resolve({
-            data: unitsMock(),
-          });
-        });
-      }
+    let unitsData;
+    (async () => {
+      const unitsResponse = await getunits();
 
-      //Запит на бекенд
-      try {
-        const response = await axios.post(url, formData);
-        return response;
-      } catch (error) {
-        console.error('Помилка при завантаженні квартир:', error);
-        return null;
+      if (unitsResponse?.data) {
+        unitsData = unitsResponse.data;
+        loadUnits();
       }
-    }
+    })();
+
     async function loadUnits() {
-      const res = await getunits();
-      if (!res) return;
+      const data = unitsData;
+      if (!data) return;
+      console.log(data);
 
-      const data = res.data;
-      setUnits(data.data);
+      setUnits(data);
     }
     const section = document.querySelector('.section_hot_deals');
     const project = section.getAttribute('data-project');
@@ -142,6 +127,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
       return result;
     }
+    const projectsIds = {
+      Америка: 252,
+      Компаньйон: 0,
+      'Новий Форт': 230,
+      'Велика Британія': 314,
+      Вежа: 180,
+      Шенген: 110,
+      'Ріел Сіті': 26,
+    };
 
     const setUnits = units => {
       wrapper.innerHTML = ''; // очищаємо обгортку
@@ -152,26 +146,28 @@ document.addEventListener('DOMContentLoaded', function() {
         .slice(0, 5); // берем перщі 5
 
       selectedUnits.forEach(unit => {
+        console.log(unit);
+        const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
         count++;
         const unitHTML = `
           <div class="swiper-slide">
-            <a href="/flats?id=${unit.id}" 
+            <a href=${link} 
                 class="flat_card" data-filtered="true"  
-                data-project="${unit.project?.name || null}" 
+                data-project="${unit.project_name || null}" 
                 data-room_count="${unit.room_count || null}" 
-                data-type="${unit.unit_type?.name || null}" 
+                data-type="${unit.unit_type_name || null}" 
                 data-size="${unit.real_size || null}" 
                 data-floor="${unit.floor_name ? unit.floor_name.match(/-?\d+/)?.[0] || null : null}"
                 data-id=${unit.id}
             >
         <div class="flat_card__hover">
           <span style="background:${colors[unit.id] ||
-            '#DCDCDC'};"  data-color="${transliterateUkrainian(unit.project.name) || ''}"></span>
+            '#DCDCDC'};"  data-color="${transliterateUkrainian(unit.project_name) || ''}"></span>
         </div>
         <!--<div class="flat_card__note">Новинка</div>-->
         <div class="flat_card__top">
           <span>Житловий комплекс</span>
-          ${unit.project?.name ? `<span>${unit.project_name}</span>` : ''}
+          ${unit.project_name ? `<span>${unit.project_name}</span>` : ''}
         </div>
         <div class="flat_card__img">
           <img src="${

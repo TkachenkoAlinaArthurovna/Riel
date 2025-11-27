@@ -1,7 +1,4 @@
-import axios from 'axios';
-import data from './units.json'; // локальні дані
-
-const unitsMock = () => data;
+import { getunits } from './helpers/getUnits.js';
 
 document.addEventListener('DOMContentLoaded', function() {
   function formatPrice(value) {
@@ -38,58 +35,44 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.classList.add('page-template-flat_single');
       console.log('Параметр id є, його значення:', idValue);
 
-      async function getunits() {
-        const formData = new FormData();
-        formData.append('action', 'units');
-        const url = '/wp-admin/admin-ajax.php';
+      let unitsData;
+      (async () => {
+        const unitsResponse = await getunits();
 
-        // Локальний режим з мок-даними
-        if (true) {
-          return await new Promise(resolve => {
-            resolve({
-              data: unitsMock(),
-            });
-          });
+        if (unitsResponse?.data) {
+          unitsData = unitsResponse.data;
+          loadUnits();
         }
-
-        //Запит на бекенд
-        try {
-          const response = await axios.post(url, formData);
-          return response;
-        } catch (error) {
-          console.error('Помилка при завантаженні квартир:', error);
-          return null;
-        }
-      }
+      })();
 
       async function loadUnits() {
-        const res = await getunits();
-        if (!res) return;
-        const data = res.data;
-        flat = data.data.find(item => item.id === Number(idValue));
+        const data = unitsData;
+        if (!data) return;
+        console.log(data);
+        flat = data.find(item => item.id === Number(idValue));
         // Заповнюємо хлібні крихти
         const unitNumber = document.querySelector('.section_breadcrumbs .unit-number');
-        if (flat?.unit_type?.name && flat?.number) {
-          unitNumber.textContent = `${flat.unit_type.name} ${flat.number}`;
+        if (flat.unit_type_name && flat.number) {
+          unitNumber.textContent = `${flat.unit_type_name} ${flat.number}`;
         }
         // Центральний блок
-        const unitNumber2 = document.querySelector(
-          '.section_flat_details__center_title .unit-number',
-        );
+        // const unitNumber2 = document.querySelector(
+        //   '.section_flat_details__center_title .unit-number',
+        // );
         const unitRoom = document.querySelector('.section_flat_details__center_title .unit-room');
         const unitSize = document.querySelector('.section_flat_details__center_title .unit-size');
 
-        if (unitNumber2 && flat?.number) {
-          unitNumber2.textContent = flat.number;
-        } else {
-          unitNumber2.textContent = '-';
-        }
-        if (unitRoom && flat?.room_count) {
+        // if (unitNumber2 && flat.number) {
+        //   unitNumber2.textContent = flat.number;
+        // } else {
+        //   unitNumber2.textContent = '-';
+        // }
+        if (unitRoom && flat.room_count) {
           unitRoom.textContent = `${flat.room_count}-K`;
         } else {
           unitRoom.textContent = '-';
         }
-        if (unitSize && flat?.real_size) {
+        if (unitSize && flat.real_size) {
           unitSize.textContent = `${flat.real_size} м²`;
         } else {
           unitSize.textContent = '-';
@@ -108,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const unitComplex = document.querySelector(
           '.section_flat_details__flat_info .unit-complex',
         );
-        if (unitComplex && flat?.project?.name) {
+        if (unitComplex && flat.project_name) {
           unitComplex.textContent = `${flat.project_name}`;
           unitComplex.href = locations[flat.project_name];
         } else {
@@ -116,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
           unitComplex.href = 'https://www.google.com/maps';
         }
         const unitLocation = document.querySelector('.unit-location');
-        if (unitLocation && flat?.project?.name) {
+        if (unitLocation && flat.project_name) {
           unitLocation.href = locations[flat.project_name];
         } else {
           unitLocation.href = 'https://www.google.com/maps';
@@ -124,31 +107,35 @@ document.addEventListener('DOMContentLoaded', function() {
         const unitSection = document.querySelector(
           '.section_flat_details__flat_info .unit-section',
         );
-        if (unitSection && flat?.section_name) {
+        if (unitSection && flat.section_name) {
           unitSection.textContent = `${flat.section_name}`;
         } else {
           unitSection.textContent = '-';
         }
         const unitFloor = document.querySelector('.section_flat_details__flat_info .unit-floor');
-        if (unitFloor && flat?.floor_name != null) {
-          unitFloor.textContent = `${flat.floor_name}`;
+        if (unitFloor && flat.floor_name != null) {
+          // Витягуємо тільки число з рядка, навіть якщо воно від’ємне
+          const match = flat.floor_name.match(/-?\d+/);
+          const floorNumber = match ? match[0] : null;
+
+          unitFloor.textContent = floorNumber ?? '-';
         } else {
           unitFloor.textContent = '-';
         }
         const unitNumber3 = document.querySelector('.flat_info__center .unit-number');
-        if (unitNumber3 && flat?.number) {
+        if (unitNumber3 && flat.number) {
           unitNumber3.textContent = `${flat.number}`;
         } else {
           unitNumber3.textContent = '-';
         }
         const unitSize2 = document.querySelector('.flat_info__center .unit-size');
-        if (unitSize2 && flat?.real_size) {
+        if (unitSize2 && flat.real_size) {
           unitSize2.textContent = `${flat.real_size} м²`;
         } else {
           unitSize2.textContent = '-';
         }
         const unitFullPrice = document.querySelector('.flat_info__price .full-price');
-        if (unitFullPrice && flat?.total_price_uah) {
+        if (unitFullPrice && flat.total_price_uah) {
           unitFullPrice.textContent = `${formatPrice(flat.total_price_uah)} грн`;
         } else {
           unitFullPrice.textContent = '-';
@@ -160,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
           unitMPrice.textContent = '-';
         }
       }
-      loadUnits();
     } else {
       console.log('Параметра id немає в URL');
     }

@@ -16,6 +16,38 @@ const forms = [
   '[data-form="contact-form-3"]',
 ];
 
+function resetInputs() {
+  const form = document.querySelector('[data-form="contact-form"]');
+
+  if (form) {
+    const inputs = form.querySelectorAll('input, textarea');
+
+    inputs.forEach(input => {
+      input.value = ''; // очистити текст
+      input.removeAttribute('value');
+      input.classList.remove('filled', 'error', 'valid');
+
+      // 🔥 якщо хочеш, щоб HTML-валідація не спрацьовувала взагалі:
+      input.removeAttribute('required');
+    });
+
+    // усі повідомлення про помилки
+    const messages = form.querySelectorAll('[data-input-message]');
+    messages.forEach(msg => {
+      msg.textContent = '';
+      msg.classList.remove('error', 'show', 'visible');
+    });
+
+    // скинути стани полів
+    const fields = form.querySelectorAll('[data-field-input]');
+    fields.forEach(field => {
+      field.removeAttribute('data-status');
+      field.setAttribute('data-status', 'field--inactive');
+      field.classList.remove('selected');
+    });
+  }
+}
+
 forms.forEach(form => {
   const $form = document.querySelector(form);
   if ($form) {
@@ -25,41 +57,31 @@ forms.forEach(form => {
       elements: {
         $form,
         successAction: () => {
-          document.querySelector('.pop_up_contact').classList.remove('active_pop_up');
-          document.querySelector('.pop_up_success').classList.add('active_pop_up');
-
-          // $form.insertAdjacentHTML(
-          //   'beforeend',
-          //   `
-          //     <div data-success style="
-          //       position: absolute;
-          //       left: 0;
-          //       top: 0;
-          //       width: 100%;
-          //       height: 100%;
-          //       background-color: var(--color-white);
-          //       display: flex;
-          //       align-items: center;
-          //       justify-content: center;
-          //       flex-direction: column;
-          //       z-index: 2;
-          //     ">
-
-          //       <div style="text-align: center; margin-bottom: 10px"  class="text-style-h-1 text-new-blue text-uppercase">
-          //         Заявка успішно відправлена
-          //       </div>
-          //       <button data-form-popup-close type="button" onclick="this.closest('[data-success]').remove()" class="button-30 button-30--blue">Закрити</button>
-
-          //     </div>
-
-          //   `,
-          // );
+          $form.insertAdjacentHTML(
+            'beforeend',
+            `
+              <div class="success-pop-up" data-success>
+                  <div class="success-pop-up__wrapper">
+                  <div class="success-pop-up__close" onclick="this.closest('[data-success]').remove();" >
+                      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12.25 29.75L29.75 12.25" stroke="#1d3541" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M29.75 29.75L12.25 12.25" stroke="#1d3541" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </div>
+                  
+                  <div class="success-pop-up__text"> Дякуємо! Ми зв'яжемося з вами найближчим часом. Гарного дня!</div>
+                  
+                  </div>
+              </div>
+            `,
+          );
 
           setTimeout(() => {
-            // $form.querySelector('[data-success]').remove();
-            document.querySelector('.pop_up_success').classList.remove('active_pop_up');
-            document.body.classList.remove('no-scroll');
-          }, 6000);
+            resetInputs();
+            if ($form.querySelector('[data-success]')) {
+              $form.querySelector('[data-success]').remove();
+            }
+          }, 5000);
         },
         $btnSubmit: $form.querySelector('[data-btn-submit]'),
         fields: {

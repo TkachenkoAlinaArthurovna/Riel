@@ -224,42 +224,61 @@ export default class FormMonster {
     };
   }
 
+  // submitForm() {
+  //   return async e => {
+  //     /*  */
+  //     e.preventDefault();
+  //     this.changeInput()(e);
+
+  //     /*  */
+
+  //     if (this.watchedState.error === false) {
+  //       try {
+  //         this.watchedState.status = 'loading';
+
+  //         const formData = new FormData(this.elements.$form);
+
+  //         formData.append('action', 'app');
+  //         // for (let [key, value] of formData.entries()) {
+  //         //   console.log(`${key}:`, value);
+  //         // }
+  //         /* eslint-disable-next-line */
+  //         const { error, code_error } = await sendForm(formData);
+
+  //         // if (true) {
+  //         if (error === 0) {
+  //           this.watchedState.status = 'successSand';
+  //           return true;
+  //         }
+  //         /* eslint-disable-next-line */
+  //         this.watchedState.serverError = code_error;
+  //         this.watchedState.status = 'failed';
+  //       } catch (err) {
+  //         this.watchedState.error = err.message;
+  //         this.watchedState.serverError = 'front_error';
+  //         this.watchedState.status = 'failed';
+  //       }
+  //     }
+  //     return null;
+  //   };
+  // }
+
   submitForm() {
-    return async e => {
-      /*  */
+    return e => {
       e.preventDefault();
+
       this.changeInput()(e);
 
-      /*  */
-
-      if (this.watchedState.error === false) {
-        try {
-          this.watchedState.status = 'loading';
-
-          const formData = new FormData(this.elements.$form);
-
-          formData.append('action', 'app');
-          // for (let [key, value] of formData.entries()) {
-          //   console.log(`${key}:`, value);
-          // }
-          /* eslint-disable-next-line */
-          const { error, code_error } = await sendForm(formData);
-
-          // if (true) {
-          if (error === 0) {
-            this.watchedState.status = 'successSand';
-            return true;
-          }
-          /* eslint-disable-next-line */
-          this.watchedState.serverError = code_error;
-          this.watchedState.status = 'failed';
-        } catch (err) {
-          this.watchedState.error = err.message;
-          this.watchedState.serverError = 'front_error';
-          this.watchedState.status = 'failed';
-        }
+      if (this.watchedState.error !== false) {
+        this.watchedState.status = 'failed';
+        return null;
       }
-      return null;
+
+      // моментально успіх
+      this.watchedState.success = true;
+      this.watchedState.status = 'successSand';
+
+      return true;
     };
   }
 

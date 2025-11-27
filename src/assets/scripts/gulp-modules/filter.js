@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.display = show ? 'flex' : 'none';
       });
 
-      setPagination();
+      // setPagination();
       countVisibleCards();
 
       setTimeout(() => {

@@ -6,10 +6,10 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
 
   units.forEach(unit => {
     if (unit.project_name != 'Залишки') {
-      const link =
-        unit.id && projectIds?.[unit.id]
-          ? `/flats?id=${unit.id}&project=${projectIds[unit.id]}`
-          : `/flats?id=${unit.id}`;
+      // const link =
+      //   unit.id && projectIds?.[unit.id]
+      //     ? `/flats?id=${unit.id}&project=${projectIds[unit.id]}`
+      //     : `/flats?id=${unit.id}`;
       function transliterateUkrainian(text, removeSpaces = true) {
         const ukrainianMap = {
           а: 'a',
@@ -103,6 +103,16 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
 
         return result;
       }
+      const projectsIds = {
+        Америка: 252,
+        Компаньйон: 0,
+        'Новий Форт': 230,
+        'Велика Британія': 314,
+        Вежа: 180,
+        Шенген: 110,
+        'Ріел Сіті': 26,
+      };
+      const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
       const unitHTML = `
         <a href=${link}
           class="flat_card" data-filtered="true"
@@ -181,5 +191,5 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
 
   filterCards();
   countVisibleCards();
-  pagination.setPagination();
+  // pagination.setPagination();
 }

@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import { initPagination } from './helpers/pagination';
 import { adresses, projectIds, colors } from './helpers/constants.js';
 import { setUnits } from './helpers/setUnits.js';
@@ -60,14 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
           filterPopupBtnDelete: filterPopupBtnDelete,
           unitsData,
         });
+
+        loadUnits();
       }
     })();
 
     async function loadUnits() {
-      const res = await getunits();
-      if (!res) return;
-
-      const data = res.data;
+      const data = unitsData;
+      if (!data) return;
 
       // Фільтр ЖК
       if (window.innerWidth > 1500) {
@@ -214,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
       setUnits(unitsData, wrapper, pagination, filterCards, countVisibleCards);
       countVisibleCards();
     }
-    loadUnits();
 
     function filterCards(input, value) {
       const selectedFilter = JSON.parse(sessionStorage.getItem('selectedFilter'));
@@ -230,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
           card.style.display = 'flex';
         });
 
-        pagination.setPagination();
+        // pagination.setPagination();
         countVisibleCards();
 
         setTimeout(() => {
@@ -340,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      pagination.setPagination();
+      // pagination.setPagination();
       countVisibleCards();
       setTimeout(() => {
         preloader.style.opacity = '0';
@@ -570,7 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedText = trigger.querySelector('span');
 
     const cardsWrapper = document.querySelector('.section_flats__filter_result_wrapper');
-    const cards = Array.from(cardsWrapper.querySelectorAll('.flat_card'));
 
     // Відкрити/закрити селект
     trigger.addEventListener('click', e => {
@@ -608,6 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function sortCards(type) {
+      const cards = Array.from(cardsWrapper.querySelectorAll('.flat_card'));
       const sorted = [...cards];
 
       if (type === 'price-asc') {
@@ -623,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Оновлюємо DOM
       cardsWrapper.innerHTML = '';
       sorted.forEach(card => cardsWrapper.appendChild(card));
-      pagination.setPagination();
+      // pagination.setPagination();
     }
   }
 });

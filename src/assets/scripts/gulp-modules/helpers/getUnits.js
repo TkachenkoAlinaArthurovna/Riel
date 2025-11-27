@@ -1,4 +1,3 @@
-// getUnits.js
 import axios from 'axios';
 import data from '../StockSite.json'; // якщо є локальний json-файл із моками
 
@@ -7,11 +6,11 @@ const unitsMock = () => data;
 
 export async function getunits() {
   const formData = new FormData();
-  formData.append('action', 'units');
+  formData.append('action', 'getFlats');
   const url = '/wp-admin/admin-ajax.php';
 
   // 🔧 Якщо хочеш перемикатися між режимами:
-  const isLocalMode = true; // змінюй на false для реального бекенду
+  const isLocalMode = false; // змінюй на false для реального бекенду
 
   if (isLocalMode) {
     return await new Promise(resolve => {
