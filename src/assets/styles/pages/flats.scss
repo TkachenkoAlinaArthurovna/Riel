@@ -60,17 +60,13 @@
           z-index: 3;
           top: 4px;
           right: -10px;
-          width: 16px;
-          height: 16px;
-          border-radius: 100%;
+          width: max-content;
+          padding: 4px 6px;
+          border-radius: 16px;
           background: $brend-dark;
           span {
-            position: absolute;
-            top: 50%;
-            left: 45%;
-            transform: translate(-50%, -50%);
             color: $brend-white;
-            font-size: 8px;
+            font-size: 12px;
             line-height: 100%;
           }
         }
@@ -125,7 +121,6 @@
   &__selected {
     position: relative;
     display: flex;
-    height: 88px;
     margin: 48px 0;
     padding: 28px 0;
     border-top: 1px solid rgba(244, 245, 249, 0.1);
@@ -216,8 +211,8 @@
 }
 
 .filter__slider {
-  width: 100%;
-  margin: 30px 0;
+  width: 90%;
+  margin: 30px auto;
   font-family: sans-serif;
   .values {
     display: flex;
@@ -302,6 +297,7 @@
 //----------СЕЛЕКТ----------//
 .section_flats__custom-select {
   position: absolute;
+  top: -38px;
   right: 0;
   width: 220px;
   height: 32px;
@@ -310,6 +306,9 @@
   font-weight: 400;
   color: $brend-white;
   background-color: $brend-dark;
+  @media (max-width: 1500px) {
+    top: -92px;
+  }
 }
 
 .section_flats__custom-select-trigger {
@@ -387,4 +386,11 @@
 .custom-option.selected {
   color: $brend-dark;
   background: $brend-green;
+}
+
+.section_flats__loadmore {
+  margin: 0 auto;
+  padding: 20px;
+  @include text-20;
+  color: $brend-white;
 }

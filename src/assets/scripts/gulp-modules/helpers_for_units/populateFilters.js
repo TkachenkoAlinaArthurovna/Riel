@@ -61,18 +61,15 @@ export function populateSliderFilter(units, field, wrapper, label) {
   const maxValue = Math.max(...values);
 
   wrapper.innerHTML = `
-    
     <div class="slider-wrapper">
       <input data-filter="${label}_min" type="range" id="${label}-min" min="${minValue}" max="${maxValue}" step="${
-    label == 'Площа' || label == 'Ціна' ? 0.1 : 1
+    label == 'Площа' || label == 'Ціна' ? 0.01 : 0.1
   }" value="${minValue}">
       <input data-filter="${label}_max" type="range" id="${label}-max" min="${minValue}" max="${maxValue}" step="${
-    label == 'Площа' || label == 'Ціна' ? 0.1 : 1
+    label == 'Площа' || label == 'Ціна' ? 0.01 : 0.1
   }" value="${maxValue}">
-
       <div class="range-tooltip min-tooltip">${Math.ceil(minValue)}</div>
       <div class="range-tooltip max-tooltip">${Math.ceil(maxValue)}</div>
-
       <div class="slider-track"></div>
     </div>
   `;

@@ -144,11 +144,11 @@ $brend-purple: #6858cf;
 }
 
 @mixin text-96-56-32 {
-  font-size: 96px;
+  font-size: 4vw;
   font-style: normal;
   font-weight: 400;
   line-height: 90%;
-  letter-spacing: -5.76px;
+  letter-spacing: -0.06em;
   text-transform: uppercase;
   @media (max-width: 1300px) {
     font-size: 56px;
@@ -161,11 +161,11 @@ $brend-purple: #6858cf;
 }
 
 @mixin text-36 {
-  font-size: 36px;
+  font-size: max(30px, 1.875vw);
   font-style: normal;
   font-weight: 500;
   line-height: 100%;
-  letter-spacing: -2.16px;
+  letter-spacing: -0.06em;
 }
 
 @mixin text-32 {

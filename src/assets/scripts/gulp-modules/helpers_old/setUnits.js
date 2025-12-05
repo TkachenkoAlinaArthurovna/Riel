@@ -110,17 +110,8 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
   };
 
   units.forEach(unit => {
-
-    
-    if (unit.project_name != 'Залишки') {
-      // const link =
-      //   unit.id && projectIds?.[unit.id]
-      //     ? `/flats?id=${unit.id}&project=${projectIds[unit.id]}`
-      //     : `/flats?id=${unit.id}`;
-      
-      
-      const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
-      const unitHTML = `
+    const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
+    const unitHTML = `
         <a href=${link}
           class="flat_card" data-filtered="true"
           data-project="${unit.project_name}" 
@@ -133,11 +124,10 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
         >
           <div class="flat_card__hover">
             
-            <span style="background:${colors[unit.id] ||
-              '#DCDCDC'};" ></span>
+            <span style="background:${colors[unit.id] || '#DCDCDC'};" ></span>
           </div>
           <div class="flat_card__top">
-            <span>Житловий комплекс</span>
+            <!--<span>Житловий комплекс</span>-->
             ${unit.project_name ? `<span>${unit.project_name}</span>` : ''}
           </div>
           <div class="flat_card__img">
@@ -186,9 +176,8 @@ export function setUnits(units, wrapper, pagination, filterCards, countVisibleCa
           }
         </a>
       `;
-      arrHtml.push(unitHTML);
-      // wrapper.insertAdjacentHTML('beforeend', unitHTML);
-    }
+    arrHtml.push(unitHTML);
+    // wrapper.insertAdjacentHTML('beforeend', unitHTML);
   });
   wrapper.innerHTML = arrHtml.join('');
 

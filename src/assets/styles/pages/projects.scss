@@ -300,6 +300,9 @@
       }
     }
   }
+  &__bottom {
+    margin-top: auto;
+  }
   &__address {
     position: relative;
     z-index: 3;
@@ -338,7 +341,7 @@
     }
     span:first-child {
       @include text-16;
-      color: $brend-grey;
+      color: $brend-white;
       @media (max-width: 480px) {
         @include text-14;
       }

@@ -10,6 +10,76 @@
   @media (max-width: 480px) {
     padding-top: 200px;
   }
+  &__subtitle {
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -2.4px;
+    color: $brend-white;
+    text-transform: none;
+    @media (max-width: 1300px) {
+      @include text-32;
+    }
+  }
+  &__title {
+    position: relative;
+    color: $brend-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min-content;
+    height: max(68px, 5.2vw);
+    margin-left: max(39px, 2.96vw);
+    padding: 0 max(10px, 0.52vw);
+    background: $brend-green;
+    @media (max-width: 480px) {
+      height: 40px;
+      margin-left: 30px;
+      font-size: 32px;
+      line-height: 110%;
+      letter-spacing: -1.92px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 1px;
+      transform: translateX(-100%);
+      display: block;
+      height: max(68px, 5.2vw);
+      width: max(39px, 2.96vw);
+
+      background-image: url('../../assets/images/btn_decor.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      @media (max-width: 480px) {
+        height: 40px;
+        width: 22px;
+      }
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: 1px;
+      transform: translateX(100%) rotate(180deg);
+      display: block;
+      height: max(68px, 5.2vw);
+      width: max(39px, 2.96vw);
+
+      background-image: url('../../assets/images/btn_decor.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      @media (max-width: 480px) {
+        height: 40px;
+        width: 22px;
+      }
+    }
+  }
   .section_title {
     margin-bottom: 100px;
     @media (max-width: 1024px) {
