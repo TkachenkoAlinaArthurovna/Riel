@@ -394,3 +394,8 @@
   @include text-20;
   color: $brend-white;
 }
+
+.filter__item.type {
+  height: 0;
+  opacity: 0;
+}

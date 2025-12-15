@@ -46,17 +46,83 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   const locations = {
     Америка:
-      'https://www.google.com/maps/search/Zhk+%22Ameryka%22+/@49.8099529,24.0085652,17z?hl=ru&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
-    Брама:
-      'https://www.google.com/maps/place/Zhk+Mistechko+Pidzamche+-+Brama/@49.8543991,24.0449007,17z/data=!3m1!4b1!4m6!3m5!1s0x473add67de4b4973:0x36834adf22609713!8m2!3d49.8543957!4d24.047481!16s%2Fg%2F11hflhn04v?hl=ru&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
+      'https://www.google.com/maps/search/?api=1&query=Америка,+вулиця+Володимира+Великого,+10,+Україна',
+
     Вежа:
-      'https://www.google.com/maps/place/Zhk+Pidzamche+Vezha/@49.8590424,24.043025,17z/data=!3m1!4b1!4m6!3m5!1s0x473adde333d1decb:0xe17fa5f12af322eb!8m2!3d49.859039!4d24.0478905!16s%2Fg%2F11rkl5bgy2?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
-    Компаньйон:
-      'https://www.google.com/maps/place/Zhk+Kompan%CA%B9yon/@49.7914999,24.0062323,17z/data=!3m1!4b1!4m6!3m5!1s0x473ae7fd7e8e4951:0xcb390809b9b44bff!8m2!3d49.7914965!4d24.0088126!16s%2Fg%2F11h9gnth9r?hl=ru&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
+      'https://www.google.com/maps/search/?api=1&query=Вежа,+вул.+Б.+Хмельницького,+207,+Україна',
+
+    Брама:
+      'https://www.google.com/maps/search/?api=1&query=Брама,+вул.+Б.+Хмельницького,+116,+Україна',
+
+    'Велика Британія':
+      'https://www.google.com/maps/search/?api=1&query=Велика+Британія,+вул.+Шевченка,+31,+Україна',
+
+    'Голоські Кручі':
+      'https://www.google.com/maps/search/?api=1&query=Голоські+Кручі,+вул.+Під+Голоском,+Україна',
+
+    'Доктор Ватсон':
+      'https://www.google.com/maps/search/?api=1&query=Доктор+Ватсон,+вулиця+Пекарська,+57,+Україна',
+
+    Компаньон:
+      'https://www.google.com/maps/search/?api=1&query=Компаньон,+вул.+Проектована,+1,+Україна',
+
+    'Львівська Площа':
+      'https://www.google.com/maps/search/?api=1&query=Львівська+Площа,+вул.+Кудрявська,+24а,+Україна',
+
+    'Львівський Квартал':
+      'https://www.google.com/maps/search/?api=1&query=Львівський+Квартал,+вул.+Глибочицька,+13,+Україна',
+
+    'Новий Форт':
+      'https://www.google.com/maps/search/?api=1&query=Новий+Форт,+вул.+Волинська,+9,+Україна',
+
+    'ОК Land':
+      'https://www.google.com/maps/search/?api=1&query=OK+Land,+просп.+Повітряних+сил,+56,+Україна',
+
+    Тополіс:
+      'https://www.google.com/maps/search/?api=1&query=Тополіс,+вул.+Гетьмана+Мазепи,+25а,+Україна',
+
     'Ріел Сіті':
-      'https://www.google.com/maps/place/%D0%96%D0%9A+Riel+City/@49.8361109,23.9699679,17z/data=!3m1!4b1!4m6!3m5!1s0x473ae71b89afed09:0x1591aa381d5922de!8m2!3d49.8361075!4d23.9725482!16s%2Fg%2F11qrqdx46w?hl=ru&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
-    Шенген:
-      'https://www.google.com/maps/search/%D1%88%D0%B5%D0%BD%D0%B3%D0%B5%D0%BD+%D0%B6%D0%BA/@49.8468765,23.9912592,17z/data=!3m1!4b1?hl=ru&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D',
+      'https://www.google.com/maps/search/?api=1&query=Ріел+Сіті,+вул.+Рудненська,+8,+Україна',
+
+    'Шерлок Холмс':
+      'https://www.google.com/maps/search/?api=1&query=Шерлок+Холмс,+вул.+Пекарська,+30,+Україна',
+
+    Ярославенка:
+      'https://www.google.com/maps/search/?api=1&query=Ярославенка,+вул.+Ярославенка,+30,+Україна',
+
+    Шенген: 'https://www.google.com/maps/search/?api=1&query=Шенген,+вул.+Залізнична,+7,+Україна',
+
+    'Берег Дніпра':
+      'https://www.google.com/maps/search/?api=1&query=Берег+Дніпра,+Дніпровська+набережна,+17-К,+Україна',
+
+    Форвард:
+      'https://www.google.com/maps/search/?api=1&query=Форвард,+вул.+Ростиславська,+5а,+Україна',
+
+    'Поділ Град':
+      'https://www.google.com/maps/search/?api=1&query=Поділ+Град,+вулиця+Дегтярна,+6,+Україна',
+
+    'Nordica Residence':
+      'https://www.google.com/maps/search/?api=1&query=Nordica+Residence,+Залізничне+шосе,+45а,+Україна',
+
+    'Maxima Residence':
+      'https://www.google.com/maps/search/?api=1&query=Maxima+Residence,+вул.+Коновальця,+30,+Україна',
+
+    'Hyde Park':
+      'https://www.google.com/maps/search/?api=1&query=Hyde+Park,+вул.+Мучна,+32,+Україна',
+
+    Канкріт:
+      'https://www.google.com/maps/search/?api=1&query=Канкріт,+Дніпровська+набережна,+17,+Україна',
+
+    'Big Ben': 'https://www.google.com/maps/search/?api=1&query=BigBen,+вул.+Стрийська,+Україна',
+
+    Brother: 'https://www.google.com/maps/search/?api=1&query=Brother,+вул.+Ревуцького,+1,+Україна',
+
+    Father:
+      'https://www.google.com/maps/search/?api=1&query=Father,+вул.+Промислова,+50/52,+Україна',
+
+    Sister: 'https://www.google.com/maps/search/?api=1&query=Sister,+вул.+Клеманська,+3,+Україна',
+
+    Harry: 'https://www.google.com/maps/search/?api=1&query=Harry,+вулиця+Стороженка,+25А,+Україна',
   };
 
   // 1. Завантажуємо всі квартири
@@ -71,6 +137,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     return;
   }
 
+  const backLink = document.querySelector('.section_flat_details__back');
+
+  if (backLink && flat?.unit_type_name) {
+    backLink.href = `./flats/?type=${flat.unit_type_name}`;
+  }
+
+  const typeLink = document.querySelector('.link_type');
+
+  if (typeLink && flat?.unit_type_name) {
+    typeLink.href = `./flats/?type=${flat.unit_type_name}`;
+  }
+
   // 3. Заповнюємо хлібні крихти
   const unitNumber = document.querySelector('.section_breadcrumbs .unit-number');
   if (unitNumber && flat.unit_type_name && flat.number) {
@@ -81,24 +159,23 @@ document.addEventListener('DOMContentLoaded', async function() {
   const unitRoom = document.querySelector('.section_flat_details__center_title .unit-room');
   const unitSize = document.querySelector('.section_flat_details__center_title .unit-size');
 
-  if (unitRoom && flat.room_count) {
+  if (unitRoom) {
     unitRoom.textContent = `${flat.room_count}-K`;
   } else if (unitRoom) {
     unitRoom.textContent = '-';
   }
 
-  if (unitSize && flat.real_size) {
-    unitSize.textContent = `${flat.real_size} м²`;
+  if (unitSize && flat.design_size) {
+    unitSize.textContent = `${flat.design_size} м²`;
   } else if (unitSize) {
     unitSize.textContent = '-';
   }
 
   // 5. Картинки
+  const mainImg = document.querySelector('#main img');
+  const planningImg = document.querySelector('#planning img');
+  const floorImg = document.querySelector('#floor img');
   if (flat.images && flat.images.length >= 3) {
-    const mainImg = document.querySelector('#main img');
-    const planningImg = document.querySelector('#planning img');
-    const floorImg = document.querySelector('#floor img');
-
     if (mainImg) {
       mainImg.src = `https://source-riel.propertymate.ai${flat.images[0].path}`;
     }
@@ -108,6 +185,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (floorImg) {
       floorImg.src = `https://source-riel.propertymate.ai${flat.images[2].path}`;
     }
+  }
+
+  if (
+    flat.images &&
+    flat.images.length == 0 &&
+    flat.section_images &&
+    flat.section_images.images &&
+    flat.section_images.images.length > 0
+  ) {
+    const firstSectionImagePath = flat.section_images.images[0].path;
+    mainImg.src = `https://source-riel.propertymate.ai${firstSectionImagePath}`;
   }
 
   // 6. Лівий блок
@@ -154,7 +242,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   const unitSize2 = document.querySelector('.flat_info__center .unit-size');
   if (unitSize2) {
-    unitSize2.textContent = flat.real_size ? `${flat.real_size} м²` : '-';
+    unitSize2.textContent = flat.design_size ? `${flat.design_size} м²` : '-';
   }
 
   const unitFullPrice = document.querySelector('.flat_info__price .full-price');

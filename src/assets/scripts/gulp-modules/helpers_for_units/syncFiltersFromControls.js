@@ -14,8 +14,7 @@ export function syncFiltersFromControls(prevFilters) {
     filterRoot = document.querySelector('.filter_flats');
   }
 
-  // ЖК
-
+  // 🔹 ЖК (масив id/slug з data-name)
   if (projectWrapper) {
     const complexInputs = projectWrapper.querySelectorAll('.checkbox__input');
     next.complex = Array.from(complexInputs)
@@ -26,20 +25,27 @@ export function syncFiltersFromControls(prevFilters) {
   }
 
   if (!filterRoot) {
+    // на всяк випадок гарантуємо масиви
+    next.type = Array.isArray(next.type) ? next.type : [];
+    next.rooms = Array.isArray(next.rooms) ? next.rooms : [];
     return next;
   }
 
-  // Тип
+  // Тип (ТЕПЕР: кілька чекбоксів → масив)
   const typeInputs = filterRoot.querySelectorAll('.filter__item_wrapper.type .checkbox__input');
-  const checkedType = Array.from(typeInputs).find(input => input.checked);
-  next.type = checkedType ? checkedType.dataset.name : '';
 
-  // Кімнати
+  next.type = Array.from(typeInputs)
+    .filter(input => input.checked)
+    .map(input => input.dataset.name);
+
+  // Кімнати (ТЕПЕР: теж масив)
   const roomsInputs = filterRoot.querySelectorAll(
     '.filter__item_wrapper.room_count .checkbox__input',
   );
-  const checkedRooms = Array.from(roomsInputs).find(input => input.checked);
-  next.rooms = checkedRooms ? checkedRooms.dataset.name : '';
+
+  next.rooms = Array.from(roomsInputs)
+    .filter(input => input.checked)
+    .map(input => input.dataset.name);
 
   // Ціна
   const priceWrapper = filterRoot.querySelector('.filter__slider.price');
@@ -69,7 +75,6 @@ export function syncFiltersFromControls(prevFilters) {
       const valMin = Number(areaMinInput.value);
       const valMax = Number(areaMaxInput.value);
 
-      // якщо повзунок стоїть у краю — фільтра немає
       next.areaMin = valMin > sliderMin ? String(valMin) : '';
       next.areaMax = valMax < sliderMax ? String(valMax) : '';
     } else {
@@ -97,6 +102,7 @@ export function syncFiltersFromControls(prevFilters) {
     }
   }
 
+  // при зміні фільтрів — завжди з першої сторінки
   next.page = 1;
 
   return next;

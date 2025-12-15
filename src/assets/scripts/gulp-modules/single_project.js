@@ -12,13 +12,34 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   const adresses = {
-    Америка: 'вул. Володимира Великого, 10',
+    Америка: 'вулиця Володимира Великого, 10',
     Вежа: 'вул. Б. Хмельницького, 207',
-    Компаньйон: 'вул. Проектована, 1',
-    'Ріел Сіті': 'вул. Рудненська, 8',
-    Шенген: 'вул. Залізнична, 7',
+    Брама: 'вул. Б. Хмельницького, 116',
     'Велика Британія': 'вул. Шевченка, 31',
-    'Новий Форт': 'вул. Волинська 9',
+    'Голоські Кручі': 'вул. Під Голоском',
+    'Доктор Ватсон': 'вулиця Пекарська, 57',
+    Компаньон: 'вул. Проектована, 1',
+    'Львівська Площа': 'вул. Кудрявська, 24а',
+    'Львівський Квартал': 'вул. Глибочицька, 13',
+    'Новий Форт': 'вул. Волинська, 9',
+    'ОК Land': 'просп. Повітряних сил, 56',
+    Тополіс: 'вул. Гетьмана Мазепи, 25а, 25б',
+    'Ріел Сіті': 'вул. Рудненська, 8',
+    'Шерлок Холмс': 'вул. Пекарська, 30',
+    Ярославенка: 'вул. Ярославенка, 30',
+    Шенген: 'вул. Залізнична, 7',
+    'Берег Дніпра': 'Дніпровська набережна, 17-К',
+    Форвард: 'вул. Ростиславська, 5а',
+    'Поділ Град': 'вулиця Дегтярна, 6',
+    'Nordica Residence': 'Залізничне шосе, 45а',
+    'Maxima Residence': 'вул. Коновальця, 30',
+    'Hyde Park': 'вул. Мучна, 32',
+    Канкріт: 'Дніпровська набережна, 17',
+    BigBen: 'вул. Стрийська (Персенківка, 2)',
+    Brother: 'вул. Ревуцького, 1',
+    Father: 'вул. Промислова, 50/52',
+    Sister: 'вул. Клеманська, 3',
+    Harry: 'вулиця Стороженка, 25А',
   };
 
   const colors = {
@@ -51,6 +72,22 @@ document.addEventListener('DOMContentLoaded', async function() {
     Шенген: '#FFA500',
     Ярославенка: '#696969',
   };
+
+  function getUnitImageSrc(unit) {
+    // 1. Пробуємо взяти з unit.images[1] → unit.images[0]
+    let imgPath =
+      unit.images?.[1]?.path ||
+      unit.images?.[0]?.path ||
+      unit.section_images?.images?.[0]?.path || // 2. fallback на section_images
+      'https://stock.riel.ua/wp-content/themes/3d/assets/images/no_image.gif'; // 3. заглушка
+
+    // Якщо це відносний шлях типу "/project/...", додаємо домен
+    if (imgPath.startsWith('/')) {
+      imgPath = `https://source-riel.propertymate.ai${imgPath}`;
+    }
+
+    return imgPath;
+  }
 
   const section = document.querySelector('.section_hot_deals');
   if (!section) return;
@@ -98,15 +135,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       .slice(0, 5); // перші 5
 
     selectedUnits.forEach(unit => {
-      console.log(unit);
       projectId = unit.project.id;
       const link = `/flats?project_id=${projectsIds[unit.project_name]}&id=${unit.id}`;
 
       count++;
 
-      const imgSrc = unit.images?.[1]?.path
-        ? `https://source-riel.propertymate.ai/${unit.images[1].path}`
-        : '/wp-content/themes/3d/assets/images/no_image.gif';
+      const imgSrc = getUnitImageSrc(unit);
 
       const unitHTML = `
         <div class="swiper-slide">
@@ -115,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async function() {
               data-project="${unit.project_name || ''}" 
               data-room_count="${unit.room_count || ''}" 
               data-type="${unit.unit_type_name || ''}" 
-              data-size="${unit.real_size || ''}" 
+              data-size="${unit.design_size || ''}" 
               data-floor="${unit.floor_name ? unit.floor_name.match(/-?\d+/)?.[0] || '' : ''}"
               data-id="${unit.id}"
           >
@@ -133,22 +167,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             <div class="flat_card__center">
               <div class="flat_card__center_left">
                 <span> ${unit.unit_type_name ? unit.unit_type_name : 'Помешкання'} м²</span>
-                ${
-                  unit.real_size && unit.real_size !== 0
-                    ? `<span>${unit.real_size}</span>`
-                    : '<span>-</span>'
-                }
+                ${unit.design_size ? `<span>${unit.design_size}</span>` : '<span>-</span>'}
               </div>
               <div class="flat_card__center_center">
                 <span>/</span>
               </div>
               <div class="flat_card__center_right">
                 <span>грн/м²</span>
-                <span>${
-                  unit.total_price_uah && unit.total_price_uah !== 0
-                    ? Number(unit.total_price_uah).toLocaleString('uk-UA')
-                    : '-'
-                }</span>
+                <span>${unit.price_m2 ? Number(unit.price_m2).toLocaleString('uk-UA') : '-'}</span>
               </div>
             </div>
             <div class="flat_card__bottom">

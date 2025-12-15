@@ -25,4 +25,52 @@ document.addEventListener('DOMContentLoaded', function() {
       },
     },
   });
+
+  const swiperKomertsiinaPloshcha = document.querySelector('.komertsiina_ploshcha .swiper');
+
+  new Swiper(swiperKomertsiinaPloshcha, {
+    loop: false,
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    speed: 600,
+    navigation: {
+      nextEl: '.komertsiina_ploshcha .swiper_navigation__right',
+      prevEl: '.komertsiina_ploshcha .swiper_navigation__left',
+    },
+    breakpoints: {
+      1024: {
+        spaceBetween: 20,
+      },
+      768: {
+        spaceBetween: 16,
+      },
+      0: {
+        spaceBetween: 8,
+      },
+    },
+  });
+
+  const swiperParkingKomora = document.querySelector('.parking_komora .swiper');
+
+  new Swiper(swiperParkingKomora, {
+    loop: false,
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    speed: 600,
+    navigation: {
+      nextEl: '.parking_komora .swiper_navigation__right',
+      prevEl: '.parking_komora .swiper_navigation__left',
+    },
+    breakpoints: {
+      1024: {
+        spaceBetween: 20,
+      },
+      768: {
+        spaceBetween: 16,
+      },
+      0: {
+        spaceBetween: 8,
+      },
+    },
+  });
 });

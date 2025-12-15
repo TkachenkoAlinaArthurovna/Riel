@@ -222,17 +222,7 @@
     object-fit: cover;
     object-position: center;
   }
-  .bg_desktop {
-    @media (max-width: 480px) {
-      display: none;
-    }
-  }
-  .bg_mob {
-    display: none;
-    @media (max-width: 480px) {
-      display: block;
-    }
-  }
+
   &::before {
     content: '';
     display: block;
@@ -443,6 +433,28 @@
 // HOT_DEALS
 
 .section_hot_deals {
+  &__title.purple {
+    span {
+      background: $brend-purple;
+    }
+    span::before {
+      background-image: url('../../assets/images/btn_decor_purple.png');
+    }
+    span::after {
+      background-image: url('../../assets/images/btn_decor_purple.png');
+    }
+  }
+  &__title.orange {
+    span {
+      background: #fb9046;
+    }
+    span::before {
+      background-image: url('../../assets/images/btn_decor_orange.png');
+    }
+    span::after {
+      background-image: url('../../assets/images/btn_decor_orange.png');
+    }
+  }
   &__title {
     display: flex;
     justify-content: space-between;
@@ -586,7 +598,7 @@
       }
     }
     span:last-child {
-      @include text-36;
+      @include text-32;
       @media (max-width: 480px) {
         @include text-32;
       }
@@ -741,14 +753,14 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 118px;
+    height: 80px;
     border-radius: 24px 24px 0 0;
     overflow: hidden;
-    @media (max-width: 1024px) {
-      height: 110px;
-    }
+    // @media (max-width: 1024px) {
+    //   height: 110px;
+    // }
     @media (max-width: 480px) {
-      height: 86px;
+      height: 70px;
     }
 
     [data-color='ameryka'] {
@@ -1291,6 +1303,7 @@
   &__bg {
     width: 100%;
     height: max(340px, 25vw);
+    object-fit: cover;
     img {
       width: 100%;
       height: 100%;
@@ -1628,5 +1641,46 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+.bg_desktop {
+  object-fit: cover;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+.bg_tablet {
+  display: none;
+  object-fit: cover;
+  @media (max-width: 1024px) {
+    display: block;
+  }
+  @media (max-width: 480px) {
+    display: none;
+  }
+}
+.bg_mob {
+  display: none;
+  object-fit: cover;
+  @media (max-width: 480px) {
+    display: block;
+  }
+}
+.section_top,
+.section_for_btn__img {
+  .bg_desktop {
+    display: block !important;
+    object-fit: cover;
+    @media (max-width: 480px) {
+      display: none !important;
+    }
+  }
+  .bg_mob {
+    display: none !important;
+    object-fit: cover;
+    @media (max-width: 480px) {
+      display: block !important;
+    }
   }
 }

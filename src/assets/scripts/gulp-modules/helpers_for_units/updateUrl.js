@@ -1,19 +1,23 @@
 export function updateUrl(filters) {
   const params = new URLSearchParams();
 
-  // complex: масив ЖК
-  if (Array.isArray(filters.complex)) {
-    filters.complex.forEach(id => {
-      if (id !== '' && id != null) {
-        params.append('complex', id);
-      }
-    });
-  } else if (filters.complex) {
-    params.append('complex', filters.complex);
-  }
+  const appendMulti = (key, value) => {
+    if (Array.isArray(value)) {
+      value.filter(v => v !== '' && v != null).forEach(v => params.append(key, v));
+    } else if (value !== '' && value != null) {
+      params.append(key, value);
+    }
+  };
 
-  if (filters.type) params.set('type', filters.type);
-  if (filters.rooms) params.set('rooms', filters.rooms);
+  // complex: масив ЖК
+  appendMulti('complex', filters.complex);
+
+  // type: тепер масив типів
+  appendMulti('type', filters.type);
+
+  // rooms: тепер масив кількостей кімнат
+  appendMulti('rooms', filters.rooms);
+
   if (filters.priceMin) params.set('priceMin', filters.priceMin);
   if (filters.priceMax) params.set('priceMax', filters.priceMax);
   if (filters.areaMin) params.set('areaMin', filters.areaMin);
@@ -21,6 +25,7 @@ export function updateUrl(filters) {
   if (filters.floorMin) params.set('floorMin', filters.floorMin);
   if (filters.floorMax) params.set('floorMax', filters.floorMax);
   if (filters.page && filters.page !== 1) params.set('page', String(filters.page));
+  if (filters.sort) params.set('sort', filters.sort);
 
   const query = params.toString();
   const newUrl = `${window.location.pathname}${query ? `?${query}` : ''}`;

@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const defaultFilters = {
     complex: [], // житловий комплекс (id або slug)
-    type: '', // тип приміщення
-    rooms: '', // кількість кімнат
+    type: [], // тип приміщення
+    rooms: [], // кількість кімнат
     priceMin: '',
     priceMax: '',
     areaMin: '',
@@ -88,4 +88,89 @@ document.addEventListener('DOMContentLoaded', async () => {
   initFilterPopup();
 
   updatePopupCount();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Зчитуємо GET-параметр type
+  const urlParams = new URLSearchParams(window.location.search);
+  const type = urlParams.get('type');
+
+  if (!type) return;
+
+  // Динамічний базовий URL
+  const baseURL = window.location.origin;
+  // Наприклад дасть: https://stock.riel.ua
+
+  // Ширина екрану
+  const screenWidth = window.innerWidth;
+
+  // Статичний шлях до картинки (змінюється тільки файл)
+  const baseImagePath = '/wp-content/themes/3d/assets/images/bg/';
+
+  // Мапа файлів для кожного типу
+  const images = {
+    квартира: {
+      desktop: 'bg_flats.png',
+      tablet: 'bg_flats_tablet.png',
+      mobile: 'bg_flats_mob.png',
+    },
+    апартамент: {
+      desktop: 'bg_apart.png',
+      tablet: 'bg_apart_tablet.png',
+      mobile: 'bg_apart_mob.png',
+    },
+    офіс: {
+      desktop: 'bg_of.png',
+      tablet: 'bg_of_tablet.png',
+      mobile: 'bg_of_mob.png',
+    },
+    комора: {
+      desktop: 'bg_komora.png',
+      tablet: 'bg_komora_tablet.png',
+      mobile: 'bg_komora_mob.png',
+    },
+    паркінг: {
+      desktop: 'bg_parking.png',
+      tablet: 'bg_parking_tablet.png',
+      mobile: 'bg_parking_mob.png',
+    },
+  };
+
+  // Мапа для заміни заголовка
+  const titleMap = {
+    квартира: 'квартири',
+    апартамент: 'апартаменти',
+    офіс: 'офіси',
+    комора: 'комори',
+    паркінг: 'паркінги',
+  };
+
+  const normalizedType = type.toLowerCase();
+
+  if (!images[normalizedType]) return;
+
+  let fileName = '';
+
+  if (screenWidth < 480) {
+    fileName = images[normalizedType].mobile;
+  } else if (screenWidth <= 1024) {
+    fileName = images[normalizedType].tablet;
+  } else {
+    fileName = images[normalizedType].desktop;
+  }
+
+  // Складаємо повний URL до картинки
+  const finalSrc = baseURL + baseImagePath + fileName;
+
+  // Присвоюємо src елементу
+  const bgEl = document.querySelector('.section_top_subpage__bg');
+  if (bgEl) {
+    bgEl.setAttribute('src', finalSrc);
+  }
+
+  // Оновлюємо заголовок
+  const titleEl = document.querySelector('.section_top_subpage__title');
+  if (titleEl && titleMap[normalizedType]) {
+    titleEl.textContent = titleMap[normalizedType];
+  }
 });
