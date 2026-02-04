@@ -212,7 +212,7 @@
 
 .filter__slider {
   width: 90%;
-  margin: 30px auto;
+  margin: 50px auto 0px auto;
   font-family: sans-serif;
   .values {
     display: flex;
@@ -288,6 +288,7 @@
   position: absolute;
   top: -30px;
   transform: translateX(-50%);
+  padding: 0 10px;
   background: #1d3541;
   color: $brend-white;
   @include text-14;
@@ -317,7 +318,7 @@
   justify-content: space-between;
   height: 100%;
   padding: 0px 12px 0px 12px;
-  border: 1px solid rgba(244, 245, 249, 0.1);
+  border: 2px solid $brend-white;
   border-radius: 8px;
   cursor: pointer;
   transition: border-color 0.2s ease;

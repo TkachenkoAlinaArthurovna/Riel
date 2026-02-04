@@ -1,12 +1,10 @@
 import { extractFloorNumber } from './extractFloorNumber';
-import { getUniqueValues } from './getUniqueValues';
 import { populateFilter, populateSliderFilter } from './populateFilters';
 
 // units = масив усіх приміщень
-// filters = зібрані з URL / localStorage
+// filters = зібрані з URL / localStorage (+ master type вже в filters.type)
 export function renderFilter(units, filters) {
   let projectWrapper;
-  let typeWrapper;
   let roomsWrapper;
   let priceWrapper;
   let sizeWrapper;
@@ -14,7 +12,6 @@ export function renderFilter(units, filters) {
 
   if (window.innerWidth > 1500) {
     projectWrapper = document.querySelector('.filter__item_wrapper.project');
-    typeWrapper = document.querySelector('.filter__item_wrapper.type');
     roomsWrapper = document.querySelector('.filter__item_wrapper.room_count');
 
     priceWrapper = document.querySelector('.filter__slider.price');
@@ -22,7 +19,6 @@ export function renderFilter(units, filters) {
     floorWrapper = document.querySelector('.filter__slider.floor');
   } else {
     projectWrapper = document.querySelector('.filter_flats__project');
-    typeWrapper = document.querySelector('.filter_flats__type');
     roomsWrapper = document.querySelector('.filter_flats__room_count');
 
     priceWrapper = document.querySelector('.filter_flats__price');
@@ -30,143 +26,123 @@ export function renderFilter(units, filters) {
     floorWrapper = document.querySelector('.filter_flats__floor');
   }
 
-  if (
-    !projectWrapper ||
-    !typeWrapper ||
-    !roomsWrapper ||
-    !priceWrapper ||
-    !sizeWrapper ||
-    !floorWrapper
-  ) {
+  if (!projectWrapper || !roomsWrapper || !priceWrapper || !sizeWrapper || !floorWrapper) {
     console.warn('Filter wrappers not found');
     return;
   }
 
+  const norm = v =>
+    String(v ?? '')
+      .trim()
+      .toLowerCase();
+
   // Мапа ЖК: id → назва
   const projectMap = {};
-  units.forEach(unit => {
-    const proj = unit.project;
-    const id = proj && proj.id != null ? proj.id : null;
-    if (id && unit.project_name) {
+  (Array.isArray(units) ? units : []).forEach(unit => {
+    const id = unit?.project?.id != null ? String(unit.project.id) : null;
+    if (id && unit?.project_name) {
       projectMap[id] = unit.project_name;
     }
   });
 
-  // Базові units для інших фільтрів (тільки вибрані ЖК)
-  let baseUnits = units;
-  if (filters.complex && filters.complex.length) {
-    const complexIds = Array.isArray(filters.complex) ? filters.complex : [filters.complex];
-    baseUnits = units.filter(unit => {
-      const proj = unit.project;
-      const pid = proj && proj.id != null ? proj.id : null;
-      return complexIds.some(c => String(c) === String(pid));
-    });
+  // Базові units для інших фільтрів (ТІЛЬКИ master type)
+  let baseUnits = Array.isArray(units) ? units : [];
+
+  const typeFilter = Array.isArray(filters.type)
+    ? filters.type.map(norm).filter(Boolean)
+    : filters.type
+    ? [norm(filters.type)].filter(Boolean)
+    : [];
+
+  if (typeFilter.length) {
+    baseUnits = baseUnits.filter(unit => typeFilter.includes(norm(unit?.unit_type_name)));
   }
 
   // -------- ЧЕКБОКСИ --------
 
-  // ЖК — всі, але інші фільтри рахуються по baseUnits
+  // ЖК — рахуються по baseUnits (щоб показувати тільки ЖК, де є цей type)
   populateFilter(
-    units,
+    baseUnits,
     unit => {
-      const proj = unit.project;
-      return proj && proj.id != null ? proj.id : null;
+      const id = unit?.project?.id != null ? unit.project.id : null;
+      return id != null ? String(id) : null;
     },
     projectWrapper,
     'complex',
   );
 
-  // Після populateFilter замінимо текст label на project_name
-  projectWrapper.querySelectorAll('.checkbox__input').forEach(input => {
-    const id = input.dataset.name;
-    const labelEl = projectWrapper.querySelector(`label[for="${input.id}"]`);
-    if (labelEl) {
-      labelEl.textContent = projectMap[id] || `ЖК ${id}`;
-    }
-
-    const complexFilter = Array.isArray(filters.complex)
-      ? filters.complex
-      : filters.complex
-      ? [filters.complex]
-      : [];
-
-    const selected = complexFilter.some(c => String(c) === String(id));
-    input.checked = selected;
-  });
-
-  // Тип
-  populateFilter(baseUnits, 'unit_type_name', typeWrapper, 'type');
-
-  const typeFilter = Array.isArray(filters.type)
-    ? filters.type
-    : filters.type
-    ? [filters.type]
+  // Після populateFilter замінимо текст label на project_name + виставимо checked
+  const complexFilter = Array.isArray(filters.complex)
+    ? filters.complex.map(String)
+    : filters.complex
+    ? [String(filters.complex)]
     : [];
 
-  typeWrapper.querySelectorAll('.checkbox__input').forEach(input => {
-    const name = input.dataset.name;
-    const isChecked = typeFilter.some(t => String(t) === String(name));
-    input.checked = isChecked;
+  projectWrapper.querySelectorAll('.checkbox__input').forEach(input => {
+    const id = String(input.dataset.name ?? '');
+    const labelEl = projectWrapper.querySelector(`label[for="${input.id}"]`);
+    if (labelEl) labelEl.textContent = projectMap[id] || `ЖК ${id}`;
+
+    input.checked = complexFilter.some(c => c === id);
   });
 
   // Кількість кімнат
   populateFilter(baseUnits, 'room_count', roomsWrapper, 'rooms');
 
   const roomsFilter = Array.isArray(filters.rooms)
-    ? filters.rooms
+    ? filters.rooms.map(v => String(v).trim()).filter(Boolean)
     : filters.rooms
-    ? [filters.rooms]
+    ? [String(filters.rooms).trim()].filter(Boolean)
     : [];
 
   roomsWrapper.querySelectorAll('.checkbox__input').forEach(input => {
-    const name = input.dataset.name;
-    const isChecked = roomsFilter.some(r => String(r) === String(name));
-    input.checked = isChecked;
+    const name = String(input.dataset.name ?? '').trim();
+    input.checked = roomsFilter.some(r => r === name);
   });
 
   // -------- ПОВЗУНКИ --------
 
   // Ціна
-  populateSliderFilter(baseUnits, unit => Number(unit.total_price_uah), priceWrapper, 'Ціна');
+  populateSliderFilter(baseUnits, unit => Number(unit?.total_price_uah) || 0, priceWrapper, 'Ціна');
   const priceMinInput = priceWrapper.querySelector('input[data-filter="Ціна_min"]');
   const priceMaxInput = priceWrapper.querySelector('input[data-filter="Ціна_max"]');
-  if (priceMinInput && filters.priceMin) {
-    priceMinInput.value = filters.priceMin;
+  if (priceMinInput) {
+    priceMinInput.value = filters.priceMin || priceMinInput.min || '';
     priceMinInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
-  if (priceMaxInput && filters.priceMax) {
-    priceMaxInput.value = filters.priceMax;
+  if (priceMaxInput) {
+    priceMaxInput.value = filters.priceMax || priceMaxInput.max || '';
     priceMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   // Площа
-  populateSliderFilter(baseUnits, unit => Number(unit.design_size), sizeWrapper, 'Площа');
+  populateSliderFilter(baseUnits, unit => Number(unit?.design_size) || 0, sizeWrapper, 'Площа');
   const areaMinInput = sizeWrapper.querySelector('input[data-filter="Площа_min"]');
   const areaMaxInput = sizeWrapper.querySelector('input[data-filter="Площа_max"]');
-  if (areaMinInput && filters.areaMin) {
-    areaMinInput.value = filters.areaMin;
+  if (areaMinInput) {
+    areaMinInput.value = filters.areaMin || areaMinInput.min || '';
     areaMinInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
-  if (areaMaxInput && filters.areaMax) {
-    areaMaxInput.value = filters.areaMax;
+  if (areaMaxInput) {
+    areaMaxInput.value = filters.areaMax || areaMaxInput.max || '';
     areaMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   // Поверх
   populateSliderFilter(
     baseUnits,
-    unit => extractFloorNumber(unit.floor_name),
+    unit => extractFloorNumber(unit?.floor_name),
     floorWrapper,
     'Поверх',
   );
   const floorMinInput = floorWrapper.querySelector('input[data-filter="Поверх_min"]');
   const floorMaxInput = floorWrapper.querySelector('input[data-filter="Поверх_max"]');
-  if (floorMinInput && filters.floorMin) {
-    floorMinInput.value = filters.floorMin;
+  if (floorMinInput) {
+    floorMinInput.value = filters.floorMin || floorMinInput.min || '';
     floorMinInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
-  if (floorMaxInput && filters.floorMax) {
-    floorMaxInput.value = filters.floorMax;
+  if (floorMaxInput) {
+    floorMaxInput.value = filters.floorMax || floorMaxInput.max || '';
     floorMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
 }

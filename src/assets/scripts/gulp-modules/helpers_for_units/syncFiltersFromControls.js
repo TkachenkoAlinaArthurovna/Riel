@@ -2,6 +2,8 @@
 export function syncFiltersFromControls(prevFilters) {
   const next = { ...prevFilters };
 
+  const isPopupMode = window.innerWidth <= 1500;
+
   let projectWrapper;
   let filterRoot;
 
@@ -19,39 +21,39 @@ export function syncFiltersFromControls(prevFilters) {
     const complexInputs = projectWrapper.querySelectorAll('.checkbox__input');
     next.complex = Array.from(complexInputs)
       .filter(input => input.checked)
-      .map(input => input.dataset.name);
+      .map(input => String(input.dataset.name || '').trim())
+      .filter(Boolean);
   } else {
     next.complex = [];
   }
 
   if (!filterRoot) {
     // на всяк випадок гарантуємо масиви
-    next.type = Array.isArray(next.type) ? next.type : [];
     next.rooms = Array.isArray(next.rooms) ? next.rooms : [];
     return next;
   }
 
-  // Тип (ТЕПЕР: кілька чекбоксів → масив)
-  const typeInputs = filterRoot.querySelectorAll('.filter__item_wrapper.type .checkbox__input');
+  // ❌ TYPE НЕ ЧИТАЄМО З DOM — type визначається masterType один раз
 
-  next.type = Array.from(typeInputs)
-    .filter(input => input.checked)
-    .map(input => input.dataset.name);
-
-  // Кімнати (ТЕПЕР: теж масив)
-  const roomsInputs = filterRoot.querySelectorAll(
-    '.filter__item_wrapper.room_count .checkbox__input',
-  );
+  // Кімнати (масив)
+  const roomsInputs = isPopupMode
+    ? filterRoot.querySelectorAll('.filter__item_wrapper.room_count_popup .checkbox__input')
+    : filterRoot.querySelectorAll('.filter__item_wrapper.room_count .checkbox__input');
 
   next.rooms = Array.from(roomsInputs)
     .filter(input => input.checked)
-    .map(input => input.dataset.name);
+    .map(input => String(input.dataset.name || '').trim())
+    .filter(Boolean);
 
   // Ціна
-  const priceWrapper = filterRoot.querySelector('.filter__slider.price');
+  const priceWrapper = isPopupMode
+    ? filterRoot.querySelector('.filter__slider.price_popup')
+    : filterRoot.querySelector('.filter__slider.price');
+
   if (priceWrapper) {
     const priceMinInput = priceWrapper.querySelector('input[data-filter="Ціна_min"]');
     const priceMaxInput = priceWrapper.querySelector('input[data-filter="Ціна_max"]');
+
     if (priceMinInput && priceMaxInput) {
       const sMin = Number(priceMinInput.min);
       const sMax = Number(priceMaxInput.max);
@@ -60,11 +62,20 @@ export function syncFiltersFromControls(prevFilters) {
 
       next.priceMin = vMin > sMin ? String(vMin) : '';
       next.priceMax = vMax < sMax ? String(vMax) : '';
+    } else {
+      next.priceMin = '';
+      next.priceMax = '';
     }
+  } else {
+    next.priceMin = '';
+    next.priceMax = '';
   }
 
   // Площа
-  const sizeWrapper = filterRoot.querySelector('.filter__slider.size');
+  const sizeWrapper = isPopupMode
+    ? filterRoot.querySelector('.filter__slider.size_popup')
+    : filterRoot.querySelector('.filter__slider.size');
+
   if (sizeWrapper) {
     const areaMinInput = sizeWrapper.querySelector('input[data-filter="Площа_min"]');
     const areaMaxInput = sizeWrapper.querySelector('input[data-filter="Площа_max"]');
@@ -87,10 +98,14 @@ export function syncFiltersFromControls(prevFilters) {
   }
 
   // Поверх
-  const floorWrapper = filterRoot.querySelector('.filter__slider.floor');
+  const floorWrapper = isPopupMode
+    ? filterRoot.querySelector('.filter__slider.floor_popup')
+    : filterRoot.querySelector('.filter__slider.floor');
+
   if (floorWrapper) {
     const floorMinInput = floorWrapper.querySelector('input[data-filter="Поверх_min"]');
     const floorMaxInput = floorWrapper.querySelector('input[data-filter="Поверх_max"]');
+
     if (floorMinInput && floorMaxInput) {
       const sMin = Number(floorMinInput.min);
       const sMax = Number(floorMaxInput.max);
@@ -99,7 +114,13 @@ export function syncFiltersFromControls(prevFilters) {
 
       next.floorMin = vMin > sMin ? String(vMin) : '';
       next.floorMax = vMax < sMax ? String(vMax) : '';
+    } else {
+      next.floorMin = '';
+      next.floorMax = '';
     }
+  } else {
+    next.floorMin = '';
+    next.floorMax = '';
   }
 
   // при зміні фільтрів — завжди з першої сторінки

@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     'Велика Британія': 'вул. Шевченка, 31',
     'Голоські Кручі': 'вул. Під Голоском',
     'Доктор Ватсон': 'вулиця Пекарська, 57',
-    Компаньон: 'вул. Проектована, 1',
-    'Львівська Площа': 'вул. Кудрявська, 24а',
-    'Львівський Квартал': 'вул. Глибочицька, 13',
+    Компаньйон: 'вул. Проектована, 1',
+    'Львівська площа': 'вул. Кудрявська, 24а',
+    'Львівський квартал': 'вул. Глибочицька, 13',
     'Новий Форт': 'вул. Волинська, 9',
     'ОК Land': 'просп. Повітряних сил, 56',
     Тополіс: 'вул. Гетьмана Мазепи, 25а, 25б',
@@ -53,14 +53,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     Sister: '#0000FF',
     Америка: '#000080',
     Брама: '#CD853F',
-    Вежа: '#FFE4E1',
+    Вежа: '#fdcec8ff',
     'Велика Британія': '#008080',
     'Голоські Кручі': '#00FF7F',
     'Доктор Ватсон': '#F0E68C',
     Залишки: '#8B0000',
     Канкріт: '#FFD700',
     Компаньйон: '#F4A460',
-    'Львівська площа': '#FFE4C4',
+    'Львівська площа': '#ffdaadff',
     'Львівський квартал': '#DEB887',
     'Новий Форт': '#0000CD',
     'ОК Land': '#9932CC',
@@ -72,6 +72,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     Шенген: '#FFA500',
     Ярославенка: '#696969',
   };
+
+  const TYPE_SLUG = {
+    квартира: 'flats',
+    апартамент: 'apartments',
+    офіс: 'offices',
+    паркінг: 'parking',
+    комора: 'komori',
+    підвал: 'pidvali',
+  };
+
+  const norm = v =>
+    String(v ?? '')
+      .trim()
+      .toLowerCase();
 
   function getUnitImageSrc(unit) {
     // 1. Пробуємо взяти з unit.images[1] → unit.images[0]
@@ -99,12 +113,18 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   const projectsIds = {
     Америка: 252,
-    Компаньйон: 0,
+    Компаньйон: 682,
     'Новий Форт': 230,
     'Велика Британія': 314,
     Вежа: 180,
     Шенген: 110,
     'Ріел Сіті': 26,
+    'Nordica Residence': 728,
+    'Maxima Residence': 720,
+    Brother: 708,
+    Father: 698,
+    Тополіс: 292,
+    Брама: 203,
   };
 
   // 🔁 ТУТ ТА САМА ЛОГІКА, ЩО Й У SINGLE-FLAT:
@@ -125,14 +145,100 @@ document.addEventListener('DOMContentLoaded', async function() {
     return data || [];
   }
 
+  function syncCartButtonsIn(root = document) {
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (!Array.isArray(cart)) cart = [];
+    } catch {
+      cart = [];
+    }
+
+    const cartSet = new Set(cart);
+
+    root.querySelectorAll('.flat_card').forEach(card => {
+      const id = String(card.dataset.id || '').trim();
+      const btn = card.querySelector('.flat_card__cart');
+      if (!id || !btn) return;
+
+      btn.classList.toggle('active', cartSet.has(id));
+    });
+  }
+
   const setUnits = units => {
     wrapper.innerHTML = '';
     let count = 0;
 
-    const selectedUnits = units
-      .filter(unit => unit.project_name === project) // юніти тільки цього ЖК
-      .sort((a, b) => (a.room_count || 0) - (b.room_count || 0)) // від меншої кількості кімнат
-      .slice(0, 5); // перші 5
+    // беремо юніти тільки цього ЖК
+    const projectUnits = units.filter(unit => unit.project_name === project);
+
+    // список типів у потрібному порядку
+    // const priorityTypes = ['квартира', 'апартамент', 'офіс', 'комора', 'підвал', 'паркінг'];
+
+    // // рахуємо кількість кожного типу
+    // const typeCounts = projectUnits.reduce((acc, unit) => {
+    //   const type = unit.unit_type_name;
+    //   if (!type) return acc;
+
+    //   acc[type] = (acc[type] || 0) + 1;
+    //   console.log(acc);
+    //   return acc;
+    // }, {});
+
+    // // знаходимо перший тип зі списку, у якого >= 1 юнітів
+
+    // // якщо жоден тип не підходить — нічого не виводимо
+    // if (!selectedType) {
+    //   console.log('Немає типу з мінімум 10 юнітами');
+    //   return;
+    // }
+
+    // // беремо перші 10 юнітів цього типу
+    // const selectedUnits = units
+    //   .filter(unit => unit.project_name === project && unit.unit_type_name === selectedType)
+    //   .sort((a, b) => (a.room_count || 0) - (b.room_count || 0))
+    //   .slice(0, 10);
+
+    // рахуємо кількість кожного типу
+    // const typeCounts = projectUnits.reduce((acc, unit) => {
+    //   const type = unit.unit_type_name;
+    //   if (!type) return acc;
+
+    //   acc[type] = (acc[type] || 0) + 1;
+    //   return acc;
+    // }, {});
+
+    // // знаходимо тип з максимальною кількістю
+    // const mostCommonUnitType = Object.keys(typeCounts).reduce((a, b) =>
+    //   typeCounts[a] > typeCounts[b] ? a : b,
+    // );
+
+    // const selectedUnits = units
+    //   .filter(unit => unit.project_name === project && unit.unit_type_name === mostCommonUnitType)
+    //   .sort((a, b) => (a.room_count || 0) - (b.room_count || 0)) // від меншої кількості кімнат
+    //   .slice(0, 5); // перші 5
+
+    const priorityTypes = ['квартира', 'апартамент', 'офіс', 'комора', 'підвал', 'паркінг'];
+
+    // рахуємо кількість кожного типу (нормалізовано)
+    const typeCounts = projectUnits.reduce((acc, unit) => {
+      const t = norm(unit.unit_type_name);
+      if (!t) return acc;
+      acc[t] = (acc[t] || 0) + 1;
+      return acc;
+    }, {});
+
+    // перший доступний тип за пріоритетом
+    const selectedType = priorityTypes.find(t => (typeCounts[t] || 0) >= 1) || priorityTypes[0];
+
+    // беремо перші 10 карток у пріоритетному порядку
+    const selectedUnits = priorityTypes
+      .flatMap(t =>
+        projectUnits
+          .filter(u => norm(u.unit_type_name) === t)
+          .sort((a, b) => (a.room_count || 0) - (b.room_count || 0)),
+      )
+      .slice(0, 10);
 
     selectedUnits.forEach(unit => {
       projectId = unit.project.id;
@@ -145,7 +251,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       const unitHTML = `
         <div class="swiper-slide">
           <a href="${link}"
-              class="flat_card" data-filtered="true"  
+              class="flat_card " data-filtered="true"  
               data-project="${unit.project_name || ''}" 
               data-room_count="${unit.room_count || ''}" 
               data-type="${unit.unit_type_name || ''}" 
@@ -165,23 +271,49 @@ document.addEventListener('DOMContentLoaded', async function() {
               <img src="${imgSrc}" alt="planning" />
             </div>
             <div class="flat_card__center">
-              <div class="flat_card__center_left">
-                <span> ${unit.unit_type_name ? unit.unit_type_name : 'Помешкання'} м²</span>
-                ${unit.design_size ? `<span>${unit.design_size}</span>` : '<span>-</span>'}
-              </div>
-              <div class="flat_card__center_center">
-                <span>/</span>
-              </div>
+              ${
+                unit.unit_type_name !== 'паркінг'
+                  ? `
+     ${
+       unit.design_size > 0
+         ? `
+          <div class="flat_card__center_left">
+            <span>${unit.unit_type_name} м²</span>
+            <span>${unit.design_size}</span>
+          </div>
+          <div class="flat_card__center_center"><span>/</span></div>
+        `
+         : ''
+     }
+      
+    `
+                  : ''
+              }
               <div class="flat_card__center_right">
-                <span>грн/м²</span>
-                <span>${unit.price_m2 ? Number(unit.price_m2).toLocaleString('uk-UA') : '-'}</span>
+               ${
+                 unit.unit_type_name !== 'паркінг'
+                   ? `<span class="price_m2_uah">грн/м²</span>
+            <span class="price_m2">$/м²</span>
+            `
+                   : ''
+               }
+                
+                 ${
+                   unit.price_m2 && unit.price_m2_uah
+                     ? `<span class="price_m2_uah">${Number(unit.price_m2_uah).toLocaleString(
+                         'uk-UA',
+                       )}</span><span class="price_m2">${Number(unit.price_m2).toLocaleString(
+                         'uk-UA',
+                       )}</span>`
+                     : '<span>-</span>'
+                 }
               </div>
             </div>
             <div class="flat_card__bottom">
               ${unit.section_name ? `<span>Секція: ${unit.section_name}</span>` : ''}
               ${
-                unit.floor_name && unit.floor_name !== 0
-                  ? `<span>Поверх: ${unit.floor_name}</span>`
+                unit.floor_name
+                  ? `<span>Поверх: ${unit.floor_name.toString().match(/-?\d+/)?.[0] || ''}</span>`
                   : ''
               }
               ${
@@ -200,6 +332,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                   </div>`
                 : ''
             }
+            <div class="flat_card__cart">
+                <span data-title="Додати в кошик">Додати в кошик</span>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M16 16C14.89 16 14 16.89 14 18C14 18.5304 14.2107 19.0391 14.5858 19.4142C14.9609 19.7893 15.4696 20 16 20C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18C18 17.4696 17.7893 16.9609 17.4142 16.5858C17.0391 16.2107 16.5304 16 16 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 13.5304 4.21071 14.0391 4.58579 14.4142C4.96086 14.7893 5.46957 15 6 15H18V13H6.42C6.3537 13 6.29011 12.9737 6.24322 12.9268C6.19634 12.8799 6.17 12.8163 6.17 12.75C6.17 12.7 6.18 12.66 6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.5C19.95 3.34 20 3.17 20 3C20 2.73478 19.8946 2.48043 19.7071 2.29289C19.5196 2.10536 19.2652 2 19 2H4.21L3.27 0M6 16C4.89 16 4 16.89 4 18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20C6.53043 20 7.03914 19.7893 7.41421 19.4142C7.78929 19.0391 8 18.5304 8 18C8 17.4696 7.78929 16.9609 7.41421 16.5858C7.03914 16.2107 6.53043 16 6 16Z" fill="#1D3541"/>
+                    </svg>
+                </div>
+            </div>
           </a>
         </div>
       `;
@@ -207,14 +347,23 @@ document.addEventListener('DOMContentLoaded', async function() {
       wrapper.insertAdjacentHTML('beforeend', unitHTML);
     });
 
+    const selectedSlug = TYPE_SLUG[selectedType] || 'flats';
+
+    // complex у вас працює як project.id (саме його читає фільтр)
+    const complexId = String(projectId);
+
     const lastSlideHTML = `
-      <div class="swiper-slide last-slide">
-        <a class="flat_card" href="/flats?complex=${projectId}" class="btn_more">
-          <span>Дивитись всі помешкання</span>
-        </a>
-      </div>
-    `;
+  <div class="swiper-slide last-slide">
+    <a class="flat_card" href="/${selectedSlug}/?complex=${encodeURIComponent(
+      complexId,
+    )}" class="btn_more">
+      <span>Дивитись більше</span>
+    </a>
+  </div>
+`;
     wrapper.insertAdjacentHTML('beforeend', lastSlideHTML);
+
+    syncCartButtonsIn(wrapper);
 
     if (count === 0) {
       section.style.display = 'none';

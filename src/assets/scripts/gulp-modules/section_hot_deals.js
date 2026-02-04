@@ -2,7 +2,7 @@ import Swiper, { Navigation, Controller, Pagination } from 'swiper';
 Swiper.use([Navigation, Pagination, Controller]);
 
 document.addEventListener('DOMContentLoaded', function() {
-  const swiperHotDeals = document.querySelector('.section_hot_deals .swiper');
+  const swiperHotDeals = document.querySelector('#section_hot_deals .swiper');
 
   new Swiper(swiperHotDeals, {
     loop: false,
@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     spaceBetween: 20,
     speed: 600,
     navigation: {
-      nextEl: '.section_hot_deals .swiper_navigation__right',
-      prevEl: '.section_hot_deals .swiper_navigation__left',
+      nextEl: '#section_hot_deals .swiper_navigation__right',
+      prevEl: '#section_hot_deals .swiper_navigation__left',
     },
     breakpoints: {
       1024: {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     },
   });
 
-  const swiperKomertsiinaPloshcha = document.querySelector('.komertsiina_ploshcha .swiper');
+  const swiperKomertsiinaPloshcha = document.querySelector('#section_komertsiina_ploshcha .swiper');
 
   new Swiper(swiperKomertsiinaPloshcha, {
     loop: false,
@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
     spaceBetween: 20,
     speed: 600,
     navigation: {
-      nextEl: '.komertsiina_ploshcha .swiper_navigation__right',
-      prevEl: '.komertsiina_ploshcha .swiper_navigation__left',
+      nextEl: '#section_komertsiina_ploshcha .swiper_navigation__right',
+      prevEl: '#section_komertsiina_ploshcha .swiper_navigation__left',
     },
     breakpoints: {
       1024: {

@@ -6,12 +6,18 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
 
   const projectsIds = {
     Америка: 252,
-    Компаньйон: 0,
+    Компаньйон: 682,
     'Новий Форт': 230,
     'Велика Британія': 314,
     Вежа: 180,
     Шенген: 110,
     'Ріел Сіті': 26,
+    'Nordica Residence': 728,
+    'Maxima Residence': 720,
+    Brother: 708,
+    Father: 698,
+    Тополіс: 292,
+    Брама: 203,
   };
 
   const colors = {
@@ -25,14 +31,14 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
     Sister: '#0000FF',
     Америка: '#000080',
     Брама: '#CD853F',
-    Вежа: '#FFE4E1',
+    Вежа: '#fdcec8ff',
     'Велика Британія': '#008080',
     'Голоські Кручі': '#00FF7F',
     'Доктор Ватсон': '#F0E68C',
     Залишки: '#8B0000',
     Канкріт: '#FFD700',
     Компаньйон: '#F4A460',
-    'Львівська площа': '#FFE4C4',
+    'Львівська площа': '#ffdaadff',
     'Львівський квартал': '#DEB887',
     'Новий Форт': '#0000CD',
     'ОК Land': '#9932CC',
@@ -52,9 +58,9 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
     'Велика Британія': 'вул. Шевченка, 31',
     'Голоські Кручі': 'вул. Під Голоском',
     'Доктор Ватсон': 'вулиця Пекарська, 57',
-    Компаньон: 'вул. Проектована, 1',
-    'Львівська Площа': 'вул. Кудрявська, 24а',
-    'Львівський Квартал': 'вул. Глибочицька, 13',
+    Компаньйон: 'вул. Проектована, 1',
+    'Львівська площа': 'вул. Кудрявська, 24а',
+    'Львівський квартал': 'вул. Глибочицька, 13',
     'Новий Форт': 'вул. Волинська, 9',
     'ОК Land': 'просп. Повітряних сил, 56',
     Тополіс: 'вул. Гетьмана Мазепи, 25а, 25б',
@@ -104,7 +110,7 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
 
     const html = `
       <a href="${link}"
-        class="flat_card"
+        class="flat_card "
         data-id="${unit.id}"
       >
         <div class="flat_card__hover">
@@ -121,24 +127,53 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
         </div>
 
         <div class="flat_card__center">
-          <div class="flat_card__center_left">
-            <span> ${unit.unit_type_name ? unit.unit_type_name : 'Помешкання'} м²</span>
-            ${unit.design_size ? `<span>${unit.design_size}</span>` : '<span>-</span>'}
-          </div>
-          <div class="flat_card__center_center"><span>/</span></div>
+          ${
+            unit.unit_type_name !== 'паркінг'
+              ? `
+     ${
+       unit.design_size > 0
+         ? `
+            <div class="flat_card__center_left">
+              <span>${unit.unit_type_name} м²</span>
+              <span>${unit.design_size}</span>
+            </div>
+            <div class="flat_card__center_center"><span>/</span></div>
+          `
+         : ''
+     }
+      
+    `
+              : ''
+          }
+           
           <div class="flat_card__center_right">
-            <span>грн/м²</span>
-            ${
-              unit.price_m2
-                ? `<span>${Number(unit.price_m2).toLocaleString('uk-UA')}</span>`
-                : '<span>-</span>'
-            }
+           ${
+             unit.unit_type_name !== 'паркінг'
+               ? `<span class="price_m2_uah">грн/м²</span>
+            <span class="price_m2">$/м²</span>
+            `
+               : ''
+           }
+                
+                 ${
+                   unit.price_m2 && unit.price_m2_uah
+                     ? `<span class="price_m2_uah number">${Number(
+                         unit.price_m2_uah,
+                       ).toLocaleString('uk-UA')}</span><span class="price_m2 number">${Number(
+                         unit.price_m2,
+                       ).toLocaleString('uk-UA')}</span>`
+                     : '<span>-</span>'
+                 }
           </div>
         </div>
 
         <div class="flat_card__bottom">
           ${unit.section_name ? `<span>Секція: ${unit.section_name}</span>` : ''}
-          ${unit.floor_name ? `<span>Поверх: ${unit.floor_name}</span>` : ''}
+          ${
+            unit.floor_name
+              ? `<span>Поверх: ${unit.floor_name.toString().match(/-?\d+/)?.[0] || ''}</span>`
+              : ''
+          }
           ${unit.room_count ? `<span>Кімнат: ${unit.room_count}</span>` : ''}
         </div>
 
@@ -152,6 +187,14 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
               </div>`
             : ''
         }
+        <div class="flat_card__cart">
+            <span data-title="Додати в кошик">Додати в кошик</span>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M16 16C14.89 16 14 16.89 14 18C14 18.5304 14.2107 19.0391 14.5858 19.4142C14.9609 19.7893 15.4696 20 16 20C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18C18 17.4696 17.7893 16.9609 17.4142 16.5858C17.0391 16.2107 16.5304 16 16 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 13.5304 4.21071 14.0391 4.58579 14.4142C4.96086 14.7893 5.46957 15 6 15H18V13H6.42C6.3537 13 6.29011 12.9737 6.24322 12.9268C6.19634 12.8799 6.17 12.8163 6.17 12.75C6.17 12.7 6.18 12.66 6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.5C19.95 3.34 20 3.17 20 3C20 2.73478 19.8946 2.48043 19.7071 2.29289C19.5196 2.10536 19.2652 2 19 2H4.21L3.27 0M6 16C4.89 16 4 16.89 4 18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20C6.53043 20 7.03914 19.7893 7.41421 19.4142C7.78929 19.0391 8 18.5304 8 18C8 17.4696 7.78929 16.9609 7.41421 16.5858C7.03914 16.2107 6.53043 16 6 16Z" fill="#1D3541"/>
+                </svg>
+            </div>
+        </div>
       </a>
     `;
 
@@ -159,6 +202,25 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
   });
 
   wrapper.innerHTML = htmlArr.join('');
+
+  // ✅ СИНХРОНІЗАЦІЯ ACTIVE ПО CART ПІСЛЯ РЕНДЕРУ
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!Array.isArray(cart)) cart = [];
+  } catch {
+    cart = [];
+  }
+
+  const cartSet = new Set(cart);
+
+  wrapper.querySelectorAll('.flat_card').forEach(card => {
+    const id = String(card.dataset.id || '').trim();
+    const btn = card.querySelector('.flat_card__cart');
+    if (!id || !btn) return;
+
+    btn.classList.toggle('active', cartSet.has(id));
+  });
 
   // керування кнопкою
   if (units.length > shownCount) {

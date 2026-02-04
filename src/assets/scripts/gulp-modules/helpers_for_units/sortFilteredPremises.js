@@ -10,8 +10,8 @@ export function sortFilteredPremises(sort, portionSize = 12) {
     return;
   }
 
-  const getPrice = u => Number(u.total_price_uah) || 0;
-  const getArea = u => Number(u.real_size || u.design_size) || 0;
+  const getPrice = u => Number(u.price_m2_uah) || 0;
+  const getArea = u => Number(u.design_size) || 0;
 
   if (sort === 'price-asc') {
     units.sort((a, b) => getPrice(a) - getPrice(b));

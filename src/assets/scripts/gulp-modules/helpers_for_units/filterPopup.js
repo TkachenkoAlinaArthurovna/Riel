@@ -9,12 +9,14 @@ export function initFilterPopup() {
   if (btnOpenFilter && popupFilter) {
     btnOpenFilter.addEventListener('click', () => {
       popupFilter.classList.add('active');
+      document.body.classList.add('no-scroll');
     });
   }
 
   if (btnClose && popupFilter) {
     btnClose.addEventListener('click', () => {
       popupFilter.classList.remove('active');
+      document.body.classList.remove('no-scroll');
     });
   }
 
@@ -23,6 +25,7 @@ export function initFilterPopup() {
     popupFilter.addEventListener('click', e => {
       if (e.target === popupFilter) {
         popupFilter.classList.remove('active');
+        document.body.classList.remove('no-scroll');
       }
     });
   }

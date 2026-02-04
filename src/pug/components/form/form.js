@@ -150,7 +150,7 @@ const lang = 'uk';
 })();
 /*  */
 
-export default class FormMonster {
+export class FormMonster {
   constructor(setting) {
     this.elements = setting.elements;
     this.$body = document.querySelector('body');
@@ -224,61 +224,201 @@ export default class FormMonster {
     };
   }
 
+  submitForm() {
+    return async e => {
+      /*  */
+      e.preventDefault();
+      this.changeInput()(e);
+
+      /*  */
+
+      if (this.watchedState.error === false) {
+        try {
+          this.watchedState.status = 'loading';
+
+          const formData = new FormData(this.elements.$form);
+
+          formData.append('action', 'app');
+
+          const { error, code_error } = await sendForm(formData);
+          console.log(error);
+          if (error === 0) {
+            this.watchedState.status = 'successSand';
+            return true;
+          }
+          /* eslint-disable-next-line */
+          this.watchedState.serverError = code_error;
+          this.watchedState.status = 'failed';
+        } catch (err) {
+          this.watchedState.error = err.message;
+          this.watchedState.serverError = 'front_error';
+          this.watchedState.status = 'failed';
+        }
+      }
+      return null;
+    };
+  }
+
   // submitForm() {
-  //   return async e => {
-  //     /*  */
+  //   return e => {
   //     e.preventDefault();
+
   //     this.changeInput()(e);
 
-  //     /*  */
-
-  //     if (this.watchedState.error === false) {
-  //       try {
-  //         this.watchedState.status = 'loading';
-
-  //         const formData = new FormData(this.elements.$form);
-
-  //         formData.append('action', 'app');
-  //         // for (let [key, value] of formData.entries()) {
-  //         //   console.log(`${key}:`, value);
-  //         // }
-  //         /* eslint-disable-next-line */
-  //         const { error, code_error } = await sendForm(formData);
-
-  //         // if (true) {
-  //         if (error === 0) {
-  //           this.watchedState.status = 'successSand';
-  //           return true;
-  //         }
-  //         /* eslint-disable-next-line */
-  //         this.watchedState.serverError = code_error;
-  //         this.watchedState.status = 'failed';
-  //       } catch (err) {
-  //         this.watchedState.error = err.message;
-  //         this.watchedState.serverError = 'front_error';
-  //         this.watchedState.status = 'failed';
-  //       }
+  //     if (this.watchedState.error !== false) {
+  //       this.watchedState.status = 'failed';
+  //       return null;
   //     }
-  //     return null;
+
+  //     // моментально успіх
+  //     this.watchedState.success = true;
+  //     this.watchedState.status = 'successSand';
+
+  //     return true;
   //   };
   // }
 
-  submitForm() {
+  listers() {
+    this.elements.$form.addEventListener('submit', this.submitForm(this.watchedState));
+    // this.fieldsKey.map(key => {
+    //   const { input } = this.elements.fields[key].inputWrapper;
+    //   input.addEventListener('input', this.changeInput(this.watchedState));
+    //   return null;
+    // });
+  }
+
+  init() {
+    this.listers();
+  }
+}
+
+export class FormMonsterForCart {
+  constructor(setting) {
+    this.elements = setting.elements;
+    this.$body = document.querySelector('body');
+    this.showSuccessMessage = setting.showSuccessMessage || true;
+
+    this.state = {
+      serverError: null,
+      error: true,
+      form: setting.elements.fields,
+      status: 'filling',
+    };
+    this.fieldsKey = Object.keys(this.elements.fields);
+    this.watchedState = initView(this.state, this.elements);
+
+    this.init();
+  }
+
+  collectCheckedUnitIdsToIdesInput() {
+    const wrapper = document.querySelector('.wrapper_for_units');
+    if (!wrapper) return;
+
+    const ids = [...wrapper.querySelectorAll('.unit_card')]
+      .filter(card => card.querySelector('.unit_card__input input[type="checkbox"]')?.checked)
+      .map(card => card.dataset.id)
+      .filter(Boolean);
+
+    // шукаємо поле ides у формі (краще відносно форми, а не document)
+    const idesInput = this.elements.$form.querySelector('input[name="ides"], #ides');
+    if (!idesInput) return;
+
+    idesInput.value = ids.join(',');
+  }
+
+  validate(formData) {
+    const formDataObj = this.fieldsKey.reduce((acc, key) => {
+      acc[key] = formData.get(key);
+      return acc;
+    }, {});
+    /*  */
+    const shapeObject = this.fieldsKey.reduce((acc, key) => {
+      acc[key] = this.elements.fields[key].rule;
+      return acc;
+    }, {});
+    /*  */
+
+    const schema = yup.object().shape(shapeObject);
+
+    try {
+      schema.validateSync(formDataObj, { abortEarly: false });
+      return null;
+    } catch (err) {
+      return err.inner;
+    }
+  }
+
+  changeInput() {
     return e => {
+      /*  */
       e.preventDefault();
+      this.watchedState.status = 'filling';
+      /*  */
+      this.collectCheckedUnitIdsToIdesInput();
+      const formData = new FormData(this.elements.$form);
 
-      this.changeInput()(e);
-
-      if (this.watchedState.error !== false) {
-        this.watchedState.status = 'failed';
+      /*  */
+      const error = this.validate(formData);
+      /*  */
+      this.fieldsKey.map(key => {
+        const field = this.elements.fields[key];
+        field.valid = true;
+        field.error = [];
+        return null;
+      });
+      /*  */
+      /*  */
+      if (error) {
+        error.forEach(({ path, message }) => {
+          this.watchedState.form[path].valid = false;
+          this.watchedState.form[path].error.push(message);
+          return null;
+        });
+        this.watchedState.error = true;
+        this.watchedState.status = 'renderErrorValidation';
         return null;
       }
+      this.watchedState.error = false;
+      this.watchedState.status = 'renderSuccessValidation';
+      return null;
+    };
+  }
 
-      // моментально успіх
-      this.watchedState.success = true;
-      this.watchedState.status = 'successSand';
+  submitForm() {
+    return async e => {
+      /*  */
+      e.preventDefault();
+      this.changeInput()(e);
 
-      return true;
+      /*  */
+
+      if (this.watchedState.error === false) {
+        try {
+          this.watchedState.status = 'loading';
+
+          this.collectCheckedUnitIdsToIdesInput();
+
+          const formData = new FormData(this.elements.$form);
+
+          formData.append('action', 'cart');
+
+          const { error, code_error } = await sendForm(formData);
+
+          if (true) {
+            // if (error === 0) {
+            this.watchedState.status = 'successSand';
+            return true;
+          }
+          /* eslint-disable-next-line */
+          this.watchedState.serverError = code_error;
+          this.watchedState.status = 'failed';
+        } catch (err) {
+          this.watchedState.error = err.message;
+          this.watchedState.serverError = 'front_error';
+          this.watchedState.status = 'failed';
+        }
+      }
+      return null;
     };
   }
 

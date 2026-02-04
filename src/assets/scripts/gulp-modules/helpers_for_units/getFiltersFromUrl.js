@@ -1,37 +1,48 @@
 export function getFiltersFromUrl() {
   const params = new URLSearchParams(window.location.search);
 
-  // const complexes = params.getAll('complex'); // ['42', '43'] або []
-
   const parseMulti = key => {
-    const values = params.getAll(key); // збире всі ?type=x&type=y
+    const values = params.getAll(key); // ?rooms=1&rooms=2 або ?rooms=1,2
     if (values.length > 0) {
       return values
-        .flatMap(v => v.split(','))
+        .flatMap(v => String(v).split(','))
         .map(v => v.trim())
         .filter(Boolean);
     }
 
-    // якщо ?type=1,2
     const single = params.get(key);
     return single
-      ? single
+      ? String(single)
           .split(',')
           .map(v => v.trim())
           .filter(Boolean)
       : [];
   };
 
+  const parseNumberOrEmpty = key => {
+    const v = params.get(key);
+    if (v === null) return '';
+    const n = Number(String(v).replace(',', '.'));
+    return Number.isFinite(n) ? String(n) : '';
+  };
+
+  const parseIntOr = (key, fallback) => {
+    const v = params.get(key);
+    const n = Number.parseInt(v ?? '', 10);
+    return Number.isFinite(n) && n > 0 ? n : fallback;
+  };
+
   return {
     complex: parseMulti('complex'),
-    type: parseMulti('type'),
+    // type: НЕ читаємо з URL. type визначається masterType один раз.
     rooms: parseMulti('rooms'),
-    priceMin: params.get('priceMin') || '',
-    priceMax: params.get('priceMax') || '',
-    areaMin: params.get('areaMin') || '',
-    areaMax: params.get('areaMax') || '',
-    floorMin: params.get('floorMin') || '',
-    floorMax: params.get('floorMax') || '',
-    page: Number(params.get('page')) || 1,
+    priceMin: parseNumberOrEmpty('priceMin'),
+    priceMax: parseNumberOrEmpty('priceMax'),
+    areaMin: parseNumberOrEmpty('areaMin'),
+    areaMax: parseNumberOrEmpty('areaMax'),
+    floorMin: parseNumberOrEmpty('floorMin'),
+    floorMax: parseNumberOrEmpty('floorMax'),
+    page: parseIntOr('page', 1),
+    sort: params.get('sort') || '', // якщо у тебе є sort в URL — зручно одразу тут
   };
 }

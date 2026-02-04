@@ -28,31 +28,38 @@ export function attachFilterListeners(allUnits, filters, portionSize = 12) {
 
   if (!projectWrapper && !filterRoot) return;
 
+  const masterType = (window.RIEL_DEFAULT_TYPE ?? '')
+    .toString()
+    .trim()
+    .toLowerCase();
+
   function runPipeline({ rerenderFilter = false, apply = true } = {}) {
-    // 1. читаємо актуальні значення фільтрів з DOM
     const synced = syncFiltersFromControls(filters);
 
-    // 2. оновлюємо існуючий об’єкт filters (НЕ створюємо новий!)
+    // не дозволяємо DOM/URL керувати type
+    if ('type' in synced) delete synced.type;
+
     Object.assign(filters, synced);
 
-    if (apply) {
-      // 3. оновлюємо URL (без sort)
-      updateUrl(filters);
+    // type тільки master (і незмінний)
+    filters.type = masterType ? [masterType] : [];
 
-      // 4. фільтруємо allUnits → зберігаємо filteredPremises → малюємо першу порцію
+    // якщо для деяких типів не можна rooms/area/floor — ще раз “підчистити”
+    // (опційно, але я раджу)
+    // adaptFiltersByType(filters, masterType);
+
+    if (apply) {
+      // URL оновлюємо БЕЗ type
+      const { type, ...urlFilters } = filters;
+      updateUrl(urlFilters);
+
       applyFiltersAndSave(allUnits, filters, portionSize);
 
-      // 5. якщо є активне сортування — поверх щойно відфільтрованого масиву
       if (filters.sort) {
         sortFilteredPremises(filters.sort, portionSize);
       }
 
       updatePopupCount();
-    }
-
-    // 6. якщо змінювався список ЖК — переформувати чекбокси/слайдери під нові ЖК
-    if (rerenderFilter) {
-      renderFilter(allUnits, filters);
     }
   }
 
@@ -111,6 +118,7 @@ export function attachFilterListeners(allUnits, filters, portionSize = 12) {
 
         if (popupFilter) {
           popupFilter.classList.remove('active');
+          document.body.classList.remove('no-scroll');
         }
       });
     }
@@ -145,6 +153,7 @@ export function attachFilterListeners(allUnits, filters, portionSize = 12) {
 
         if (popupFilter) {
           popupFilter.classList.remove('active');
+          document.body.classList.remove('no-scroll');
         }
       });
     }

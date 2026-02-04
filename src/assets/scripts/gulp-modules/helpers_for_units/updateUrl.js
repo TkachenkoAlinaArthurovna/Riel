@@ -1,31 +1,40 @@
 export function updateUrl(filters) {
-  const params = new URLSearchParams();
+  const params = new URLSearchParams(window.location.search);
 
-  const appendMulti = (key, value) => {
-    if (Array.isArray(value)) {
-      value.filter(v => v !== '' && v != null).forEach(v => params.append(key, v));
-    } else if (value !== '' && value != null) {
-      params.append(key, value);
-    }
+  // очищаємо все, що перезаписуємо (type НЕ чіпаємо і НЕ додаємо)
+  params.delete('complex');
+  params.delete('rooms');
+  params.delete('priceMin');
+  params.delete('priceMax');
+  params.delete('areaMin');
+  params.delete('areaMax');
+  params.delete('floorMin');
+  params.delete('floorMax');
+  params.delete('page');
+  params.delete('sort');
+  params.delete('type'); // на всяк випадок прибираємо старі лінки виду ?type=...
+
+  // helper: додає масив БЕЗ дублікатів
+  const appendUnique = (key, value) => {
+    const arr = Array.isArray(value) ? value : value != null && value !== '' ? [value] : [];
+
+    [...new Set(arr.map(v => String(v).trim()).filter(v => v !== ''))].forEach(v =>
+      params.append(key, v),
+    );
   };
 
-  // complex: масив ЖК
-  appendMulti('complex', filters.complex);
+  appendUnique('complex', filters.complex);
+  appendUnique('rooms', filters.rooms);
 
-  // type: тепер масив типів
-  appendMulti('type', filters.type);
+  if (filters.priceMin) params.set('priceMin', String(filters.priceMin));
+  if (filters.priceMax) params.set('priceMax', String(filters.priceMax));
+  if (filters.areaMin) params.set('areaMin', String(filters.areaMin));
+  if (filters.areaMax) params.set('areaMax', String(filters.areaMax));
+  if (filters.floorMin) params.set('floorMin', String(filters.floorMin));
+  if (filters.floorMax) params.set('floorMax', String(filters.floorMax));
 
-  // rooms: тепер масив кількостей кімнат
-  appendMulti('rooms', filters.rooms);
-
-  if (filters.priceMin) params.set('priceMin', filters.priceMin);
-  if (filters.priceMax) params.set('priceMax', filters.priceMax);
-  if (filters.areaMin) params.set('areaMin', filters.areaMin);
-  if (filters.areaMax) params.set('areaMax', filters.areaMax);
-  if (filters.floorMin) params.set('floorMin', filters.floorMin);
-  if (filters.floorMax) params.set('floorMax', filters.floorMax);
-  if (filters.page && filters.page !== 1) params.set('page', String(filters.page));
-  if (filters.sort) params.set('sort', filters.sort);
+  if (filters.page && Number(filters.page) !== 1) params.set('page', String(filters.page));
+  if (filters.sort) params.set('sort', String(filters.sort));
 
   const query = params.toString();
   const newUrl = `${window.location.pathname}${query ? `?${query}` : ''}`;

@@ -201,6 +201,7 @@
   }
   .swiper-button-lock {
     opacity: 0.2;
+    pointer-events: none;
     svg {
       animation: none !important;
     }
@@ -242,8 +243,8 @@
     color: $brend-white;
     div {
       position: absolute;
-      right: 40px;
       bottom: 60px;
+      right: 40px;
       z-index: 2;
       display: flex;
       flex-direction: column;
@@ -254,6 +255,8 @@
       line-height: 120%;
       letter-spacing: -1.2px;
       @media (max-width: 1600px) {
+        width: 150px;
+        max-width: 180px;
         font-size: 16px;
         font-weight: 500;
         line-height: 140%;
@@ -263,7 +266,9 @@
         right: 32px;
       }
       @media (max-width: 480px) {
-        display: none;
+        bottom: auto;
+        top: 18vw;
+        right: 16px;
       }
       span:last-child {
         font-size: 64px;
@@ -357,7 +362,7 @@
       left: 32px;
     }
     @media (max-width: 480px) {
-      left: 16px;
+      display: none;
     }
     span {
       @include text-96-56-32;
@@ -378,6 +383,7 @@
       left: 32px;
     }
     @media (max-width: 480px) {
+      top: 50vw;
       left: 16px;
     }
   }
@@ -395,6 +401,8 @@
       left: 32px;
     }
     @media (max-width: 480px) {
+      top: auto;
+      bottom: 10vw;
       left: 16px;
     }
   }
@@ -410,7 +418,6 @@
       z-index: 2;
       right: 16px;
       bottom: 16px;
-      display: flex;
       flex-direction: column;
       gap: 4px;
       span:first-child {
@@ -673,12 +680,20 @@
     align-items: center;
     width: 45%;
     text-align: center;
-    span:first-child {
+    margin: 0 auto;
+    span:nth-child(1),
+    span:nth-child(2) {
       @include text-16;
       color: $brend-grey;
     }
-    span:last-child {
+    span:nth-child(3),
+    span:nth-child(4) {
       @include text-36;
+    }
+    span:nth-child(1).price_m2_uah.number,
+    span:nth-child(2).price_m2.number {
+      @include text-36;
+      color: $brend-white;
     }
   }
   &__bottom {
@@ -729,8 +744,13 @@
     @include text-16;
     background: #6858cf;
     white-space: nowrap;
+    @media (max-width: 1024px) {
+      top: 60px;
+    }
     @media (max-width: 480px) {
       @include text-14;
+      font-size: 12px;
+      top: 50px;
     }
     &::after {
       content: '';
@@ -823,6 +843,136 @@
       }
     }
   }
+  &__cart.active {
+    svg path {
+      fill: $brend-green;
+    }
+  }
+  &__cart {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: calc(100% - 80px);
+    height: 68px;
+    margin: 40px auto 0 auto;
+    background: $brend-white;
+    @media (max-width: 480px) {
+      height: 40px;
+    }
+    span {
+      position: relative;
+      color: rgba(0, 0, 0, 0);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%; /* 24px */
+      letter-spacing: -1.2px;
+      overflow: hidden;
+      @media (max-width: 480px) {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%; /* 19.2px */
+        letter-spacing: -0.96px;
+      }
+    }
+    span::before {
+      content: attr(data-title);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      color: $brend-dark;
+      transition: 0.2s ease-in-out;
+    }
+    span::after {
+      content: attr(data-title);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      color: $brend-dark;
+      transition: 0.2s ease-in-out;
+      transform: translateY(120%);
+    }
+    div {
+      position: relative;
+      svg {
+        transition: 0.2s ease-in-out;
+      }
+    }
+  }
+  &__cart:hover span:before {
+    transform: translateY(-120%);
+  }
+  &__cart:hover span:after {
+    transform: translateY(0%);
+  }
+  &__cart::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 1px;
+    transform: translateX(-100%);
+    display: block;
+    height: 100%;
+    width: 39px;
+    height: 68px;
+    background-image: url('../../assets/images/btn_decor_white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 480px) {
+      width: 22px;
+      height: 40px;
+    }
+  }
+  &__cart::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 1px;
+    transform: translateX(100%) rotate(180deg);
+    display: block;
+    height: 100%;
+    width: 39px;
+    height: 68px;
+    background-image: url('../../assets/images/btn_decor_white.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    @media (max-width: 480px) {
+      width: 22px;
+      height: 40px;
+    }
+  }
+}
+
+.cart_count {
+  position: absolute;
+  transform: translate(12px, -12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: $brend-green;
+  color: $brend-dark;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.84px;
+  text-transform: uppercase;
+  opacity: 0;
+}
+.cart_count.active {
+  opacity: 1;
 }
 
 //SECTION_FOR_BTN
@@ -1408,6 +1558,7 @@
 .page-template-flats {
   .section_top_subpage__title {
     color: $brend-white;
+    text-shadow: 1px 1px 2px black;
   }
 }
 
@@ -1423,7 +1574,7 @@
   display: none;
   @media (max-width: 1500px) {
     position: fixed;
-    z-index: 12;
+    z-index: 102;
     top: 0;
     bottom: 0;
     left: 0;
@@ -1532,6 +1683,7 @@
     font-weight: 600;
     line-height: 120%;
     letter-spacing: -1.2px;
+    text-transform: uppercase;
   }
   &__item_wrapper {
     display: flex;
@@ -1682,5 +1834,35 @@
     @media (max-width: 480px) {
       display: block !important;
     }
+  }
+}
+
+.uah {
+  .price_m2 {
+    display: none !important;
+  }
+  .full-price.usd {
+    display: none !important;
+  }
+  .m-price.usd {
+    display: none !important;
+  }
+  .price.usd {
+    display: none !important;
+  }
+}
+
+.usd {
+  .price_m2_uah {
+    display: none !important;
+  }
+  .full-price.uah {
+    display: none !important;
+  }
+  .m-price.uah {
+    display: none !important;
+  }
+  .price.uah {
+    display: none !important;
   }
 }

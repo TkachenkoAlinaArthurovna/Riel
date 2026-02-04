@@ -344,7 +344,7 @@ input[type='number']::-webkit-outer-spin-button {
   transition: all 0.5s ease-out;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(41, 41, 37, 1);
+  background: $brend-green;
 }
 
 input[type='number']::-webkit-inner-spin-button,

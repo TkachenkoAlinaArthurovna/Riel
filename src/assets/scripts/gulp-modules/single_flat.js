@@ -1,5 +1,19 @@
 import { getData } from './helpers_for_units/getData';
 
+const TYPE_SLUG = {
+  квартира: 'flats',
+  апартамент: 'apartments',
+  офіс: 'offices',
+  паркінг: 'parking',
+  комора: 'komori',
+  підвал: 'pidvali',
+};
+
+const norm = v =>
+  String(v ?? '')
+    .trim()
+    .toLowerCase();
+
 // Форматування ціни
 function formatPrice(value) {
   if (value == null) return '';
@@ -63,13 +77,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     'Доктор Ватсон':
       'https://www.google.com/maps/search/?api=1&query=Доктор+Ватсон,+вулиця+Пекарська,+57,+Україна',
 
-    Компаньон:
-      'https://www.google.com/maps/search/?api=1&query=Компаньон,+вул.+Проектована,+1,+Україна',
+    Компаньйон:
+      'https://www.google.com/maps/search/?api=1&query=Компаньйон,+вул.+Проектована,+1,+Україна',
 
-    'Львівська Площа':
+    'Львівська площа':
       'https://www.google.com/maps/search/?api=1&query=Львівська+Площа,+вул.+Кудрявська,+24а,+Україна',
 
-    'Львівський Квартал':
+    'Львівський квартал':
       'https://www.google.com/maps/search/?api=1&query=Львівський+Квартал,+вул.+Глибочицька,+13,+Україна',
 
     'Новий Форт':
@@ -140,35 +154,73 @@ document.addEventListener('DOMContentLoaded', async function() {
   const backLink = document.querySelector('.section_flat_details__back');
 
   if (backLink && flat?.unit_type_name) {
-    backLink.href = `./flats/?type=${flat.unit_type_name}`;
+    const type = norm(flat?.unit_type_name);
+    const slug = TYPE_SLUG[type] || 'flats';
+
+    // ✅ повертаємось на сторінку типу
+    backLink.href = `/${slug}/`;
   }
+
+  const titleMap = {
+    квартира: 'квартири',
+    апартамент: 'апартаменти',
+    офіс: 'офіси',
+    комора: 'комори',
+    паркінг: 'паркінги',
+    підвал: 'підвали',
+  };
 
   const typeLink = document.querySelector('.link_type');
 
   if (typeLink && flat?.unit_type_name) {
-    typeLink.href = `./flats/?type=${flat.unit_type_name}`;
+    const type = norm(flat?.unit_type_name);
+    const slug = TYPE_SLUG[type] || 'flats';
+
+    typeLink.href = `/${slug}/`;
+    typeLink.textContent = titleMap[type] || type;
   }
 
   // 3. Заповнюємо хлібні крихти
   const unitNumber = document.querySelector('.section_breadcrumbs .unit-number');
+  const unitNumber2 = document.querySelector('.section_flat_details__title_number');
   if (unitNumber && flat.unit_type_name && flat.number) {
     unitNumber.textContent = `${flat.unit_type_name} ${flat.number}`;
+  }
+  if (unitNumber2 && flat.number) {
+    unitNumber2.textContent = `№ ${flat.number}`;
   }
 
   // 4. Центральний блок
   const unitRoom = document.querySelector('.section_flat_details__center_title .unit-room');
+  const unitRoom2 = document.querySelector('.section_flat_details__title_rooms');
   const unitSize = document.querySelector('.section_flat_details__center_title .unit-size');
+  const unitSizeMob = document.querySelector('.section_flat_details__title_size');
 
   if (unitRoom) {
     unitRoom.textContent = `${flat.room_count}-K`;
   } else if (unitRoom) {
     unitRoom.textContent = '-';
   }
+  if (unitRoom2) {
+    unitRoom2.textContent = `${flat.room_count}-K`;
+  }
 
-  if (unitSize && flat.design_size) {
-    unitSize.textContent = `${flat.design_size} м²`;
-  } else if (unitSize) {
-    unitSize.textContent = '-';
+  if (unitSize) {
+    const design = Number(flat.design_size);
+    const real = Number(flat.real_size);
+
+    const size = design > 0 ? design : real > 0 ? real : null;
+
+    unitSize.textContent = size !== null ? `${size} м²` : '-';
+  }
+
+  if (unitSizeMob) {
+    const design = Number(flat.design_size);
+    const real = Number(flat.real_size);
+
+    const size = design > 0 ? design : real > 0 ? real : null;
+
+    unitSizeMob.textContent = size !== null ? `${size} м²` : '-';
   }
 
   // 5. Картинки
@@ -242,18 +294,33 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   const unitSize2 = document.querySelector('.flat_info__center .unit-size');
   if (unitSize2) {
-    unitSize2.textContent = flat.design_size ? `${flat.design_size} м²` : '-';
+    const design = Number(flat.design_size);
+    const real = Number(flat.real_size);
+
+    const size = design > 0 ? design : real > 0 ? real : null;
+
+    unitSize2.textContent = size !== null ? `${size} м²` : '-';
   }
 
-  const unitFullPrice = document.querySelector('.flat_info__price .full-price');
-  if (unitFullPrice) {
-    unitFullPrice.textContent = flat.total_price_uah
+  const unitFullPriceUah = document.querySelector('.flat_info__price .full-price.uah');
+  if (unitFullPriceUah) {
+    unitFullPriceUah.textContent = flat.total_price_uah
       ? `${formatPrice(flat.total_price_uah)} грн`
       : '-';
   }
 
-  const unitMPrice = document.querySelector('.flat_info__price .m-price');
-  if (unitMPrice) {
-    unitMPrice.textContent = flat.price_m2 ? `${formatPrice(flat.price_m2)} грн` : '-';
+  const unitFullPriceUsd = document.querySelector('.flat_info__price .full-price.usd');
+  if (unitFullPriceUsd) {
+    unitFullPriceUsd.textContent = flat.total_price ? `${formatPrice(flat.total_price)} $` : '-';
+  }
+
+  const unitMPriceUah = document.querySelector('.flat_info__price .m-price.uah');
+  if (unitMPriceUah) {
+    unitMPriceUah.textContent = flat.price_m2_uah ? `${formatPrice(flat.price_m2_uah)} грн` : '-';
+  }
+
+  const unitMPriceUsd = document.querySelector('.flat_info__price .m-price.usd');
+  if (unitMPriceUsd) {
+    unitMPriceUsd.textContent = flat.price_m2 ? `${formatPrice(flat.price_m2)} $` : '-';
   }
 });
