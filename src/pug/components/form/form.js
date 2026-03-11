@@ -316,7 +316,7 @@ export class FormMonsterForCart {
 
     const ids = [...wrapper.querySelectorAll('.unit_card')]
       .filter(card => card.querySelector('.unit_card__input input[type="checkbox"]')?.checked)
-      .map(card => card.dataset.id)
+      .map(card => card.dataset.url)
       .filter(Boolean);
 
     // шукаємо поле ides у формі (краще відносно форми, а не document)

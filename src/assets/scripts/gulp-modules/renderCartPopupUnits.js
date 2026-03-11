@@ -1,4 +1,20 @@
 export function renderCartPopupUnits(allPremises, cartIds) {
+  const projectsIds = {
+    Америка: 252,
+    Компаньйон: 682,
+    'Новий Форт': 230,
+    'Велика Британія': 314,
+    Вежа: 180,
+    Шенген: 110,
+    'Ріел Сіті': 26,
+    'Nordica Residence': 728,
+    'Maxima Residence': 720,
+    Brother: 708,
+    Father: 698,
+    Тополіс: 292,
+    Брама: 203,
+  };
+
   const colors = {
     'Big Ben': '#B22222',
     Brother: '#FFA500',
@@ -104,7 +120,10 @@ export function renderCartPopupUnits(allPremises, cartIds) {
       const address = adresses[projectName] || '';
 
       return `
-      <div class="unit_card" data-id="${unit.id}">
+      <div class="unit_card" data-id="${
+        unit.id
+      }" data-url="https://stock.riel.ua/flats/?project_id=${projectsIds[unit.project_name] ||
+        '0'}&id=${unit.id}">
         <div class="unit_card__input">
           <input type="checkbox" class="checkbox" checked />
         </div>

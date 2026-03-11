@@ -156,4 +156,37 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  document.querySelectorAll('[data-acc]').forEach(item => {
+    const btn = item.querySelector('.menu__row');
+    const sub = item.querySelector('.menu__sub');
+    if (!btn || !sub) return;
+
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const willOpen = !item.classList.contains('is-open');
+
+      // ✅ закриваємо всі інші акордеони
+      document.querySelectorAll('[data-acc].is-open').forEach(opened => {
+        if (opened === item) return;
+
+        opened.classList.remove('is-open');
+
+        const openedBtn = opened.querySelector('.menu__toggle');
+        const openedSub = opened.querySelector('.menu__sub');
+
+        openedBtn?.setAttribute('aria-expanded', 'false');
+        openedSub?.setAttribute('hidden', '');
+      });
+
+      // ✅ відкриваємо/закриваємо поточний
+      item.classList.toggle('is-open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+      if (willOpen) sub.removeAttribute('hidden');
+      else sub.setAttribute('hidden', '');
+    });
+  });
 });

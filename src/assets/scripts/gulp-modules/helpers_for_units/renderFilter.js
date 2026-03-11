@@ -10,7 +10,9 @@ export function renderFilter(units, filters) {
   let sizeWrapper;
   let floorWrapper;
 
-  if (window.innerWidth > 1500) {
+  const isDesktop = window.innerWidth > 1500;
+
+  if (isDesktop) {
     projectWrapper = document.querySelector('.filter__item_wrapper.project');
     roomsWrapper = document.querySelector('.filter__item_wrapper.room_count');
 
@@ -26,7 +28,8 @@ export function renderFilter(units, filters) {
     floorWrapper = document.querySelector('.filter_flats__floor');
   }
 
-  if (!projectWrapper || !roomsWrapper || !priceWrapper || !sizeWrapper || !floorWrapper) {
+  // ✅ roomsWrapper може не бути (для типів де кімнатність не потрібна)
+  if (!projectWrapper || !priceWrapper || !sizeWrapper || !floorWrapper) {
     console.warn('Filter wrappers not found');
     return;
   }
@@ -86,63 +89,117 @@ export function renderFilter(units, filters) {
     input.checked = complexFilter.some(c => c === id);
   });
 
-  // Кількість кімнат
-  populateFilter(baseUnits, 'room_count', roomsWrapper, 'rooms');
+  // ===== ROOMS (✅ тільки один чекбокс) =====
+  if (roomsWrapper) {
+    populateFilter(
+      baseUnits,
+      u => {
+        const v = String(u?.room_count ?? '').trim();
+        return v ? v : null; // ✅ не рендеримо пусті
+      },
+      roomsWrapper,
+      'rooms',
+    );
 
-  const roomsFilter = Array.isArray(filters.rooms)
-    ? filters.rooms.map(v => String(v).trim()).filter(Boolean)
-    : filters.rooms
-    ? [String(filters.rooms).trim()].filter(Boolean)
-    : [];
+    const roomsValue = Array.isArray(filters.rooms)
+      ? filters.rooms[0] != null
+        ? String(filters.rooms[0]).trim()
+        : ''
+      : filters.rooms != null
+      ? String(filters.rooms).trim()
+      : '';
 
-  roomsWrapper.querySelectorAll('.checkbox__input').forEach(input => {
-    const name = String(input.dataset.name ?? '').trim();
-    input.checked = roomsFilter.some(r => r === name);
-  });
+    roomsWrapper.querySelectorAll('.checkbox__input').forEach(input => {
+      const name = String(input.dataset.name ?? '').trim();
+      input.checked = roomsValue !== '' && roomsValue === name;
+    });
+  }
+
+  // ===== PRICE USD PRESET (radio) =====
+  // ✅ синхронізуємо radio по filters.pricePresetUsd тільки в поточному режимі
+  const preset = String(filters.pricePresetUsd || '').trim();
+  const presetSelector = isDesktop
+    ? 'input[type="radio"][name="pricePresetPage"]'
+    : 'input[type="radio"][name="pricePresetPopup"]';
+
+  const radios = document.querySelectorAll(presetSelector);
+
+  // ✅ якщо вже є checked radio і preset порожній — не скидаємо під час ререндеру
+  const hasChecked = Array.from(radios).some(r => r instanceof HTMLInputElement && r.checked);
+
+  if (!(hasChecked && !preset)) {
+    radios.forEach(r => {
+      if (!(r instanceof HTMLInputElement)) return;
+      r.checked = preset ? String(r.value) === preset : false;
+    });
+  }
 
   // -------- ПОВЗУНКИ --------
 
-  // Ціна
-  populateSliderFilter(baseUnits, unit => Number(unit?.total_price_uah) || 0, priceWrapper, 'Ціна');
-  const priceMinInput = priceWrapper.querySelector('input[data-filter="Ціна_min"]');
-  const priceMaxInput = priceWrapper.querySelector('input[data-filter="Ціна_max"]');
-  if (priceMinInput) {
-    priceMinInput.value = filters.priceMin || priceMinInput.min || '';
-    priceMinInput.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-  if (priceMaxInput) {
-    priceMaxInput.value = filters.priceMax || priceMaxInput.max || '';
-    priceMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
-  }
+  // ✅ ВАЖЛИВО: під час ініціалізації не даємо listener-ам скидати preset
+  window.__RIEL_SYNCING_FILTERS__ = true;
 
-  // Площа
-  populateSliderFilter(baseUnits, unit => Number(unit?.design_size) || 0, sizeWrapper, 'Площа');
-  const areaMinInput = sizeWrapper.querySelector('input[data-filter="Площа_min"]');
-  const areaMaxInput = sizeWrapper.querySelector('input[data-filter="Площа_max"]');
-  if (areaMinInput) {
-    areaMinInput.value = filters.areaMin || areaMinInput.min || '';
-    areaMinInput.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-  if (areaMaxInput) {
-    areaMaxInput.value = filters.areaMax || areaMaxInput.max || '';
-    areaMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
-  }
+  try {
+    // Ціна (UAH)
+    populateSliderFilter(
+      baseUnits,
+      unit => Number(unit?.total_price_uah) || 0,
+      priceWrapper,
+      'Ціна',
+    );
 
-  // Поверх
-  populateSliderFilter(
-    baseUnits,
-    unit => extractFloorNumber(unit?.floor_name),
-    floorWrapper,
-    'Поверх',
-  );
-  const floorMinInput = floorWrapper.querySelector('input[data-filter="Поверх_min"]');
-  const floorMaxInput = floorWrapper.querySelector('input[data-filter="Поверх_max"]');
-  if (floorMinInput) {
-    floorMinInput.value = filters.floorMin || floorMinInput.min || '';
-    floorMinInput.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-  if (floorMaxInput) {
-    floorMaxInput.value = filters.floorMax || floorMaxInput.max || '';
-    floorMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
+    const priceMinInput = priceWrapper.querySelector('input[data-filter="Ціна_min"]');
+    const priceMaxInput = priceWrapper.querySelector('input[data-filter="Ціна_max"]');
+
+    // ✅ якщо є USD preset — range UI тримаємо "повний" (min/max)
+    const setPriceToDefault = Boolean(preset);
+
+    if (priceMinInput) {
+      priceMinInput.value = setPriceToDefault
+        ? priceMinInput.min || ''
+        : filters.priceMin || priceMinInput.min || '';
+      priceMinInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    if (priceMaxInput) {
+      priceMaxInput.value = setPriceToDefault
+        ? priceMaxInput.max || ''
+        : filters.priceMax || priceMaxInput.max || '';
+      priceMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // Площа
+    populateSliderFilter(baseUnits, unit => Number(unit?.design_size) || 0, sizeWrapper, 'Площа');
+    const areaMinInput = sizeWrapper.querySelector('input[data-filter="Площа_min"]');
+    const areaMaxInput = sizeWrapper.querySelector('input[data-filter="Площа_max"]');
+
+    if (areaMinInput) {
+      areaMinInput.value = filters.areaMin || areaMinInput.min || '';
+      areaMinInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    if (areaMaxInput) {
+      areaMaxInput.value = filters.areaMax || areaMaxInput.max || '';
+      areaMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // Поверх
+    populateSliderFilter(
+      baseUnits,
+      unit => extractFloorNumber(unit?.floor_name),
+      floorWrapper,
+      'Поверх',
+    );
+    const floorMinInput = floorWrapper.querySelector('input[data-filter="Поверх_min"]');
+    const floorMaxInput = floorWrapper.querySelector('input[data-filter="Поверх_max"]');
+
+    if (floorMinInput) {
+      floorMinInput.value = filters.floorMin || floorMinInput.min || '';
+      floorMinInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    if (floorMaxInput) {
+      floorMaxInput.value = filters.floorMax || floorMaxInput.max || '';
+      floorMaxInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  } finally {
+    window.__RIEL_SYNCING_FILTERS__ = false;
   }
 }

@@ -388,7 +388,7 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
-input {
+input:not([type='radio']) {
   margin: 0;
   padding: 0;
   border: none;

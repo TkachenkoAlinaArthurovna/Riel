@@ -1,6 +1,4 @@
 import { getData } from './helpers_for_units/getData';
-import { getFiltersFromUrl } from './helpers_for_units/getFiltersFromUrl';
-import { filterPremisesByFilters } from './helpers_for_units/filterPremisesByFilters';
 import { renderFilter } from './helpers_for_units/renderFilter';
 import { applyFiltersAndSave } from './helpers_for_units/applyFiltersAndSave';
 import { attachFilterListeners } from './helpers_for_units/attachFilterListeners';
@@ -9,31 +7,23 @@ import { attachLoadMore } from './helpers_for_units/attachLoadMore';
 import { initSortSelect } from './helpers_for_units/initSortSelect';
 import { initFilterPopup } from './helpers_for_units/filterPopup.js';
 import { updatePopupCount } from './helpers_for_units/updatePopupCount';
-import { sanitizeUrlFiltersByType } from './helpers_for_units/sanitizeUrlFiltersByType.js';
+import { updateUrl } from './helpers_for_units/updateUrl.js';
 
-// Функція для отримання квартир із sessionStorage або сервера
+// ===== Cache loader =====
 async function loadUnits() {
   const cached = sessionStorage.getItem('units');
-
-  if (cached) {
-    return JSON.parse(cached);
-  }
+  if (cached) return JSON.parse(cached);
 
   const data = await getData();
-
-  if (data) {
-    sessionStorage.setItem('units', JSON.stringify(data));
-  }
-
-  return data || []; // щоб не повернути undefined
+  if (data) sessionStorage.setItem('units', JSON.stringify(data));
+  return data || [];
 }
 
-// Ініціалізація на головній
 async function initUnits() {
   return await loadUnits();
 }
 
-// ====== TYPE MASTER ======
+// ===== MASTER TYPE =====
 function getMasterType() {
   return (window.RIEL_DEFAULT_TYPE ?? '')
     .toString()
@@ -41,19 +31,9 @@ function getMasterType() {
     .toLowerCase();
 }
 
-/**
- * Головне правило:
- * - У URL ЗАВЖДИ є type
- * - ТІЛЬКИ type керує всіма іншими фільтрами
- *   (тобто ми НЕ читаємо інші параметри з URL взагалі)
- *
- * Тут задаєш бізнес-правила: що скидати/ховати/фіксувати під кожен type.
- */
 function adaptFiltersByType(filters, type) {
-  // примусово робимо type єдиним активним
   filters.type = type ? [type] : [];
 
-  // типові приклади правил — підкоригуй під вашу реальну логіку:
   switch (type) {
     case 'паркінг':
       filters.rooms = [];
@@ -64,26 +44,149 @@ function adaptFiltersByType(filters, type) {
       break;
 
     case 'комора':
-      filters.rooms = [];
-      break;
-
     case 'офіс':
       filters.rooms = [];
       break;
 
     case 'апартамент':
     case 'квартира':
-      // залишаємо rooms/area/floor як є
-      break;
-
     default:
       break;
   }
 
-  // якщо потрібно, можна скидати сортування/пейдж при зміні type
-  filters.page = 1;
-
   return filters;
+}
+
+// ===== SLASH URL parsing =====
+const BASES = ['flats', 'apartments', 'offices', 'parking', 'komori', 'pidvali'];
+
+const ROOMS_SLUG_TO_VALUE = {
+  'odnokimnatni-kvartiru': '1',
+  'dvokimnatni-kvartiru': '2',
+  'trikimnatni-kvartiru': '3',
+  '4-kimnatni-kvartiru': '4',
+  '5-kimnatni-kvartiru': '5',
+
+  // додали для апартаментів
+  'odnokimnatni-apartamenti': '1',
+  'dvokimnatni-apartamenti': '2',
+  'trikimnatni-apartamenti': '3',
+  '4-kimnatni-apartamenti': '4',
+  '5-kimnatni-apartamenti': '5',
+};
+
+const ROOMS_BY_BASE = {
+  flats: {
+    '1': 'odnokimnatni-kvartiru',
+    '2': 'dvokimnatni-kvartiru',
+    '3': 'trikimnatni-kvartiru',
+    '4': '4-kimnatni-kvartiru',
+    '5': '5-kimnatni-kvartiru',
+  },
+  apartments: {
+    '1': 'odnokimnatni-apartamenti',
+    '2': 'dvokimnatni-apartamenti',
+    '3': 'trikimnatni-apartamenti',
+    '4': '4-kimnatni-apartamenti',
+    '5': '5-kimnatni-apartamenti',
+  },
+};
+
+function getRoomsMapsForBase(base) {
+  const valueToSlug = ROOMS_BY_BASE[base] || {};
+  const slugToValue = Object.fromEntries(
+    Object.entries(valueToSlug).map(([value, slug]) => [slug, value]),
+  );
+  return { valueToSlug, slugToValue };
+}
+
+const ROOMS_VALUE_TO_SLUG = Object.fromEntries(
+  Object.entries(ROOMS_SLUG_TO_VALUE).map(([slug, val]) => [val, slug]),
+);
+
+function getBaseFromPathname() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  return parts.find(p => BASES.includes(p)) || null;
+}
+
+function setSingleRoom(filters, v) {
+  if (!v) {
+    filters.rooms = [];
+    return;
+  }
+  filters.rooms = [String(v)];
+}
+
+function parseFiltersFromSlashUrl(defaultFilters, base) {
+  const out = { ...defaultFilters };
+
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const baseIndex = parts.indexOf(base);
+  if (baseIndex === -1) return out;
+
+  const { slugToValue } = getRoomsMapsForBase(base);
+
+  let i = baseIndex + 1;
+
+  // 1) rooms slug
+  const first = parts[i];
+  if (first && slugToValue[first]) {
+    setSingleRoom(out, slugToValue[first]);
+    i += 1;
+  }
+
+  // 2) key/value pairs
+  let hasUsdPreset = false;
+
+  for (; i < parts.length; i += 2) {
+    const key = parts[i];
+    const val = parts[i + 1];
+    if (!key || !val) break;
+
+    switch (key) {
+      case 'price-usd':
+        out.pricePresetUsd = decodeURIComponent(val);
+        hasUsdPreset = true;
+        out.priceMin = '';
+        out.priceMax = '';
+        break;
+
+      case 'price':
+        if (hasUsdPreset) break;
+        {
+          const [min, max] = decodeURIComponent(val).split('-');
+          out.priceMin = min || '';
+          out.priceMax = max || '';
+        }
+        break;
+
+      case 'area': {
+        const [min, max] = decodeURIComponent(val).split('-');
+        out.areaMin = min || '';
+        out.areaMax = max || '';
+        break;
+      }
+
+      case 'floor': {
+        const [min, max] = decodeURIComponent(val).split('-');
+        out.floorMin = min || '';
+        out.floorMax = max || '';
+        break;
+      }
+
+      case 'complex':
+        out.complex = decodeURIComponent(val)
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return out;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -92,125 +195,81 @@ document.addEventListener('DOMContentLoaded', async () => {
   const PAGE_SIZE = 12;
 
   const defaultFilters = {
-    complex: [], // житловий комплекс (id або slug)
-    type: [], // тип приміщення
-    rooms: [], // кількість кімнат
+    complex: [],
+    type: [],
+    rooms: [],
     priceMin: '',
     priceMax: '',
+    pricePresetUsd: '',
     areaMin: '',
     areaMax: '',
     floorMin: '',
     floorMax: '',
-    page: 1,
     sort: '',
   };
 
-  // 1) MASTER TYPE з URL (він завжди є)
   const masterType = getMasterType();
-  console.log('masterType', masterType);
 
-  // 2) Дані
+  const base = getBaseFromPathname();
+  if (!base) return;
+
   const allPremises = await initUnits();
   const safePremises = Array.isArray(allPremises) ? allPremises : [];
 
-  // 3) Базові фільтри зі storage (або дефолт)
-  // const storedFilters = loadFiltersFromStorage(defaultFilters);
-
-  // 4) Формуємо filters ТІЛЬКИ від type (інші URL-параметри ігноруємо)
-  // const filters = adaptFiltersByType({ ...storedFilters }, masterType);
-
-  // 5) Зберігаємо актуальні фільтри
-  // saveFiltersToStorage(filters);
-
   const storedFilters = loadFiltersFromStorage(defaultFilters);
+  const pathFilters = parseFiltersFromSlashUrl(defaultFilters, base);
 
-  // фільтри з URL (rooms/price/area/...)
-  const urlFilters = getFiltersFromUrl();
-
-  // лишаємо тільки те, що дозволено для поточного type
-  const safeUrlFilters = sanitizeUrlFiltersByType(urlFilters, masterType);
-
-  // пріоритет: URL (дозволені поля) > storage
   const merged = {
     ...storedFilters,
-    ...safeUrlFilters,
+    ...pathFilters,
   };
 
-  // фінально застосовуємо правила master type
   const filters = adaptFiltersByType(merged, masterType);
 
-  // зберігаємо актуальні фільтри (БЕЗ sort)
-  const { type, ...toStore } = filters;
+  // rooms safety
+  if (filters.rooms?.length > 1) {
+    setSingleRoom(filters, filters.rooms[0]);
+  }
+
+  // якщо type не дозволяє rooms — прибираємо
+  if (['паркінг', 'комора', 'офіс', 'підвал'].includes(masterType)) {
+    filters.rooms = [];
+  }
+
+  // ✅ storage: якщо є USD preset — не зберігаємо priceMin/priceMax
+  const { type, ...toStoreRaw } = filters;
+  const toStore = { ...toStoreRaw };
+
+  if (toStore.pricePresetUsd) {
+    toStore.priceMin = '';
+    toStore.priceMax = '';
+  }
+
   saveFiltersToStorage(toStore);
 
-  // 6) Верхній блок (фон/заголовок) + UI-видимість фільтрів
-  // applyTopBgAndTitleByType(masterType);
-  // applyUiVisibilityByType(masterType);
+  // ✅ URL
+  const filtersForUrl = { ...filters, sort: '' };
+  updateUrl(filtersForUrl);
 
-  // 7) Малюємо фільтри та застосовуємо їх
+  // ✅ Render + apply
   renderFilter(safePremises, filters);
-  applyFiltersAndSave(safePremises, filters);
+  applyFiltersAndSave(safePremises, filters, PAGE_SIZE);
 
-  // 8) Сортування/слухачі/пагінація/попап
+  // ✅ listeners
   initSortSelect(filters, PAGE_SIZE);
   attachFilterListeners(safePremises, filters, PAGE_SIZE);
   attachLoadMore(PAGE_SIZE);
   initFilterPopup();
   updatePopupCount();
 
-  // // Чекаємо дані
-  // const allPremises = await initUnits(); // ← тепер тут саме масив, а не Promise
-
-  // // На всякий випадок, якщо щось пішло не так
-  // const safePremises = Array.isArray(allPremises) ? allPremises : [];
-
-  // // фільтри з URL
-  // const urlFilters = getFiltersFromUrl();
-
-  // // фільтри з localStorage (якщо були)
-  // const storedFilters = loadFiltersFromStorage(defaultFilters);
-
-  // // пріоритет: URL > localStorage > default
-  // const filters = {
-  //   ...storedFilters,
-  //   ...urlFilters,
-  // };
-
-  // // зберігаємо актуальний filters у localStorage
-  // saveFiltersToStorage(filters);
-
-  // // малюємо фільтр
-  // renderFilter(safePremises, filters);
-
-  // // рахуємо й зберігаємо відфільтрований масив
-  // applyFiltersAndSave(safePremises, filters);
-
-  // initSortSelect(filters, PAGE_SIZE);
-
-  // // підключаємо слухачі – тепер вони будуть читати/писати filters через localStorage
-  // attachFilterListeners(safePremises, filters, PAGE_SIZE);
-
-  // attachLoadMore(PAGE_SIZE);
-
-  // initFilterPopup();
-
-  // updatePopupCount();
-
-  // Зчитуємо GET-параметр type
+  // ===== TOP BG + TITLE =====
   const normalizedType = masterType;
   if (!normalizedType) return;
 
-  // Динамічний базовий URL
   const baseURL = window.location.origin;
-  // Наприклад дасть: https://stock.riel.ua
-
-  // Ширина екрану
   const screenWidth = window.innerWidth;
-
-  // Статичний шлях до картинки (змінюється тільки файл)
   const baseImagePath = '/wp-content/themes/3d/assets/images/bg/';
 
-  // Мапа файлів для кожного типу
   const images = {
     квартира: {
       desktop: 'bg_flats.png',
@@ -222,11 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       tablet: 'bg_apart_tablet.png',
       mobile: 'bg_apart_mob.png',
     },
-    офіс: {
-      desktop: 'bg_of.png',
-      tablet: 'bg_of_tablet.png',
-      mobile: 'bg_of_mob.png',
-    },
+    офіс: { desktop: 'bg_of.png', tablet: 'bg_of_tablet.png', mobile: 'bg_of_mob.png' },
     комора: {
       desktop: 'bg_komora.png',
       tablet: 'bg_komora_tablet.png',
@@ -244,7 +299,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     },
   };
 
-  // Мапа для заміни заголовка
   const titleMap = {
     квартира: 'квартири',
     апартамент: 'апартаменти',
@@ -257,25 +311,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!images[normalizedType]) return;
 
   let fileName = '';
+  if (screenWidth < 480) fileName = images[normalizedType].mobile;
+  else if (screenWidth <= 1024) fileName = images[normalizedType].tablet;
+  else fileName = images[normalizedType].desktop;
 
-  if (screenWidth < 480) {
-    fileName = images[normalizedType].mobile;
-  } else if (screenWidth <= 1024) {
-    fileName = images[normalizedType].tablet;
-  } else {
-    fileName = images[normalizedType].desktop;
-  }
-
-  // Складаємо повний URL до картинки
   const finalSrc = baseURL + baseImagePath + fileName;
 
-  // Присвоюємо src елементу
   const bgEl = document.querySelector('.section_top_subpage__bg');
-  if (bgEl) {
-    bgEl.setAttribute('src', finalSrc);
-  }
+  if (bgEl) bgEl.setAttribute('src', finalSrc);
 
-  // Оновлюємо заголовок
   const titleEl = document.querySelector('.section_top_subpage__title');
   const breadcrumbs = document.querySelector('.section_top_subpage__breadcrumbs_type');
   if (titleEl && titleMap[normalizedType] && breadcrumbs) {
@@ -283,7 +327,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     breadcrumbs.textContent = titleMap[normalizedType];
   }
 
-  // що ховаємо для кожного type
   const HIDE_RULES = {
     паркінг: ['.filter__item.size', '.filter__item.room_count'],
     комора: ['.filter__item.room_count'],

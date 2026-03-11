@@ -400,3 +400,52 @@
   height: 0;
   opacity: 0;
 }
+
+.filter__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 0 16px 10px;
+}
+
+.filter__option input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.filter__reset.price_preset_reset {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.price_preset {
+  .filter__item_wrapper {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 10px;
+  }
+  input {
+    accent-color: $brend-green;
+  }
+}
+
+.price_preset {
+  display: none !important;
+}
+
+.page-id-436 {
+  .price_preset {
+    display: block !important;
+  }
+}
+
+.filter__slider.price {
+  .range-tooltip.min-tooltip {
+    top: 30px;
+  }
+}

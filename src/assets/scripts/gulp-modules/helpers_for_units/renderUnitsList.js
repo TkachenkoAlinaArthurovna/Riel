@@ -1,9 +1,9 @@
 export function renderUnitsPortion(units, shownCount, portionSize = 12) {
   const wrapper = document.querySelector('.section_flats__filter_result_wrapper');
   const loadmoreBtn = document.querySelector('.section_flats__loadmore');
+  if (!wrapper) return;
 
   //   projectsIds, colors, adresses
-
   const projectsIds = {
     Америка: 252,
     Компаньйон: 682,
@@ -82,20 +82,13 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
     Harry: 'вулиця Стороженка, 25А',
   };
 
-  if (!wrapper) return;
-
-  const toShow = units.slice(0, shownCount);
-  const htmlArr = [];
-
   function getUnitImageSrc(unit) {
-    // 1. Пробуємо взяти з unit.images[1] → unit.images[0]
     let imgPath =
       unit.images?.[1]?.path ||
       unit.images?.[0]?.path ||
-      unit.section_images?.images?.[0]?.path || // 2. fallback на section_images
-      'https://stock.riel.ua/wp-content/themes/3d/assets/images/no_image.gif'; // 3. заглушка
+      unit.section_images?.images?.[0]?.path ||
+      'https://stock.riel.ua/wp-content/themes/3d/assets/images/no_image.gif';
 
-    // Якщо це відносний шлях типу "/project/...", додаємо домен
     if (imgPath.startsWith('/')) {
       imgPath = `https://source-riel.propertymate.ai${imgPath}`;
     }
@@ -103,67 +96,89 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
     return imgPath;
   }
 
-  toShow.forEach(unit => {
-    const link = `/flats?project_id=${projectsIds[unit.project_name] || '0'}&id=${unit.id}`;
+  // ✅ скільки вже реально відрендерено в DOM
+  const alreadyRendered = wrapper.querySelectorAll('.flat_card').length;
 
+  // ✅ додаємо тільки "хвіст"
+  const toAppend = units.slice(alreadyRendered, shownCount);
+  if (toAppend.length === 0) {
+    // оновимо тільки кнопку
+    if (loadmoreBtn) {
+      loadmoreBtn.style.display = units.length > shownCount ? 'block' : 'none';
+    }
+    return;
+  }
+
+  // ✅ cart set (1 раз)
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!Array.isArray(cart)) cart = [];
+  } catch {
+    cart = [];
+  }
+  const cartSet = new Set(cart.map(String));
+
+  const htmlArr = [];
+
+  toAppend.forEach(unit => {
+    const link = `/flats/?project_id=${projectsIds[unit.project_name] || '0'}&id=${unit.id}`;
     const imgSrc = getUnitImageSrc(unit);
 
     const html = `
       <a href="${link}"
-        class="flat_card "
+        class="flat_card"
         data-id="${unit.id}"
       >
         <div class="flat_card__hover">
-            <span style="background:${colors[unit.project_name] || '#68d23f'};"></span>
+          <span style="background:${colors[unit.project_name] || '#68d23f'};"></span>
         </div>
 
         <div class="flat_card__top">
-          <!--<span>Житловий комплекс</span>-->
           ${unit.project_name ? `<span>${unit.project_name}</span>` : ''}
         </div>
 
         <div class="flat_card__img">
-            <img src="${imgSrc}" alt="planning" />
+          <img src="${imgSrc}" alt="planning" />
         </div>
 
         <div class="flat_card__center">
           ${
             unit.unit_type_name !== 'паркінг'
               ? `
-     ${
-       unit.design_size > 0
-         ? `
-            <div class="flat_card__center_left">
-              <span>${unit.unit_type_name} м²</span>
-              <span>${unit.design_size}</span>
-            </div>
-            <div class="flat_card__center_center"><span>/</span></div>
-          `
-         : ''
-     }
-      
-    `
+                ${
+                  unit.design_size > 0
+                    ? `
+                      <div class="flat_card__center_left">
+                        <span>${unit.unit_type_name} м²</span>
+                        <span>${unit.design_size}</span>
+                      </div>
+                      <div class="flat_card__center_center"><span>/</span></div>
+                    `
+                    : ''
+                }
+              `
               : ''
           }
-           
+
           <div class="flat_card__center_right">
-           ${
-             unit.unit_type_name !== 'паркінг'
-               ? `<span class="price_m2_uah">грн/м²</span>
-            <span class="price_m2">$/м²</span>
-            `
-               : ''
-           }
-                
-                 ${
-                   unit.price_m2 && unit.price_m2_uah
-                     ? `<span class="price_m2_uah number">${Number(
-                         unit.price_m2_uah,
-                       ).toLocaleString('uk-UA')}</span><span class="price_m2 number">${Number(
-                         unit.price_m2,
-                       ).toLocaleString('uk-UA')}</span>`
-                     : '<span>-</span>'
-                 }
+            ${
+              unit.unit_type_name !== 'паркінг'
+                ? `<span class="price_m2_uah">грн/м²</span>
+                   <span class="price_m2">$/м²</span>`
+                : ''
+            }
+
+            ${
+              unit.price_m2 && unit.price_m2_uah
+                ? `<span class="price_m2_uah number">${Number(unit.price_m2_uah).toLocaleString(
+                    'uk-UA',
+                  )}</span>
+                   <span class="price_m2 number">${Number(unit.price_m2).toLocaleString(
+                     'uk-UA',
+                   )}</span>`
+                : '<span>-</span>'
+            }
           </div>
         </div>
 
@@ -187,13 +202,14 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
               </div>`
             : ''
         }
-        <div class="flat_card__cart">
-            <span data-title="Додати в кошик">Додати в кошик</span>
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M16 16C14.89 16 14 16.89 14 18C14 18.5304 14.2107 19.0391 14.5858 19.4142C14.9609 19.7893 15.4696 20 16 20C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18C18 17.4696 17.7893 16.9609 17.4142 16.5858C17.0391 16.2107 16.5304 16 16 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 13.5304 4.21071 14.0391 4.58579 14.4142C4.96086 14.7893 5.46957 15 6 15H18V13H6.42C6.3537 13 6.29011 12.9737 6.24322 12.9268C6.19634 12.8799 6.17 12.8163 6.17 12.75C6.17 12.7 6.18 12.66 6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.5C19.95 3.34 20 3.17 20 3C20 2.73478 19.8946 2.48043 19.7071 2.29289C19.5196 2.10536 19.2652 2 19 2H4.21L3.27 0M6 16C4.89 16 4 16.89 4 18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20C6.53043 20 7.03914 19.7893 7.41421 19.4142C7.78929 19.0391 8 18.5304 8 18C8 17.4696 7.78929 16.9609 7.41421 16.5858C7.03914 16.2107 6.53043 16 6 16Z" fill="#1D3541"/>
-                </svg>
-            </div>
+
+        <div class="flat_card__cart ${cartSet.has(String(unit.id)) ? 'active' : ''}">
+          <span data-title="Додати в кошик">Додати в кошик</span>
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M16 16C14.89 16 14 16.89 14 18C14 18.5304 14.2107 19.0391 14.5858 19.4142C14.9609 19.7893 15.4696 20 16 20C16.5304 20 17.0391 19.7893 17.4142 19.4142C17.7893 19.0391 18 18.5304 18 18C18 17.4696 17.7893 16.9609 17.4142 16.5858C17.0391 16.2107 16.5304 16 16 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 13.5304 4.21071 14.0391 4.58579 14.4142C4.96086 14.7893 5.46957 15 6 15H18V13H6.42C6.3537 13 6.29011 12.9737 6.24322 12.9268C6.19634 12.8799 6.17 12.8163 6.17 12.75C6.17 12.7 6.18 12.66 6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.5C19.95 3.34 20 3.17 20 3C20 2.73478 19.8946 2.48043 19.7071 2.29289C19.5196 2.10536 19.2652 2 19 2H4.21L3.27 0M6 16C4.89 16 4 16.89 4 18C4 18.5304 4.21071 14.0391 4.58579 14.4142C4.96086 14.7893 5.46957 15 6 15H18V13H6.42Z" fill="#1D3541"/>
+            </svg>
+          </div>
         </div>
       </a>
     `;
@@ -201,31 +217,11 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
     htmlArr.push(html);
   });
 
-  wrapper.innerHTML = htmlArr.join('');
+  // ✅ ГОЛОВНЕ: НЕ innerHTML, а append
+  wrapper.insertAdjacentHTML('beforeend', htmlArr.join(''));
 
-  // ✅ СИНХРОНІЗАЦІЯ ACTIVE ПО CART ПІСЛЯ РЕНДЕРУ
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!Array.isArray(cart)) cart = [];
-  } catch {
-    cart = [];
-  }
-
-  const cartSet = new Set(cart);
-
-  wrapper.querySelectorAll('.flat_card').forEach(card => {
-    const id = String(card.dataset.id || '').trim();
-    const btn = card.querySelector('.flat_card__cart');
-    if (!id || !btn) return;
-
-    btn.classList.toggle('active', cartSet.has(id));
-  });
-
-  // керування кнопкою
-  if (units.length > shownCount) {
-    loadmoreBtn.style.display = 'block';
-  } else {
-    loadmoreBtn.style.display = 'none';
+  // кнопка
+  if (loadmoreBtn) {
+    loadmoreBtn.style.display = units.length > shownCount ? 'block' : 'none';
   }
 }

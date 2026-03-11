@@ -41,7 +41,7 @@ export function initSortSelect(filters, portionSize = 12) {
       // оновлюємо filters.sort (щоб стан був у памʼяті)
       filters.sort = value;
 
-      // 💥 сортуємо саме filteredPremises з localStorage
+      //сортуємо саме filteredPremises з localStorage
       sortFilteredPremises(value, portionSize);
     });
   });

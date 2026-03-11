@@ -6,27 +6,24 @@ export function filterPremisesByFilters(premises, f) {
       .trim()
       .toLowerCase();
 
+  const hasFloorFilter = Boolean(f.floorMin) || Boolean(f.floorMax);
+
   return (Array.isArray(premises) ? premises : []).filter(item => {
-    // ЖК: якщо масив не пустий — беремо тільки з цих ЖК
     if (Array.isArray(f.complex) && f.complex.length) {
       const id = item?.project?.id != null ? String(item.project.id) : '';
       const matches = f.complex.some(c => String(c) === id);
       if (!matches) return false;
     }
 
-    // Тип приміщення (MASTER): порівнюємо нормалізовано
     if (
       f.type &&
       ((Array.isArray(f.type) && f.type.length) || (!Array.isArray(f.type) && f.type !== ''))
     ) {
       const typeFilters = (Array.isArray(f.type) ? f.type : [f.type]).map(norm).filter(Boolean);
       const itemType = norm(item?.unit_type_name);
-
-      const matchesType = typeFilters.some(t => t === itemType);
-      if (!matchesType) return false;
+      if (!typeFilters.some(t => t === itemType)) return false;
     }
 
-    // Кількість кімнат (може бути кілька варіантів)
     if (
       f.rooms &&
       ((Array.isArray(f.rooms) && f.rooms.length) || (!Array.isArray(f.rooms) && f.rooms !== ''))
@@ -36,23 +33,22 @@ export function filterPremisesByFilters(premises, f) {
         .filter(Boolean);
 
       const roomStr = String(item?.room_count ?? '').trim();
-      const matchesRooms = roomsFilters.some(r => r === roomStr);
-
-      if (!matchesRooms) return false;
+      if (!roomsFilters.some(r => r === roomStr)) return false;
     }
 
-    // Ціна
     const price = Number(item?.total_price_uah) || 0;
     if (f.priceMin && price < Number(f.priceMin)) return false;
     if (f.priceMax && price > Number(f.priceMax)) return false;
 
-    // Площа
     const area = Number(item?.design_size) || 0;
     if (f.areaMin && area < Number(f.areaMin)) return false;
     if (f.areaMax && area > Number(f.areaMax)) return false;
 
-    // Поверх
     const floor = extractFloorNumber(item?.floor_name);
+
+    // ✅ якщо фільтр по поверху є, але поверх не витягнувся — відсікаємо
+    if (hasFloorFilter && floor == null) return false;
+
     if (f.floorMin && floor < Number(f.floorMin)) return false;
     if (f.floorMax && floor > Number(f.floorMax)) return false;
 

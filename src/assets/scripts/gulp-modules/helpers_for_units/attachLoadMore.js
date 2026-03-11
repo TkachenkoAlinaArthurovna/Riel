@@ -1,26 +1,9 @@
-// import { renderUnitsPortion } from './renderUnitsList';
-
-// export function attachLoadMore(portionSize = 12) {
-//   const btn = document.querySelector('.section_flats__loadmore');
-//   if (!btn) return;
-
-//   btn.addEventListener('click', () => {
-//     const filtered = JSON.parse(localStorage.getItem('filteredPremises')) || [];
-//     let shown = Number(localStorage.getItem('shownCount')) || portionSize;
-
-//     shown += portionSize;
-//     localStorage.setItem('shownCount', shown);
-
-//     renderUnitsPortion(filtered, shown, portionSize);
-//   });
-// }
 import { renderUnitsPortion } from './renderUnitsList';
 
 function lockScroll() {
   const y = window.scrollY;
   document.body.dataset.scrollY = String(y);
 
-  // фіксуємо body на місці
   document.body.style.position = 'fixed';
   document.body.style.top = `-${y}px`;
   document.body.style.left = '0';
@@ -37,32 +20,45 @@ function unlockScroll() {
   document.body.style.right = '';
   document.body.style.width = '';
 
-  window.scrollTo(0, y);
   delete document.body.dataset.scrollY;
+  return y;
 }
 
 export function attachLoadMore(portionSize = 12) {
   const btn = document.querySelector('.section_flats__loadmore');
   if (!btn) return;
 
-  btn.addEventListener('click', async () => {
+  // ✅ якщо це button в form — щоб не було submit
+  if (btn.tagName === 'BUTTON') btn.type = 'button';
+
+  btn.addEventListener('click', async e => {
+    // ✅ якщо це <a> — прибираємо “якір/навігацію”
+    e.preventDefault();
+
+    // ✅ прибираємо фокус (фокус часто і є причиною автоскролу)
+    btn.blur();
+
     const filtered = JSON.parse(localStorage.getItem('filteredPremises')) || [];
     const prevShown = Number(localStorage.getItem('shownCount')) || portionSize;
     const nextShown = prevShown + portionSize;
 
-    // 🔒 блокуємо і кнопку, і скрол
     btn.disabled = true;
     lockScroll();
 
     localStorage.setItem('shownCount', nextShown);
 
-    // якщо renderUnitsPortion НЕ async — await не завадить (просто одразу продовжить)
     await renderUnitsPortion(filtered, nextShown, portionSize);
 
-    // даємо DOM “осісти”
+    // ✅ важливо: відновлюємо скрол ПІСЛЯ того, як браузер “доскролить”
+    const y = unlockScroll();
+
+    // 2 кадри підряд — щоб перебити пізній автоскрол
     requestAnimationFrame(() => {
-      unlockScroll();
-      btn.disabled = false;
+      window.scrollTo(0, y);
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y);
+        btn.disabled = false;
+      });
     });
   });
 }

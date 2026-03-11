@@ -1,43 +1,101 @@
+const BASES = ['flats', 'apartments', 'offices', 'parking', 'komori', 'pidvali'];
+
+// SEO rooms slug
+const ROOMS_SLUG_TO_VALUE = {
+  'odnokimnatni-kvartiru': '1',
+  'dvokimnatni-kvartiru': '2',
+  'trikimnatni-kvartiru': '3',
+  '4-kimnatni-kvartiru': '4',
+  '5-kimnatni-kvartiru': '5',
+
+  // додали для апартаментів
+  'odnokimnatni-apartamenti': '1',
+  'dvokimnatni-apartamenti': '2',
+  'trikimnatni-apartamenti': '3',
+  '4-kimnatni-apartamenti': '4',
+  '5-kimnatni-apartamenti': '5',
+};
+
+const ROOMS_SLUGS_BY_BASE = {
+  flats: {
+    '1': 'odnokimnatni-kvartiru',
+    '2': 'dvokimnatni-kvartiru',
+    '3': 'trikimnatni-kvartiru',
+    '4': '4-kimnatni-kvartiru',
+    '5': '5-kimnatni-kvartiru',
+  },
+  apartments: {
+    '1': 'odnokimnatni-apartamenti',
+    '2': 'dvokimnatni-apartamenti',
+    '3': 'trikimnatni-apartamenti',
+    '4': '4-kimnatni-apartamenti',
+    '5': '5-kimnatni-apartamenti',
+  },
+};
+
+// fallback якщо для base немає мапи
+function getRoomSlugByBase(base, roomValue) {
+  const v = String(roomValue ?? '');
+  const map = ROOMS_SLUGS_BY_BASE[base] || null;
+  if (!map) return null;
+  return map[v] || null;
+}
+
+const ROOMS_VALUE_TO_SLUG = Object.fromEntries(
+  Object.entries(ROOMS_SLUG_TO_VALUE).map(([slug, val]) => [val, slug]),
+);
+
+function getBaseFromPathname() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  return parts.find(p => BASES.includes(p)) || null;
+}
+
+function buildSlashUrlFromFilters(base, filters) {
+  const parts = [base];
+
+  // ✅ rooms першим (і тільки один)
+  if (filters.rooms?.length === 1) {
+    const slug =
+      getRoomSlugByBase(base, filters.rooms[0]) || ROOMS_VALUE_TO_SLUG[String(filters.rooms[0])]; // fallback на стару логіку
+    if (slug) parts.push(slug);
+  }
+
+  // ✅ complex (може бути багато)
+  if (Array.isArray(filters.complex) && filters.complex.length) {
+    const ids = filters.complex.map(String).filter(Boolean);
+    if (ids.length) parts.push('complex', encodeURIComponent(ids.join(',')));
+  }
+
+  // ✅ USD preset
+  if (filters.pricePresetUsd) {
+    parts.push('price-usd', encodeURIComponent(String(filters.pricePresetUsd)));
+  }
+
+  // ✅ UAH price пишемо ТІЛЬКИ якщо НЕ активний preset
+  if (!filters.pricePresetUsd && (filters.priceMin || filters.priceMax)) {
+    parts.push('price', `${filters.priceMin || ''}-${filters.priceMax || ''}`);
+  }
+
+  if (filters.areaMin || filters.areaMax) {
+    parts.push('area', `${filters.areaMin || ''}-${filters.areaMax || ''}`);
+  }
+
+  if (filters.floorMin || filters.floorMax) {
+    parts.push('floor', `${filters.floorMin || ''}-${filters.floorMax || ''}`);
+  }
+
+  if (filters.sort) {
+    parts.push('sort', encodeURIComponent(String(filters.sort)));
+  }
+
+  return `/${parts.join('/')}/`;
+}
+
 export function updateUrl(filters) {
-  const params = new URLSearchParams(window.location.search);
+  const base = getBaseFromPathname();
+  if (!base) return;
 
-  // очищаємо все, що перезаписуємо (type НЕ чіпаємо і НЕ додаємо)
-  params.delete('complex');
-  params.delete('rooms');
-  params.delete('priceMin');
-  params.delete('priceMax');
-  params.delete('areaMin');
-  params.delete('areaMax');
-  params.delete('floorMin');
-  params.delete('floorMax');
-  params.delete('page');
-  params.delete('sort');
-  params.delete('type'); // на всяк випадок прибираємо старі лінки виду ?type=...
-
-  // helper: додає масив БЕЗ дублікатів
-  const appendUnique = (key, value) => {
-    const arr = Array.isArray(value) ? value : value != null && value !== '' ? [value] : [];
-
-    [...new Set(arr.map(v => String(v).trim()).filter(v => v !== ''))].forEach(v =>
-      params.append(key, v),
-    );
-  };
-
-  appendUnique('complex', filters.complex);
-  appendUnique('rooms', filters.rooms);
-
-  if (filters.priceMin) params.set('priceMin', String(filters.priceMin));
-  if (filters.priceMax) params.set('priceMax', String(filters.priceMax));
-  if (filters.areaMin) params.set('areaMin', String(filters.areaMin));
-  if (filters.areaMax) params.set('areaMax', String(filters.areaMax));
-  if (filters.floorMin) params.set('floorMin', String(filters.floorMin));
-  if (filters.floorMax) params.set('floorMax', String(filters.floorMax));
-
-  if (filters.page && Number(filters.page) !== 1) params.set('page', String(filters.page));
-  if (filters.sort) params.set('sort', String(filters.sort));
-
-  const query = params.toString();
-  const newUrl = `${window.location.pathname}${query ? `?${query}` : ''}`;
-
-  window.history.replaceState({}, '', newUrl);
+  const path = buildSlashUrlFromFilters(base, filters);
+  const hash = window.location.hash || '';
+  window.history.replaceState({}, '', path + hash);
 }
