@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   checkScreenWidth();
 
   // перевірка при зміні розміру вікна
-  window.addEventListener('resize', checkScreenWidth);
+  // window.addEventListener('resize', checkScreenWidth);
 
   function updateCartCount() {
     const counter = document.querySelector('.cart_count');
