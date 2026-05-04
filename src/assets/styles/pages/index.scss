@@ -1199,7 +1199,7 @@
     background: $brend-purple;
   }
   @media (max-width: 480px) {
-    height: 101vw;
+    height: auto;
   }
   &:hover {
     @media (min-width: 1024px) {

@@ -181,3 +181,166 @@
     color: $brend-white;
   }
 }
+//----------//
+.riel-article {
+  font-family: $default-font;
+  color: $brend-white;
+  background: $brend-dark;
+  word-spacing: 0.3em;
+  strong {
+    font-weight: 700;
+  }
+}
+
+.riel-article h2,
+.riel-article h3 {
+  margin: 24px 0 12px;
+  font-weight: 700;
+}
+
+.riel-article h2 {
+  font-size: 28px;
+}
+
+.riel-article h3 {
+  font-size: 22px;
+}
+
+.riel-article p {
+  margin: 0 0 16px;
+  font-size: 16px;
+}
+
+.riel-article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+}
+
+.riel-article figure {
+  margin: 24px 0;
+}
+
+.riel-article figcaption {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.riel-article ul {
+  margin: 16px 0 16px 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.riel-article li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 18px;
+  font-size: 16px;
+}
+
+.riel-article li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.riel-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.riel-article th,
+.riel-article td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.riel-article th {
+  font-weight: 700;
+}
+
+.riel-article .highlight-box,
+.riel-article .summary-box {
+  margin: 20px 0;
+  padding: 16px;
+  border-radius: 8px;
+  color: #1d3541;
+  background: #f7f7f7;
+}
+
+.riel-article .summary-box p,
+.riel-article .summary-box strong {
+  color: inherit;
+}
+
+.coef-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.coef-card {
+  flex: 1 1 180px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.coef-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.coef-value {
+  margin-bottom: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1d3541;
+}
+
+.coef-note {
+  font-size: 14px;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .coef-card {
+    flex: none;
+  }
+  .coef-grid {
+    flex-direction: column;
+  }
+
+  .coef-value {
+    font-size: 28px;
+  }
+
+  .riel-article h2 {
+    font-size: 24px;
+  }
+
+  .riel-article h3 {
+    font-size: 20px;
+  }
+
+  .riel-article p,
+  .riel-article li {
+    font-size: 14px;
+  }
+  .riel-article th,
+  .riel-article td {
+    font-size: 12px;
+  }
+}

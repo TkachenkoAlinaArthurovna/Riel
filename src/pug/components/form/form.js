@@ -240,6 +240,15 @@ export class FormMonster {
 
           formData.append('action', 'app');
 
+          const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+
+          UTM_KEYS.forEach(key => {
+            const value = sessionStorage.getItem(key);
+            if (value) {
+              formData.set(key, value);
+            }
+          });
+
           const { error, code_error } = await sendForm(formData);
           console.log(error);
           if (error === 0) {
