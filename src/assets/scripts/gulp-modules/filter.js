@@ -386,6 +386,19 @@ document.addEventListener('DOMContentLoaded', () => {
     status3: 'Комори в продажу',
     status4: 'В продажу паркінги',
     status5: 'В продажу комори',
+
+    status6: 'Хіт продажів',
+    status7: 'Вибір покупців',
+    status8: 'Топ-пропозиція',
+    status9: 'Найкраща ціна',
+    status10: 'Акційна ціна',
+    status11: 'Знижка',
+    status12: 'Максимальна вигода',
+    status13: 'Найкраще планування',
+    status14: 'Бізнес-клас',
+    status15: 'Сімейний формат',
+    status16: 'Новинка',
+    status17: 'Ексклюзив',
   };
 
   const CITY_LABELS = {
@@ -394,7 +407,25 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const CITY_ORDER = ['kyiv', 'lviv'];
-  const STATUS_ORDER = ['status1', 'status2', 'status3', 'status4', 'status5'];
+  const STATUS_ORDER = [
+    'status1',
+    'status2',
+    'status3',
+    'status4',
+    'status5',
+    'status6',
+    'status7',
+    'status8',
+    'status9',
+    'status10',
+    'status11',
+    'status12',
+    'status13',
+    'status14',
+    'status15',
+    'status16',
+    'status17',
+  ];
 
   // ===== URL BASE =====
   // якщо slug сторінки інший — зміни тут
