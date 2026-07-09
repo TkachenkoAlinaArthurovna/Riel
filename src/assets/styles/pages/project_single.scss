@@ -326,3 +326,46 @@
   @include text-20;
   text-align: center;
 }
+
+.project_text {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+  &__left {
+    width: 50%;
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+    h2.section_title {
+      margin-bottom: 0;
+    }
+  }
+  &__right {
+    width: 50%;
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+    h3 {
+      margin-bottom: 20px;
+      @include text-36;
+      @media (max-width: 480px) {
+        margin-bottom: 16px;
+        @include text-20;
+      }
+    }
+    p {
+      @include text-16;
+      @media (max-width: 480px) {
+        @include text-14;
+        font-weight: 500;
+        line-height: 120%;
+      }
+    }
+  }
+}
