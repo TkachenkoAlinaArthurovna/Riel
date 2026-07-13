@@ -218,27 +218,21 @@ document.addEventListener('DOMContentLoaded', async function() {
     //   .sort((a, b) => (a.room_count || 0) - (b.room_count || 0)) // від меншої кількості кімнат
     //   .slice(0, 5); // перші 5
 
-    const priorityTypes = ['квартира', 'апартамент', 'офіс', 'комора', 'підвал', 'паркінг'];
+    // житло → комерція → все інше (типи поза списком отримують ранг OTHER_RANK)
+    const OTHER_RANK = 2;
+    const TYPE_RANK = {
+      квартира: 0,
+      апартамент: 0,
+      офіс: 1,
+    };
+    const rankOf = unit => TYPE_RANK[norm(unit.unit_type_name)] ?? OTHER_RANK;
 
-    // рахуємо кількість кожного типу (нормалізовано)
-    const typeCounts = projectUnits.reduce((acc, unit) => {
-      const t = norm(unit.unit_type_name);
-      if (!t) return acc;
-      acc[t] = (acc[t] || 0) + 1;
-      return acc;
-    }, {});
-
-    // перший доступний тип за пріоритетом
-    const selectedType = priorityTypes.find(t => (typeCounts[t] || 0) >= 1) || priorityTypes[0];
-
-    // беремо перші 10 карток у пріоритетному порядку
-    const selectedUnits = priorityTypes
-      .flatMap(t =>
-        projectUnits
-          .filter(u => norm(u.unit_type_name) === t)
-          .sort((a, b) => (a.room_count || 0) - (b.room_count || 0)),
-      )
+    // беремо перші 10 карток: спочатку за групою, всередині групи — від меншої кількості кімнат
+    const selectedUnits = [...projectUnits]
+      .sort((a, b) => rankOf(a) - rankOf(b) || (a.room_count || 0) - (b.room_count || 0))
       .slice(0, 10);
+
+    const selectedType = norm(selectedUnits[0]?.unit_type_name);
 
     selectedUnits.forEach(unit => {
       projectId = unit.project.id;
