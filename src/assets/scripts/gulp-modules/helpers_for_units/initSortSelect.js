@@ -9,9 +9,9 @@ export function initSortSelect(filters, portionSize = 12) {
   const options = root.querySelectorAll('.custom-option');
 
   // початковий стан із filters.sort (якщо ти його зберігаєш)
-  const currentSort = filters.sort || '';
-  let currentOption = Array.from(options).find(o => o.dataset.value === currentSort) || options[0];
-
+  const currentSort = filters.sort || 'price-asc';
+  let currentOption = Array.from(options).find(o => o.dataset.value === currentSort) || options[1];
+  sortFilteredPremises(currentSort, portionSize);
   options.forEach(o => o.classList.remove('selected'));
   currentOption.classList.add('selected');
   triggerLabel.textContent = currentOption.textContent;
