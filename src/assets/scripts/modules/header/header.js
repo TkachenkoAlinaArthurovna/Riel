@@ -146,13 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // }
 });
 
-
-const mainBtn = document.getElementById("mainBtn");
-if(mainBtn) {
-  const icons = mainBtn.querySelectorAll(".icon:not(.close)");
-  const closeIcon = mainBtn.querySelector(".icon.close");
-  const socialLinks = document.getElementById("socialLinks");
-  const widget = document.getElementById("widget");
+const mainBtn = document.getElementById('mainBtn');
+if (mainBtn) {
+  const icons = mainBtn.querySelectorAll('.icon:not(.close)');
+  const closeIcon = mainBtn.querySelector('.icon.close');
+  const socialLinks = document.getElementById('socialLinks');
+  const widget = document.getElementById('widget');
 
   let index = 0;
   let interval = null;
@@ -160,7 +159,7 @@ if(mainBtn) {
 
   function showIcon(i) {
     icons.forEach((icon, idx) => {
-      icon.classList.toggle("active", idx === i);
+      icon.classList.toggle('active', idx === i);
     });
   }
 
@@ -179,35 +178,66 @@ if(mainBtn) {
   startRotation();
 
   // клік по головній кнопці
-  mainBtn.addEventListener("click", (e) => {
+  mainBtn.addEventListener('click', e => {
     e.stopPropagation();
     isOpen = !isOpen;
 
     if (isOpen) {
       // відкрити соц мережі
-      socialLinks.classList.add("open");
+      socialLinks.classList.add('open');
       stopRotation();
-      icons.forEach(icon => icon.classList.remove("active"));
-      closeIcon.classList.add("active");
-      mainBtn.style.setProperty("--ripple-play", "paused");
+      icons.forEach(icon => icon.classList.remove('active'));
+      closeIcon.classList.add('active');
+      mainBtn.style.setProperty('--ripple-play', 'paused');
     } else {
       // закрити
-      socialLinks.classList.remove("open");
-      closeIcon.classList.remove("active");
+      socialLinks.classList.remove('open');
+      closeIcon.classList.remove('active');
       showIcon(index);
       startRotation();
     }
   });
 
   // клік поза віджетом
-  document.addEventListener("click", (e) => {
+  document.addEventListener('click', e => {
     if (isOpen && !widget.contains(e.target)) {
       isOpen = false;
-      socialLinks.classList.remove("open");
-      closeIcon.classList.remove("active");
+      socialLinks.classList.remove('open');
+      closeIcon.classList.remove('active');
       showIcon(index);
       startRotation();
     }
   });
-
 }
+
+const initNewPopup = () => {
+  const popup = document.querySelector('.new_popup');
+  console.log('popup', popup);
+
+  if (!popup) return;
+
+  const closeButton = popup.querySelector('.new_popup__close');
+  const popupLink = popup.querySelector('.new_popup__btn');
+  const storageKey = 'new_popup_closed';
+
+  const closePopup = () => {
+    popup.classList.remove('is-open');
+    sessionStorage.setItem(storageKey, 'true');
+  };
+
+  const popupWasClosed = sessionStorage.getItem(storageKey) === 'true';
+
+  if (!popupWasClosed) {
+    popup.classList.add('is-open');
+  }
+
+  closeButton?.addEventListener('click', closePopup);
+
+  popupLink?.addEventListener('click', () => {
+    sessionStorage.setItem(storageKey, 'true');
+  });
+};
+
+document.addEventListener('DOMContentLoaded', initNewPopup);
+
+console.log('header.js loaded');
