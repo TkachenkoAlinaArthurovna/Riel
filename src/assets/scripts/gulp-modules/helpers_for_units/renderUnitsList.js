@@ -90,7 +90,7 @@ export function renderUnitsPortion(units, shownCount, portionSize = 12) {
       'https://stock.riel.ua/wp-content/themes/3d/assets/images/no_image.gif';
 
     if (imgPath.startsWith('/')) {
-      imgPath = `https://source-riel.propertymate.ai${imgPath}`;
+      imgPath = `https://property.riel.ua${imgPath}`;
     }
 
     return imgPath;

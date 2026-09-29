@@ -229,13 +229,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   const floorImg = document.querySelector('#floor img');
   if (flat.images && flat.images.length >= 3) {
     if (mainImg) {
-      mainImg.src = `https://source-riel.propertymate.ai${flat.images[0].path}`;
+      mainImg.src = `https://property.riel.ua${flat.images[0].path}`;
     }
     if (planningImg) {
-      planningImg.src = `https://source-riel.propertymate.ai${flat.images[1].path}`;
+      planningImg.src = `https://property.riel.ua${flat.images[1].path}`;
     }
     if (floorImg) {
-      floorImg.src = `https://source-riel.propertymate.ai${flat.images[2].path}`;
+      floorImg.src = `https://property.riel.ua${flat.images[2].path}`;
     }
   }
 
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     flat.section_images.images.length > 0
   ) {
     const firstSectionImagePath = flat.section_images.images[0].path;
-    mainImg.src = `https://source-riel.propertymate.ai${firstSectionImagePath}`;
+    mainImg.src = `https://property.riel.ua${firstSectionImagePath}`;
   }
 
   // 6. Лівий блок

@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Якщо це відносний шлях типу "/project/...", додаємо домен
     if (imgPath.startsWith('/')) {
-      imgPath = `https://source-riel.propertymate.ai${imgPath}`;
+      imgPath = `https://property.riel.ua${imgPath}`;
     }
 
     return imgPath;
